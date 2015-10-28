@@ -5,10 +5,10 @@
 
 namespace SprykerFeature\Zed\Discount\Persistence\Propel;
 
-use SprykerFeature\Zed\Discount\Persistence\Propel\Base\SpyDiscountVoucherPoolQuery as BaseSpyDiscountVoucherPoolQuery;
+use Orm\Zed\Discount\Persistence\Base\SpyDiscountVoucherPoolCategory as BaseSpyDiscountVoucherPoolCategory;
 
 /**
- * Skeleton subclass for performing query and update operations on the 'pac_discount_voucher_pool' table.
+ * Skeleton subclass for representing a row from the 'pac_discount_voucher_pool_category' table.
  *
  *
  *
@@ -16,8 +16,7 @@ use SprykerFeature\Zed\Discount\Persistence\Propel\Base\SpyDiscountVoucherPoolQu
  * application requirements.  This class will only be generated as
  * long as it does not already exist in the output directory.
  */
-class SpyDiscountVoucherPoolQuery extends BaseSpyDiscountVoucherPoolQuery
+abstract class AbstractSpyDiscountVoucherPoolCategory extends BaseSpyDiscountVoucherPoolCategory
 {
 
-} // SpyDiscountVoucherPoolQuery
-
+}

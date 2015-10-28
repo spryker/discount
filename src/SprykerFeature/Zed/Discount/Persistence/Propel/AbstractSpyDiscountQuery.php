@@ -5,10 +5,10 @@
 
 namespace SprykerFeature\Zed\Discount\Persistence\Propel;
 
-use SprykerFeature\Zed\Discount\Persistence\Propel\Base\SpyDiscountDecisionRule as BaseSpyDiscountDecisionRule;
+use Orm\Zed\Discount\Persistence\Base\SpyDiscountQuery as BaseSpyDiscountQuery;
 
 /**
- * Skeleton subclass for representing a row from the 'pac_discount_decision_rule' table.
+ * Skeleton subclass for performing query and update operations on the 'pac_discount' table.
  *
  *
  *
@@ -16,7 +16,8 @@ use SprykerFeature\Zed\Discount\Persistence\Propel\Base\SpyDiscountDecisionRule 
  * application requirements.  This class will only be generated as
  * long as it does not already exist in the output directory.
  */
-class SpyDiscountDecisionRule extends BaseSpyDiscountDecisionRule
+abstract class AbstractSpyDiscountQuery extends BaseSpyDiscountQuery
 {
 
-}
+} // SpyDiscountQuery
+
