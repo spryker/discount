@@ -32,7 +32,7 @@ use Zend\Filter\Word\CamelCaseToUnderscore;
  * @method DiscountQueryContainer getQueryContainer()
  * @method DiscountConfig getConfig()
  */
-class DiscountDependencyContainer extends AbstractCommunicationFactory
+class DiscountCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
