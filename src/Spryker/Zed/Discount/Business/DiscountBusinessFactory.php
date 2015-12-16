@@ -48,7 +48,7 @@ use Spryker\Shared\Kernel\Store;
  * @method DiscountConfig getConfig()
  * @method DiscountQueryContainer getQueryContainer()
  */
-class DiscountDependencyContainer extends AbstractBusinessFactory
+class DiscountBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
