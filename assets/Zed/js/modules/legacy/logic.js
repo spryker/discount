@@ -7,7 +7,6 @@
 
 'use strict';
 
-// require('vendor/spryker/spryker/Bundles/Gui/assets/Zed/modules/main');
 var discount = require('./helpers');
 
 $(function(){

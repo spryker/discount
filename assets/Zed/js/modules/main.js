@@ -1,6 +1,6 @@
 /**
  * 
- * Discount dependencies
+ * Discount main module
  * @copyright: Spryker Systems GmbH
  *
  */
@@ -8,5 +8,5 @@
 'use strict';
 
 require('ZedGui');
-require('../sass/main.scss');
 require('./legacy/logic');
+require('../../sass/main.scss');
