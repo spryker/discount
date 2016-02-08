@@ -6,14 +6,13 @@
 namespace Spryker\Zed\Discount\Communication\Plugin\OrderAmountAggregator;
 
 use Generated\Shared\Transfer\OrderTransfer;
-use Spryker\Zed\Discount\Business\DiscountFacade;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Sales\Dependency\Plugin\OrderTotalsAggregatePluginInterface;
 
 /**
  * @method \Spryker\Zed\Discount\Business\DiscountFacade getFacade()
  */
-class ItemTaxWithDiscountsAggregatorPlugin extends AbstractPlugin implements OrderTotalsAggregatePluginInterface
+class OrderExpenseTaxWithDiscountsAggregatorPlugin extends AbstractPlugin implements OrderTotalsAggregatePluginInterface
 {
 
     /**
@@ -23,6 +22,6 @@ class ItemTaxWithDiscountsAggregatorPlugin extends AbstractPlugin implements Ord
      */
     public function aggregate(OrderTransfer $orderTransfer)
     {
-        $this->getFacade()->aggregateItemTaxWithDiscounts($orderTransfer);
+        $this->getFacade()->aggregateOrderExpenseTaxWithDiscounts($orderTransfer);
     }
 }
