@@ -5,7 +5,6 @@
 
 namespace Spryker\Zed\Discount\Communication\Controller;
 
-use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
