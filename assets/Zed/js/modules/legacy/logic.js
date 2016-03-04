@@ -1,25 +1,32 @@
+/**
+ * Copyright (c) 2016-present Spryker Systems GmbH. All rights reserved. 
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file. 
+ */
+
 'use strict';
+
+var discount = require('./helpers');
 
 $(function(){
 
     $('#add-collector-container').click(function(e){
         e.preventDefault();
-        loadCollectorPluginForm($(this), 'cart_rule');
+        discount.loadCollectorPluginForm($(this), 'cart_rule');
     });
 
     $('#add-collector-pool-container').click(function(e){
         e.preventDefault();
-        loadCollectorPluginForm($(this), 'voucher_codes');
+        discount.loadCollectorPluginForm($(this), 'voucher_codes');
     });
 
     $('#add-rules-container').click(function(e){
         e.preventDefault();
-        loadCartRulesForm($(this), 'cart_rule');
+        discount.loadCartRulesForm($(this), 'cart_rule');
     });
 
     $('#add-rules-pool-container').click(function(e){
         e.preventDefault();
-        loadCartRulesForm($(this), 'voucher_codes');
+        discount.loadCartRulesForm($(this), 'voucher_codes');
     });
 
     $('.table-data-codes').DataTable({
