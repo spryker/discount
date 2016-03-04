@@ -1,16 +1,11 @@
-function loadCartRulesForm(element, mainFormName) {
-    element.children('i').removeClass('hidden');
-    var sprykerAjax = new SprykerAjax();
-    sprykerAjax.loadDecisionRulesOptions(element, mainFormName);
-}
+/**
+ * Copyright (c) 2016-present Spryker Systems GmbH. All rights reserved. 
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file. 
+ */
 
-function loadCollectorPluginForm(element, mainFormName) {
-    element.children('i').removeClass('hidden');
-    var sprykerAjax = new SprykerAjax();
-    sprykerAjax.loadCollectorPlugins(element, mainFormName);
-}
+'use strict';
 
-SprykerAjax.prototype.loadDecisionRulesOptions = function(element, mainFormName){
+SprykerAjax.loadDecisionRulesOptions = function(element, mainFormName){
     var elementsCount = $('#rules-container > .col-md-6').length;
     var nextElementIndex = elementsCount + 1;
     var options = {
@@ -26,7 +21,7 @@ SprykerAjax.prototype.loadDecisionRulesOptions = function(element, mainFormName)
     );
 };
 
-SprykerAjax.prototype.loadCollectorPlugins = function(element, mainFormName){
+SprykerAjax.loadCollectorPlugins = function(element, mainFormName){
     var elementsCount = $('#collector-container > .col-md-6').length;
     var nextElementIndex = elementsCount + 1;
     var options = {
@@ -40,4 +35,15 @@ SprykerAjax.prototype.loadCollectorPlugins = function(element, mainFormName){
             element.children('i').addClass('hidden');
         }
     );
+};
+
+module.exports = {
+    loadCartRulesForm: function(element, mainFormName){
+        element.children('i').removeClass('hidden');
+        SprykerAjax.loadDecisionRulesOptions(element, mainFormName);
+    },
+    loadCollectorPluginForm: function(element, mainFormName){
+        element.children('i').removeClass('hidden');
+        SprykerAjax.loadCollectorPlugins(element, mainFormName);
+    }
 };
