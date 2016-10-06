@@ -32,7 +32,7 @@
         <property name="type" type="string" />
     </transfer>
 
-    <transfer name="calculatedDiscount">
+    <transfer name="CalculatedDiscount">
         <property name="displayName" type="string" />
         <property name="description" type="string" />
         <property name="voucherCode" type="string"/>
