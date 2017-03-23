@@ -4,7 +4,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Unit\Spryker\Zed\Discount\Communication\Plugin\Calculator;
+namespace ZedCommunication\Plugin\Calculator;
 
 use Codeception\TestCase\Test;
 use Spryker\Zed\Discount\Communication\Plugin\Calculator\PercentagePlugin;

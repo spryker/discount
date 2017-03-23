@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Communication\Controller;
+namespace ZedCommunication\Controller;
 
-use Discount\CommunicationTester;
+use Discount\ZedCommunicationTester;
 
 /**
  * @group Spryker
@@ -22,22 +22,22 @@ class IndexControllerCest
 {
 
     /**
-     * @param \Discount\CommunicationTester $i
+     * @param \Discount\ZedCommunicationTester $i
      *
      * @return void
      */
-    public function testICanOpenDiscountPage(CommunicationTester $i)
+    public function testICanOpenDiscountPage(ZedCommunicationTester $i)
     {
         $i->amOnPage('/discount/index/list');
         $i->seeResponseCodeIs(200);
     }
 
     /**
-     * @param \Discount\CommunicationTester $i
+     * @param \Discount\ZedCommunicationTester $i
      *
      * @return void
      */
-    public function testICanGoFromOverviewPageToCreatePage(CommunicationTester $i)
+    public function testICanGoFromOverviewPageToCreatePage(ZedCommunicationTester $i)
     {
         $i->amOnPage('/discount/index/list');
         $i->click('Create new Discount');

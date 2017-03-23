@@ -5,10 +5,10 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-namespace Acceptance\Discount\Zed;
+namespace ZedPresentation\Discount\Zed;
 
 use Discount\PageObject\DiscountListPage;
-use Discount\AcceptanceTester;
+use Discount\ZedPresentationTester;
 
 /**
  * @group Acceptance
@@ -21,11 +21,11 @@ class DiscountListCest
 {
 
     /**
-     * @param \Discount\AcceptanceTester $i
+     * @param \Discount\ZedPresentationTester $i
      *
      * @return void
      */
-    public function testPageShouldShowList(AcceptanceTester $i)
+    public function testPageShouldShowList(ZedPresentationTester $i)
     {
         $i->wantTo('See a list of created discounts');
         $i->expect('A grid with discounts is shown');

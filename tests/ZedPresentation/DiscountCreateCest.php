@@ -5,10 +5,10 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-namespace Acceptance;
+namespace ZedPresentation;
 
 use Discount\PageObject\DiscountCreatePage;
-use Discount\AcceptanceTester;
+use Discount\ZedPresentationTester;
 
 /**
  * @group Acceptance
@@ -21,36 +21,36 @@ class DiscountCreateCest
 {
 
     /**
-     * @param \Discount\AcceptanceTester $i
+     * @param \Discount\ZedPresentationTester $i
      * @param \Discount\PageObject\DiscountCreatePage $createPage
      *
      * @return void
      */
-    public function createExclusiveDiscount(AcceptanceTester $i, DiscountCreatePage $createPage)
+    public function createExclusiveDiscount(ZedPresentationTester $i, DiscountCreatePage $createPage)
     {
         $createPage->createDiscount(DiscountCreatePage::DISCOUNT_VALID_EXCLUSIVE);
         $i->see($createPage::MESSAGE_SUCCESSFUL_ALERT_CREATION);
     }
 
     /**
-     * @param \Discount\AcceptanceTester $i
+     * @param \Discount\ZedPresentationTester $i
      * @param \Discount\PageObject\DiscountCreatePage $createPage
      *
      * @return void
      */
-    public function createNotExclusiveDiscount(AcceptanceTester $i, DiscountCreatePage $createPage)
+    public function createNotExclusiveDiscount(ZedPresentationTester $i, DiscountCreatePage $createPage)
     {
         $createPage->createDiscount(DiscountCreatePage::DISCOUNT_VALID_NOT_EXCLUSIVE);
         $i->see($createPage::MESSAGE_SUCCESSFUL_ALERT_CREATION);
     }
 
     /**
-     * @param \Discount\AcceptanceTester $i
+     * @param \Discount\ZedPresentationTester $i
      * @param \Discount\PageObject\DiscountCreatePage $createPage
      *
      * @return void
      */
-    public function createInvalidDiscount(AcceptanceTester $i, DiscountCreatePage $createPage)
+    public function createInvalidDiscount(ZedPresentationTester $i, DiscountCreatePage $createPage)
     {
         $createPage->createDiscount(DiscountCreatePage::EMPTY_DISCOUNT, ['name' => null]);
         $i->dontSee($createPage::MESSAGE_SUCCESSFUL_ALERT_CREATION);
@@ -65,12 +65,12 @@ class DiscountCreateCest
     }
 
     /**
-     * @param \Discount\AcceptanceTester $i
+     * @param \Discount\ZedPresentationTester $i
      * @param \Discount\PageObject\DiscountCreatePage $createPage
      *
      * @return void
      */
-    public function simpleDiscountComputation(AcceptanceTester $i, DiscountCreatePage $createPage)
+    public function simpleDiscountComputation(ZedPresentationTester $i, DiscountCreatePage $createPage)
     {
         $createPage->open()->tab('Discount calculation');
         $createPage->fillInDiscountRule(0, 'item-price', 'equal', '12');
