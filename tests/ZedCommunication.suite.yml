@@ -1,4 +1,4 @@
-class_name: CommunicationTester
+class_name: ZedCommunicationTester
 modules:
   enabled:
     - \Testify\Module\Environment

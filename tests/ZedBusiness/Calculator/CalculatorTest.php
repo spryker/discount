@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Business\Calculator;
+namespace ZedBusiness\Calculator;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\DiscountTransfer;

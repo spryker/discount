@@ -1,4 +1,4 @@
-class_name: AcceptanceTester
+class_name: ZedPresentationTester
 modules:
   enabled:
     - \Testify\Module\Environment

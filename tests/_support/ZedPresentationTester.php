@@ -18,9 +18,9 @@ use Codeception\Actor;
  *
  * @SuppressWarnings(PHPMD)
  */
-class ClientTester extends Actor
+class ZedPresentationTester extends Actor
 {
 
-    use _generated\ClientTesterActions;
+    use _generated\ZedPresentationTesterActions;
 
 }
