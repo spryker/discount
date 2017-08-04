@@ -1,13 +1,8 @@
 <?php
-
-/**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
- */
-
 namespace SprykerTest\Zed\Discount;
 
 use Codeception\Actor;
+use Codeception\Scenario;
 
 /**
  * Inherited Methods
@@ -24,13 +19,20 @@ use Codeception\Actor;
  *
  * @SuppressWarnings(PHPMD)
  */
-class BusinessTester extends Actor
+class DiscountPresentationTester extends Actor
 {
 
-    use _generated\BusinessTesterActions;
+    use _generated\DiscountPresentationTesterActions;
 
-   /**
-    * Define custom actions here
-    */
+    /**
+     * @param \Codeception\Scenario $scenario
+     */
+    public function __construct(Scenario $scenario)
+    {
+        parent::__construct($scenario);
+
+        $this->amZed();
+        $this->amLoggedInUser();
+    }
 
 }
