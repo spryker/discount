@@ -5,22 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Discount\Business\Persistence;
+namespace Spryker\Zed\Discount\Business\Checkout;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SaveOrderTransfer;
+use Spryker\Zed\Api\Business\Exception\EntityNotSavedException;
 
-/**
- * @deprecated Use \Spryker\Zed\Discount\Business\Checkout\DiscountOrderSaverInterface instead
- * Will be remove with the next major
- */
 interface DiscountOrderSaverInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     * @param SaveOrderTransfer $saveOrderTransfer
      *
      * @return void
      */
-    public function saveDiscounts(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer);
+    public function saveOrderDiscounts(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer);
 }
