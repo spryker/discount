@@ -9,14 +9,14 @@ namespace Spryker\Zed\Discount\Communication\Plugin\Distributor;
 use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
-use Spryker\Zed\DiscountExtension\Dependency\Plugin\Distributor\DiscountableItemExpanderStrategyPluginInterface;
+use Spryker\Zed\DiscountExtension\Dependency\Plugin\Distributor\DiscountableItemTransformerStrategyPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\Discount\Business\DiscountFacadeInterface getFacade()
  * @method \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory getFactory()
  */
-class DiscountableItemExpanderStrategyPlugin extends AbstractPlugin implements DiscountableItemExpanderStrategyPluginInterface
+class DiscountableItemTransformerStrategyPlugin extends AbstractPlugin implements DiscountableItemTransformerStrategyPluginInterface
 {
     /**
      * @var float
@@ -42,7 +42,7 @@ class DiscountableItemExpanderStrategyPlugin extends AbstractPlugin implements D
      *
      * @return void
      */
-    public function expandDiscountableItem(DiscountableItemTransfer $discountableItemTransfer, DiscountTransfer $discountTransfer, $totalDiscountAmount, $totalAmount, $quantity)
+    public function transformDiscountableItem(DiscountableItemTransfer $discountableItemTransfer, DiscountTransfer $discountTransfer, $totalDiscountAmount, $totalAmount, $quantity)
     {
         $calculatedDiscountTransfer = $this->createBaseCalculatedDiscountTransfer($discountTransfer);
         $singleItemAmountShare = $discountableItemTransfer->getUnitPrice() / $totalAmount;
