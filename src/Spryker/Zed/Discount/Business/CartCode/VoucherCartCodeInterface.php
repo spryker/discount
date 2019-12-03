@@ -10,7 +10,7 @@ namespace Spryker\Zed\Discount\Business\CartCode;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface VoucherCartCodeProcessorInterface
+interface VoucherCartCodeInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -41,5 +41,5 @@ interface VoucherCartCodeProcessorInterface
      *
      * @return \Generated\Shared\Transfer\MessageTransfer|null
      */
-    public function getOperationResponseMessage(QuoteTransfer $quoteTransfer, string $cartCode): ?MessageTransfer;
+    public function findOperationResponseMessage(QuoteTransfer $quoteTransfer, string $cartCode): ?MessageTransfer;
 }
