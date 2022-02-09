@@ -74,9 +74,7 @@ class IndexController extends AbstractController
                 ->getDiscountGeneralOrFail()
                 ->getIdDiscountOrFail();
 
-            /** @var \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer */
-            $discountConfiguratorTransfer = $discountForm->getData();
-            $discountType = $discountConfiguratorTransfer->getDiscountGeneral()->getDiscountType();
+            $discountType = $discountForm->getData()->getDiscountGeneral()->getDiscountType();
 
             $this->addSuccessMessage('Discount successfully created, but not activated.');
 
