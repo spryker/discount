@@ -7,14 +7,10 @@
 
 namespace Spryker\Zed\Discount\Dependency\Facade;
 
-use Generated\Shared\Transfer\StoreTransfer;
-
-interface DiscountToStoreFacadeInterface
+interface DiscountToLocaleFacadeInterface
 {
     /**
-     * @param string $storeName
-     *
-     * @return \Generated\Shared\Transfer\StoreTransfer
+     * @return string
      */
-    public function getStoreByName($storeName): StoreTransfer;
+    public function getCurrentLocaleName(): string;
 }
