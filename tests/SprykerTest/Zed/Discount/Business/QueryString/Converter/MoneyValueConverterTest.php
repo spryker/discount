@@ -9,8 +9,6 @@ namespace SprykerTest\Zed\Discount\Business\QueryString\Converter;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ClauseTransfer;
-use Spryker\Zed\Discount\Business\QueryString\Comparator\IsIn;
-use Spryker\Zed\Discount\Business\QueryString\Comparator\IsNotIn;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Discount\Business\QueryString\Converter\MoneyValueConverter;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMoneyBridge;
@@ -30,6 +28,20 @@ use Spryker\Zed\Money\Business\MoneyFacade;
 class MoneyValueConverterTest extends Unit
 {
     /**
+     * @uses \Spryker\Zed\Discount\Business\QueryString\Comparator\IsIn::EXPRESSION
+     *
+     * @var string
+     */
+    protected const EXPRESSION_IS_IN = 'is in';
+
+    /**
+     * @uses \Spryker\Zed\Discount\Business\QueryString\Comparator\IsNotIn::EXPRESSION
+     *
+     * @var string
+     */
+    protected const EXPRESSION_IS_NOT_IN = 'is not in';
+
+    /**
      * @return void
      */
     public function testConvertDecimalToCentWhenIsNotInUsedShouldUpdateAllItems()
@@ -39,7 +51,7 @@ class MoneyValueConverterTest extends Unit
         $values = ['10', '12.12', '12,30'];
         $clauseTransfer = new ClauseTransfer();
         $clauseTransfer->setValue(implode(ComparatorOperators::LIST_DELIMITER, $values));
-        $clauseTransfer->setOperator(IsNotIn::EXPRESSION);
+        $clauseTransfer->setOperator(static::EXPRESSION_IS_NOT_IN);
 
         $currencyConverterMock->convertDecimalToCent($clauseTransfer);
 
@@ -60,7 +72,7 @@ class MoneyValueConverterTest extends Unit
         $values = ['10', '12.12', '12,30'];
         $clauseTransfer = new ClauseTransfer();
         $clauseTransfer->setValue(implode(ComparatorOperators::LIST_DELIMITER, $values));
-        $clauseTransfer->setOperator(IsIn::EXPRESSION);
+        $clauseTransfer->setOperator(static::EXPRESSION_IS_IN);
 
         $currencyConverterMock->convertDecimalToCent($clauseTransfer);
 
@@ -80,7 +92,7 @@ class MoneyValueConverterTest extends Unit
 
         $clauseTransfer = new ClauseTransfer();
         $clauseTransfer->setValue('10,50');
-        $clauseTransfer->setOperator(IsIn::EXPRESSION);
+        $clauseTransfer->setOperator(static::EXPRESSION_IS_IN);
 
         $currencyConverterMock->convertDecimalToCent($clauseTransfer);
 
