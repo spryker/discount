@@ -144,7 +144,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface[]
+     * @return \Spryker\Zed\DiscountExtension\Dependency\Plugin\DecisionRulePluginInterface[]
      */
     public function getDecisionRulePlugins()
     {
@@ -179,7 +179,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface[]
+     * @return \Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountableItemCollectorPluginInterface[]
      */
     public function getCollectorPlugins()
     {
