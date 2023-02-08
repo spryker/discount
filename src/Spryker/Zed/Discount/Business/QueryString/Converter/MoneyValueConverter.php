@@ -15,6 +15,19 @@ use Spryker\Zed\Discount\Dependency\Facade\DiscountToMoneyInterface;
 
 class MoneyValueConverter implements MoneyValueConverterInterface
 {
+    /**
+     * @uses \Spryker\Zed\Discount\Business\QueryString\Comparator\IsIn::EXPRESSION
+     *
+     * @var string
+     */
+    protected const EXPRESSION_IS_IN = 'is in';
+
+    /**
+     * @uses \Spryker\Zed\Discount\Business\QueryString\Comparator\IsNotIn::EXPRESSION
+     *
+     * @var string
+     */
+    protected const EXPRESSION_IS_NOT_IN = 'is not in';
 
     /**
      * @var \Spryker\Zed\Discount\Dependency\Facade\DiscountToMoneyInterface
@@ -36,8 +49,10 @@ class MoneyValueConverter implements MoneyValueConverterInterface
      */
     public function convertDecimalToCent(ClauseTransfer $clauseTransfer)
     {
-        if ($clauseTransfer->getOperator() === IsNotIn::EXPRESSION ||
-            $clauseTransfer->getOperator() === IsIn::EXPRESSION) {
+        if (
+            $clauseTransfer->getOperator() === static::EXPRESSION_IS_NOT_IN ||
+            $clauseTransfer->getOperator() === static::EXPRESSION_IS_IN
+        ) {
             $this->convertListPrice($clauseTransfer);
         } else {
             $this->convertSinglePrice($clauseTransfer);

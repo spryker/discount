@@ -18,12 +18,12 @@ class CollectorProvider implements SpecificationProviderInterface
 {
 
     /**
-     * @var \Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface[]
+     * @var \Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountableItemCollectorPluginInterface[]
      */
     protected $collectorPlugins = [];
 
     /**
-     * @param \Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface[] $collectorPlugins
+     * @param \Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountableItemCollectorPluginInterface[] $collectorPlugins
      */
     public function __construct(array $collectorPlugins)
     {

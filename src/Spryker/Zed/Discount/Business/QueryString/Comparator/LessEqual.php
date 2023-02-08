@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -10,44 +11,32 @@ use Generated\Shared\Transfer\ClauseTransfer;
 use Spryker\Zed\Discount\Business\Exception\ComparatorException;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 
-class LessEqual implements ComparatorInterface
+class LessEqual extends AbstractComparator implements ComparatorInterface
 {
-
     /**
-     * @param \Generated\Shared\Transfer\ClauseTransfer $compareWithValue
-     * @param string $withValue
-     *
-     * @return bool
+     * @var string
      */
-    public function compare(ClauseTransfer $compareWithValue, $withValue)
-    {
-        $this->isValidValue($withValue);
-
-        return $withValue <= $compareWithValue->getValue();
-    }
+    protected const EXPRESSION = '<=';
 
     /**
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
+     * @param mixed $withValue
      *
      * @return bool
      */
-    public function accept(ClauseTransfer $clauseTransfer)
+    public function compare(ClauseTransfer $clauseTransfer, $withValue): bool
     {
-        return (strcasecmp($clauseTransfer->getOperator(), $this->getExpression()) === 0);
+        if (!$this->isValidValue($withValue)) {
+            return false;
+        }
+
+        return $withValue <= $clauseTransfer->getValue();
     }
 
     /**
-     * @return string
+     * @return list<string>
      */
-    public function getExpression()
-    {
-        return '<=';
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getAcceptedTypes()
+    public function getAcceptedTypes(): array
     {
         return [
             ComparatorOperators::TYPE_NUMBER,
@@ -55,19 +44,22 @@ class LessEqual implements ComparatorInterface
     }
 
     /**
-     * @param string $withValue
+     * @param mixed $withValue
      *
      * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
      *
      * @return bool
      */
-    public function isValidValue($withValue)
+    public function isValidValue($withValue): bool
     {
+        if (!parent::isValidValue($withValue)) {
+            return false;
+        }
+
         if (preg_match(ComparatorOperators::NUMBER_REGEXP, $withValue) === 0) {
             throw new ComparatorException('Only numeric value can be used together with "<=" comparator.');
         }
 
         return true;
     }
-
 }
