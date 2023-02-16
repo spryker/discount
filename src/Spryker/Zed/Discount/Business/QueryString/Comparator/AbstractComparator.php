@@ -34,7 +34,7 @@ abstract class AbstractComparator implements ComparatorInterface
     {
         if (!is_scalar($withValue)) {
             throw new ComparatorException(
-                sprintf('Only scalar value can be used together with "%s" comparator.', $this->getExpression()),
+                sprintf('Only scalar value can be used together with "%s" comparator.', $this->getExpression())
             );
         }
 
