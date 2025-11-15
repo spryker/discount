@@ -86,6 +86,9 @@ class ConditionsForm extends AbstractType
                     QueryString::OPTION_QUERY_STRING_TYPE => MetaProviderFactory::TYPE_DECISION_RULE,
                 ]),
             ],
+            'row_attr' => [
+                'data-qa' => 'decision-rule',
+            ],
             'attr' => [
                 'data-label' => $label,
                 'data-url' => Url::generate(

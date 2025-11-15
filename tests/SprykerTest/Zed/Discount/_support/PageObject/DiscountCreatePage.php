@@ -180,7 +180,7 @@ class DiscountCreatePage
 
         $this->tab('tab-content-conditions');
         $i->click('#btn-condition-get');
-        $i->executeJS('document.querySelector("#discount_discountCondition .form-group").classList.remove("hidden")');
+        $i->executeJS('document.querySelector("[data-qa=decision-rule]").classList.remove("hidden")');
 
         $i->waitForElement('#discount_discountCondition_decision_rule_query_string', 20);
         $i->fillField('#discount_discountCondition_decision_rule_query_string', $data['applyWhen']);
