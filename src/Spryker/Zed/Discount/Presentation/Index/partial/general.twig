@@ -11,7 +11,7 @@
         {{ form_label(discountForm.discountGeneral.display_name) }}
         {{ form_widget(discountForm.discountGeneral.display_name) }}
         <div class="form-note">
-            <span class="glyphicon glyphicon-info-sign"></span>
+            <span class="fa fa-info-circle"></span>
             {{ 'Unique, short, and descriptive. Displayed in cart calculation.' | trans }}
         </div>
         {{ form_errors(discountForm.discountGeneral.display_name) }}
@@ -21,7 +21,7 @@
         {{ form_label(discountForm.discountGeneral.description) }}
         {{ form_widget(discountForm.discountGeneral.description) }}
         <div class="form-note">
-            <span class="glyphicon glyphicon-info-sign"></span>
+            <span class="fa fa-info-circle"></span>
             {{ 'Summary explaining promotion. Displayed with eligible products where applicable.' | trans }}
         </div>
         {{ form_errors(discountForm.discountGeneral.description) }}
@@ -32,7 +32,7 @@
             {{ form_label(discountForm.discountGeneral.priority) }}
             {{ form_widget(discountForm.discountGeneral.priority) }}
             <div class="form-note">
-                <span class="glyphicon glyphicon-info-sign"></span>
+                <span class="fa fa-info-circle"></span>
                 {{ discountForm.discountGeneral.priority.vars.help }}
             </div>
             {{ form_errors(discountForm.discountGeneral.priority) }}

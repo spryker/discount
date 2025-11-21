@@ -7,7 +7,7 @@
     {{ form_label(voucherForm.quantity) }}
     {{ form_widget(voucherForm.quantity) }}
     <div class="form-note">
-        <span class="glyphicon glyphicon-info-sign"></span>
+        <span class="fa fa-info-circle"></span>
         {{ voucherForm.quantity.vars.help }}
     </div>
 </div>
@@ -33,8 +33,8 @@
 {{ form_end(voucherForm) }}
 
 {% if discountConfigurator.discountVoucher and discountConfigurator.discountVoucher.fkDiscountVoucherPool %}
- {{ viewActionButton(url('/discount/voucher/export', {'id-pool' : discountConfigurator.discountVoucher.fkDiscountVoucherPool}), 'Export' | trans) }}
- {{ removeActionButton(url('/discount/voucher/delete-discount-vouchers', {'id-pool': discountConfigurator.discountVoucher.fkDiscountVoucherPool, 'id-discount' : idDiscount }), 'Delete codes' | trans ) }}
+    {{ viewActionButton(url('/discount/voucher/export', {'id-pool' : discountConfigurator.discountVoucher.fkDiscountVoucherPool}), 'Export' | trans) }}
+    {{ removeActionButton(url('/discount/voucher/delete-discount-vouchers', {'id-pool': discountConfigurator.discountVoucher.fkDiscountVoucherPool, 'id-discount' : idDiscount }), 'Delete codes' | trans ) }}
 {% endif %}
 
 {% if voucherCodesTable is defined %}
