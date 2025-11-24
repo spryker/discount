@@ -15,6 +15,8 @@ use Spryker\Zed\Gui\Communication\Form\Type\FormattedNumberType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -97,8 +99,15 @@ class ConditionsForm extends AbstractType
                         'type' => MetaProviderFactory::TYPE_DECISION_RULE,
                     ],
                 )->build(),
+                'class' => $this->getConfig()->isBase64EncodeQueryStringFieldEnabled() ? 'js-encode-on-change' : '',
             ],
         ]);
+
+        if ($this->getConfig()->isBase64EncodeQueryStringFieldEnabled()) {
+            $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event): void {
+                $this->decodeEncodedFormField($event);
+            });
+        }
 
         return $this;
     }
@@ -127,6 +136,23 @@ class ConditionsForm extends AbstractType
         ]);
 
         return $this;
+    }
+
+    protected function decodeEncodedFormField(FormEvent $event): void
+    {
+        $data = $event->getData();
+
+        if (!is_array($data)) {
+            return;
+        }
+
+        if (!isset($data[static::FIELD_DECISION_RULE_QUERY_STRING]) || !is_string($data[static::FIELD_DECISION_RULE_QUERY_STRING])) {
+            return;
+        }
+
+        $decodedValue = $this->getFactory()->createFormFieldEncoder()->decode($data[static::FIELD_DECISION_RULE_QUERY_STRING]);
+        $data[static::FIELD_DECISION_RULE_QUERY_STRING] = $decodedValue;
+        $event->setData($data);
     }
 
     /**

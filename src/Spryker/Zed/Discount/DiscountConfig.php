@@ -73,6 +73,8 @@ class DiscountConfig extends AbstractBundleConfig
      */
     protected const MAX_ALLOWED_DATETIME = '2038-01-19 03:14:07';
 
+    protected const bool BASE64_ENCODE_QUERY_STRING_FIELD_ENABLED = true;
+
     /**
      * @api
      *
@@ -216,5 +218,19 @@ class DiscountConfig extends AbstractBundleConfig
     public function getMaxAllowedDatetime(): string
     {
         return static::MAX_ALLOWED_DATETIME;
+    }
+
+    /**
+     * Specification:
+     * - Enables/disables query string fields encoding.
+     * Enable this if you are experiencing 403 errors due to AWS WAF protection.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isBase64EncodeQueryStringFieldEnabled(): bool
+    {
+        return static::BASE64_ENCODE_QUERY_STRING_FIELD_ENABLED;
     }
 }

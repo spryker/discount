@@ -18,6 +18,8 @@ use Spryker\Zed\Discount\Communication\Form\DataProvider\VoucherFormDataProvider
 use Spryker\Zed\Discount\Communication\Form\DeleteVoucherCodeForm;
 use Spryker\Zed\Discount\Communication\Form\DiscountForm;
 use Spryker\Zed\Discount\Communication\Form\DiscountVisibilityForm;
+use Spryker\Zed\Discount\Communication\Form\Encoder\FormFieldEncoder;
+use Spryker\Zed\Discount\Communication\Form\Encoder\FormFieldEncoderInterface;
 use Spryker\Zed\Discount\Communication\Form\TableFilterForm;
 use Spryker\Zed\Discount\Communication\Form\Transformer\CalculatorAmountTransformer;
 use Spryker\Zed\Discount\Communication\Form\VoucherForm;
@@ -215,6 +217,14 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     public function createDiscountVisibilityForm(): FormInterface
     {
         return $this->getFormFactory()->create(DiscountVisibilityForm::class);
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Communication\Form\Encoder\FormFieldEncoderInterface
+     */
+    public function createFormFieldEncoder(): FormFieldEncoderInterface
+    {
+        return new FormFieldEncoder();
     }
 
     /**

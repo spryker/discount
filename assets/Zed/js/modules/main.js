@@ -43,6 +43,10 @@ $(document).ready(function () {
         }
 
         sqlConditionBuilder.saveQuery();
+        const targets = document.querySelectorAll('.js-encode-on-change');
+        for (const target of targets) {
+            target.value = btoa(unescape(encodeURIComponent(target.value)));
+        }
 
         $('#discount-form').submit();
     });

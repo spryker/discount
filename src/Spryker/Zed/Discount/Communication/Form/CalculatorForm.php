@@ -297,8 +297,15 @@ class CalculatorForm extends AbstractType
                         'type' => MetaProviderFactory::TYPE_COLLECTOR,
                     ],
                 )->build(),
+                'class' => $this->getConfig()->isBase64EncodeQueryStringFieldEnabled() ? 'js-encode-on-change' : '',
             ],
         ]);
+
+        if ($this->getConfig()->isBase64EncodeQueryStringFieldEnabled()) {
+            $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
+                $this->decodeEncodedFormField($event);
+            });
+        }
 
         return $this;
     }
@@ -321,6 +328,24 @@ class CalculatorForm extends AbstractType
         }
 
         return $calculatorPlugins[$pluginName];
+    }
+
+    protected function decodeEncodedFormField(FormEvent $event): void
+    {
+        $data = $event->getData();
+
+        if (!is_array($data)) {
+            return;
+        }
+
+        if (!isset($data[static::FIELD_COLLECTOR_QUERY_STRING]) || !is_string($data[static::FIELD_COLLECTOR_QUERY_STRING])) {
+            return;
+        }
+
+        $decodedValue = $this->getFactory()->createFormFieldEncoder()->decode($data[static::FIELD_COLLECTOR_QUERY_STRING]);
+        $data[static::FIELD_COLLECTOR_QUERY_STRING] = $decodedValue;
+
+        $event->setData($data);
     }
 
     /**
