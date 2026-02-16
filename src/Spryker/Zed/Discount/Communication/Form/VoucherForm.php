@@ -234,6 +234,7 @@ class VoucherForm extends AbstractType
     {
         $range = range(3, 10);
 
+        /** @phpstan-ignore arrayValues.list */
         return array_combine(array_values($range), $range);
     }
 

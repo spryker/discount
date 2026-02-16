@@ -220,6 +220,7 @@ class SpecificationBuilder implements SpecificationBuilderInterface
         $rightNode,
         $compositeNode
     ) {
+        /** @phpstan-ignore notIdentical.alwaysTrue */
         if ($compositeNode !== null) {
             $leftNode = $compositeNode;
         }

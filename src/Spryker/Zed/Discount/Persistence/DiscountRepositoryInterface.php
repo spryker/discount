@@ -54,18 +54,18 @@ interface DiscountRepositoryInterface
     public function discountVoucherPoolExists(int $idDiscount): bool;
 
     /**
-     * @param list<int> $salesOrderIds
+     * @param array<int> $salesOrderIds
      *
-     * @return list<string>
+     * @return array<string>
      */
     public function getUsedSalesDiscountCodesBySalesOrderIds(array $salesOrderIds): array;
 
     /**
-     * @param list<int> $salesOrderIds
-     * @param list<int> $salesExpenseIds
-     * @param list<int> $salesOrderItemIds
+     * @param array<int> $salesOrderIds
+     * @param array<int> $salesExpenseIds
+     * @param array<int> $salesOrderItemIds
      *
-     * @return list<int>
+     * @return array<int>
      */
     public function getSalesDiscountIds(
         array $salesOrderIds = [],

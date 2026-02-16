@@ -27,6 +27,7 @@ class QueryStringValidator extends ConstraintValidator
             return;
         }
 
+        /** @phpstan-ignore instanceof.alwaysTrue */
         if (!$constraint instanceof QueryString) {
             throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\QueryStringConstraint');
         }

@@ -178,7 +178,7 @@ class DiscountEntityManager extends AbstractEntityManager implements DiscountEnt
     }
 
     /**
-     * @param list<int> $salesDiscountIds
+     * @param array<int> $salesDiscountIds
      *
      * @return void
      */
@@ -191,7 +191,7 @@ class DiscountEntityManager extends AbstractEntityManager implements DiscountEnt
     }
 
     /**
-     * @param list<int> $salesDiscountIds
+     * @param array<int> $salesDiscountIds
      *
      * @return void
      */

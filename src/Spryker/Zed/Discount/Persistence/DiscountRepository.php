@@ -119,13 +119,13 @@ class DiscountRepository extends AbstractRepository implements DiscountRepositor
     }
 
     /**
-     * @param list<int> $salesOrderIds
+     * @param array<int> $salesOrderIds
      *
-     * @return list<string>
+     * @return array<string>
      */
     public function getUsedSalesDiscountCodesBySalesOrderIds(array $salesOrderIds): array
     {
-        return $this->getFactory()
+        $salesDiscountCodes = $this->getFactory()
             ->createSalesDiscountCodeQuery()
             ->useDiscountQuery()
                 ->filterByFkSalesOrder_In($salesOrderIds)
@@ -140,14 +140,16 @@ class DiscountRepository extends AbstractRepository implements DiscountRepositor
             ->distinct()
             ->find()
             ->getData();
+
+        return $salesDiscountCodes;
     }
 
     /**
-     * @param list<int> $salesOrderIds
-     * @param list<int> $salesExpenseIds
-     * @param list<int> $salesOrderItemIds
+     * @param array<int> $salesOrderIds
+     * @param array<int> $salesExpenseIds
+     * @param array<int> $salesOrderItemIds
      *
-     * @return list<int>
+     * @return array<int>
      */
     public function getSalesDiscountIds(
         array $salesOrderIds = [],
@@ -168,8 +170,10 @@ class DiscountRepository extends AbstractRepository implements DiscountRepositor
             $salesDiscountQuery->filterByFkSalesOrderItem_In($salesOrderItemIds);
         }
 
-        return $salesDiscountQuery->select([SpySalesDiscountTableMap::COL_ID_SALES_DISCOUNT])
+        $salesDiscountIds = $salesDiscountQuery->select([SpySalesDiscountTableMap::COL_ID_SALES_DISCOUNT])
             ->find()
             ->getData();
+
+        return $salesDiscountIds;
     }
 }

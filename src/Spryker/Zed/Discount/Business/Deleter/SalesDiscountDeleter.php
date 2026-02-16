@@ -46,7 +46,7 @@ class SalesDiscountDeleter implements SalesDiscountDeleterInterface
     }
 
     /**
-     * @param list<int> $salesOrderIds
+     * @param array<int> $salesOrderIds
      *
      * @return void
      */
@@ -57,7 +57,7 @@ class SalesDiscountDeleter implements SalesDiscountDeleterInterface
     }
 
     /**
-     * @param list<int> $salesExpenseIds
+     * @param array<int> $salesExpenseIds
      *
      * @return void
      */
@@ -68,7 +68,7 @@ class SalesDiscountDeleter implements SalesDiscountDeleterInterface
     }
 
     /**
-     * @param list<int> $salesOrderItemIds
+     * @param array<int> $salesOrderItemIds
      *
      * @return void
      */
@@ -79,7 +79,7 @@ class SalesDiscountDeleter implements SalesDiscountDeleterInterface
     }
 
     /**
-     * @param list<int> $salesDiscountIds
+     * @param array<int> $salesDiscountIds
      *
      * @return void
      */
@@ -93,7 +93,7 @@ class SalesDiscountDeleter implements SalesDiscountDeleterInterface
     }
 
     /**
-     * @param list<int> $salesDiscountIds
+     * @param array<int> $salesDiscountIds
      *
      * @return void
      */

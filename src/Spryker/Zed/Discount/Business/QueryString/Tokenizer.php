@@ -25,13 +25,16 @@ class Tokenizer implements TokenizerInterface
      */
     public function tokenizeQueryString($queryString)
     {
-        /** @var array<string> $tokens */
         $tokens = preg_split(
             static::STRING_TO_TOKENS_REGEXP,
             $queryString,
             -1,
             PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE,
         );
+
+        if ($tokens === false) {
+            throw new QueryStringException('Could not tokenize query string.');
+        }
 
         $tokens = array_map('trim', $tokens);
 
