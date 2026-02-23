@@ -76,10 +76,10 @@ class ClauseValidatorTest extends Unit
         $metaDataProviderMock
             ->expects($this->any())
             ->method('isFieldAvailable')
-            ->will($this->returnValueMap([
+            ->willReturnMap([
                 ['undefined', true],
                 ['field', false],
-            ]));
+            ]);
 
         $clauseValidator = $this->createClauseValidator($comparatorOperatorsMock, $metaDataProviderMock);
         $clauseTransfer = $this->createClauseTransfer();
@@ -102,7 +102,7 @@ class ClauseValidatorTest extends Unit
         $metaDataProviderMock
             ->expects($this->any())
             ->method('isFieldAvailable')
-            ->will($this->returnValueMap([['field', true]]));
+            ->willReturnMap([['field', true]]);
 
         $clauseValidator = $this->createClauseValidator($comparatorOperatorsMock, $metaDataProviderMock);
         $clauseTransfer = $this->createClauseTransfer();

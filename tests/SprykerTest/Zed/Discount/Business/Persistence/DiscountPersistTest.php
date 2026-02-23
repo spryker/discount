@@ -69,8 +69,13 @@ class DiscountPersistTest extends Unit
 
         $discountQueryMock = $this->createDiscountQueryMock();
         $discountQueryMock->expects($this->once())
-            ->method('findOneByIdDiscount')
-            ->willReturn($discountEntityMock);
+            ->method('__call')->willReturnCallback(function ($method) use ($discountEntityMock) {
+                if ($method === 'findOneByIdDiscount') {
+                    return $discountEntityMock;
+                }
+
+                return null;
+            });
 
         $discountQueryContainerMock = $this->createDiscountQueryContainerMock();
         $discountQueryContainerMock->method('queryDiscount')->willReturn($discountQueryMock);
@@ -91,8 +96,9 @@ class DiscountPersistTest extends Unit
 
         $discountQueryMock = $this->createDiscountQueryMock();
         $discountQueryMock->expects($this->once())
-            ->method('findOneByIdDiscount')
-            ->willReturn(null);
+            ->method('__call')->willReturnCallback(function ($method) {
+                return null;
+            });
 
         $discountQueryContainerMock = $this->createDiscountQueryContainerMock();
         $discountQueryContainerMock->method('queryDiscount')->willReturn($discountQueryMock);
@@ -118,8 +124,13 @@ class DiscountPersistTest extends Unit
 
         $discountQueryMock = $this->createDiscountQueryMock();
         $discountQueryMock->expects($this->once())
-            ->method('findOneByIdDiscount')
-            ->willReturn($discountEntityMock);
+            ->method('__call')->willReturnCallback(function ($method) use ($discountEntityMock) {
+                if ($method === 'findOneByIdDiscount') {
+                    return $discountEntityMock;
+                }
+
+                return null;
+            });
 
         $discountQueryContainerMock = $this->createDiscountQueryContainerMock();
         $discountQueryContainerMock->method('queryDiscount')->willReturn($discountQueryMock);
@@ -144,8 +155,9 @@ class DiscountPersistTest extends Unit
 
         $discountQueryMock = $this->createDiscountQueryMock();
         $discountQueryMock->expects($this->once())
-            ->method('findOneByIdDiscount')
-            ->willReturn(null);
+            ->method('__call')->willReturnCallback(function ($method) {
+                return null;
+            });
 
         $discountQueryContainerMock = $this->createDiscountQueryContainerMock();
         $discountQueryContainerMock->method('queryDiscount')->willReturn($discountQueryMock);
@@ -170,8 +182,13 @@ class DiscountPersistTest extends Unit
 
         $discountQueryMock = $this->createDiscountQueryMock();
         $discountQueryMock->expects($this->once())
-            ->method('findOneByIdDiscount')
-            ->willReturn($discountEntityMock);
+            ->method('__call')->willReturnCallback(function ($method) use ($discountEntityMock) {
+                if ($method === 'findOneByIdDiscount') {
+                    return $discountEntityMock;
+                }
+
+                return null;
+            });
 
         $discountQueryContainerMock = $this->createDiscountQueryContainerMock();
         $discountQueryContainerMock->method('queryDiscount')->willReturn($discountQueryMock);
@@ -192,8 +209,9 @@ class DiscountPersistTest extends Unit
 
         $discountQueryMock = $this->createDiscountQueryMock();
         $discountQueryMock->expects($this->once())
-            ->method('findOneByIdDiscount')
-            ->willReturn(null);
+            ->method('__call')->willReturnCallback(function ($method) {
+                return null;
+            });
 
         $discountQueryContainerMock = $this->createDiscountQueryContainerMock();
         $discountQueryContainerMock->method('queryDiscount')->willReturn($discountQueryMock);
@@ -290,7 +308,7 @@ class DiscountPersistTest extends Unit
      */
     protected function createDiscountQueryMock(): SpyDiscountQuery
     {
-        return $this->getMockBuilder(SpyDiscountQuery::class)->addMethods(['findOneByIdDiscount'])->getMock();
+        return $this->getMockBuilder(SpyDiscountQuery::class)->getMock();
     }
 
     /**

@@ -439,12 +439,12 @@ class SpecificationBuilderTest extends Unit
             $metaDataProviderMock
                 ->expects($this->any())
                 ->method('isFieldAvailable')
-                ->will($this->returnValueMap([
+                ->willReturnMap([
                     ['quantity', true],
                     ['sku', true],
                     ['color', true],
                     ['attribute.value', true],
-                ]));
+                ]);
         }
 
         return new SpecificationBuilder(
