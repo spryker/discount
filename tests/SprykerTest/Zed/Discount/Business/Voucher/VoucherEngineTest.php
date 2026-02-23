@@ -76,13 +76,20 @@ class VoucherEngineTest extends Unit
         $discountVoucherQueryMock->method('filterByFkDiscountVoucherPool')
             ->willReturn($discountVoucherQueryMock);
 
-        $discountVoucherQueryMock->method('orderByVoucherBatch')
-            ->willReturnSelf();
-
+        // No explicit method() for dynamic methods; __call will handle orderByVoucherBatch/findOneByCode by default
         $discountVoucherQueryMock->method('findOne')
             ->willReturn($discountVoucherEntityMock);
 
-        $discountVoucherQueryMock->method('findOneByCode')->willReturn(null);
+        $discountVoucherQueryMock
+            ->method('__call')
+            ->willReturnCallback(function ($name, $args) use ($discountVoucherEntityMock, $discountVoucherQueryMock) {
+                if ($name === 'findOneByCode') {
+                    return null;
+                }
+
+                // default behavior: for orderByVoucherBatch return $this (handled by specific expectation above)
+                return $discountVoucherQueryMock;
+            });
 
         $discountVoucherContainerMock = $this->createDiscountQueryContainerMock();
         $discountVoucherContainerMock->method('queryDiscountVoucher')
@@ -124,8 +131,10 @@ class VoucherEngineTest extends Unit
             ->method('filterByFkDiscountVoucherPool')
             ->willReturn($discountVoucherQueryMock);
 
+        // Expect __call to be invoked for orderByVoucherBatch
         $discountVoucherQueryMock->expects($this->once())
-            ->method('orderByVoucherBatch')
+            ->method('__call')
+            ->with('orderByVoucherBatch', $this->anything())
             ->willReturnSelf();
 
         $discountVoucherContainerMock = $this->createDiscountQueryContainerMock();
@@ -167,12 +176,20 @@ class VoucherEngineTest extends Unit
             ->method('filterByFkDiscountVoucherPool')
             ->willReturn($discountVoucherQueryMock);
 
-        $discountVoucherQueryMock->expects($this->once())
-            ->method('orderByVoucherBatch')
-            ->willReturnSelf();
+        // Configure __call to return a dummy object when findOneByCode is called
+        $discountVoucherQueryMock->method('__call')
+            ->willReturnCallback(function ($name, $args) use ($discountVoucherQueryMock) {
+                if ($name === 'findOneByCode') {
+                    return new stdClass();
+                }
 
-        $discountVoucherQueryMock->method('findOneByCode')
-            ->willReturn(new stdClass());
+                if ($name === 'orderByVoucherBatch') {
+                    return $discountVoucherQueryMock;
+                }
+
+                // default behavior: for orderByVoucherBatch return $this (handled by specific expectation above)
+                return null;
+            });
 
         $discountVoucherContainerMock = $this->createDiscountQueryContainerMock();
         $discountVoucherContainerMock->method('queryDiscountVoucher')
@@ -299,13 +316,11 @@ class VoucherEngineTest extends Unit
     protected function createDiscountVoucherQueryMock(): SpyDiscountVoucherQuery
     {
         return $this->getMockBuilder(SpyDiscountVoucherQuery::class)
-            ->addMethods([
-                'orderByVoucherBatch',
-                'findOneByCode',
-            ])
+            ->disableOriginalConstructor()
             ->onlyMethods([
                 'filterByFkDiscountVoucherPool',
                 'findOne',
+                '__call',
             ])
             ->getMock();
     }

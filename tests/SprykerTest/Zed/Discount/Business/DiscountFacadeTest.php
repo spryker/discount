@@ -31,6 +31,7 @@ use Spryker\Zed\Discount\Business\Voucher\VoucherValidator;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 use Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountRuleWithValueOptionsPluginInterface;
 use Spryker\Zed\Kernel\Container;
+use SprykerTest\Zed\Discount\DiscountRuleWithValueOptionsPlugin;
 
 /**
  * Auto-generated group annotations
@@ -1101,10 +1102,7 @@ class DiscountFacadeTest extends Unit
      */
     protected function createDiscountRuleWithValueOptionsPluginMock(): DiscountRuleWithValueOptionsPluginInterface
     {
-        $discountRulePluginMock = $this->getMockBuilder(DiscountRuleWithValueOptionsPluginInterface::class)
-            ->addMethods(['getFieldName'])
-            ->onlyMethods(['getQueryStringValueOptions'])
-            ->getMock();
+        $discountRulePluginMock = $this->createMock(DiscountRuleWithValueOptionsPlugin::class);
 
         return $discountRulePluginMock;
     }

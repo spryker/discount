@@ -58,12 +58,23 @@ class MonthDecisionRuleTest extends BaseRuleTester
         ComparatorOperatorsInterface $comparatorMock,
         DateTime $currentDateTime
     ): MonthDecisionRule {
-        /** @var \Spryker\Zed\Discount\Business\DecisionRule\MonthDecisionRule|\PHPUnit\Framework\MockObject\MockObject $monthDecisionRule */
-        $monthDecisionRule = $this->getMockBuilder(MonthDecisionRule::class)
-            ->addMethods(['getCurrentDateTime'])
-            ->setConstructorArgs([$comparatorMock])
-            ->getMock();
-        $monthDecisionRule->method('getCurrentDateTime')->willReturn($currentDateTime);
+        // PHPUnit 12 removed addMethods(), so use an anonymous concrete subclass that
+        // defines getCurrentDateTime() to return the provided DateTime. This avoids
+        // needing to mock non-existing methods and works across PHPUnit versions.
+        $monthDecisionRule = new class ($comparatorMock, $currentDateTime) extends MonthDecisionRule {
+            private DateTime $currentDateTime;
+
+            public function __construct(ComparatorOperatorsInterface $comparator, DateTime $currentDateTime)
+            {
+                parent::__construct($comparator);
+                $this->currentDateTime = $currentDateTime;
+            }
+
+            public function getCurrentDateTime(): DateTime
+            {
+                return $this->currentDateTime;
+            }
+        };
 
         return $monthDecisionRule;
     }
