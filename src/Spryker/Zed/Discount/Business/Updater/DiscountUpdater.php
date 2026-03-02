@@ -32,11 +32,6 @@ class DiscountUpdater implements DiscountUpdaterInterface
      */
     protected $discountVoucherPoolUpdater;
 
-    /**
-     * @param \Spryker\Zed\Discount\Business\Mapper\DiscountMapperInterface $discountMapper
-     * @param \Spryker\Zed\Discount\Persistence\DiscountEntityManagerInterface $discountEntityManager
-     * @param \Spryker\Zed\Discount\Business\Updater\DiscountVoucherPoolUpdaterInterface $discountVoucherPoolUpdater
-     */
     public function __construct(
         DiscountMapperInterface $discountMapper,
         DiscountEntityManagerInterface $discountEntityManager,
@@ -47,11 +42,6 @@ class DiscountUpdater implements DiscountUpdaterInterface
         $this->discountVoucherPoolUpdater = $discountVoucherPoolUpdater;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
-     *
-     * @return void
-     */
     public function updateDiscount(DiscountConfiguratorTransfer $discountConfiguratorTransfer): void
     {
         $this->getTransactionHandler()->handleTransaction(function () use ($discountConfiguratorTransfer) {
@@ -59,11 +49,6 @@ class DiscountUpdater implements DiscountUpdaterInterface
         });
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
-     *
-     * @return void
-     */
     protected function executeUpdateDiscountTransaction(DiscountConfiguratorTransfer $discountConfiguratorTransfer): void
     {
         $idDiscountVoucherPool = $this->discountVoucherPoolUpdater->updateDiscountVoucherPool($discountConfiguratorTransfer);

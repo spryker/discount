@@ -27,9 +27,6 @@ use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataPro
  */
 class ClauseValidatorTest extends Unit
 {
-    /**
-     * @return void
-     */
     public function testValidateWhenInvalidComparatorUsedShouldThrowException(): void
     {
         $this->expectException(QueryStringException::class);
@@ -42,9 +39,6 @@ class ClauseValidatorTest extends Unit
         $clauseValidator->validateClause($this->createClauseTransfer());
     }
 
-    /**
-     * @return void
-     */
     public function testValidateWhenFieldNameContainsInvalidCharactersShouldThrowExpeption(): void
     {
         $this->expectException(QueryStringException::class);
@@ -110,12 +104,6 @@ class ClauseValidatorTest extends Unit
         $clauseValidator->validateClause($clauseTransfer);
     }
 
-    /**
-     * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface|null $comparatorOperatorsMock
-     * @param \Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProviderInterface|null $metaDataProviderMock
-     *
-     * @return \Spryker\Zed\Discount\Business\QueryString\ClauseValidator
-     */
     protected function createClauseValidator(
         ?ComparatorOperatorsInterface $comparatorOperatorsMock = null,
         ?MetaDataProviderInterface $metaDataProviderMock = null
@@ -147,9 +135,6 @@ class ClauseValidatorTest extends Unit
         return $this->getMockBuilder(MetaDataProviderInterface::class)->getMock();
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\ClauseTransfer
-     */
     protected function createClauseTransfer(): ClauseTransfer
     {
         return new ClauseTransfer();

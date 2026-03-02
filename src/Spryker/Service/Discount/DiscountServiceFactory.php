@@ -14,9 +14,6 @@ use Spryker\Zed\Kernel\ClassResolver\Business\BusinessFactoryResolver;
 
 class DiscountServiceFactory extends AbstractServiceFactory
 {
-    /**
-     * @return \Spryker\Service\Discount\Calculator\CalculatorInterface
-     */
     public function createCalculator(): CalculatorInterface
     {
         return new Calculator($this->getZedCalculatorPlugins());

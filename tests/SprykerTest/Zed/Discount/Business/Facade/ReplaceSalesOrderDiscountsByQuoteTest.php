@@ -58,9 +58,6 @@ class ReplaceSalesOrderDiscountsByQuoteTest extends Unit
      */
     protected DiscountBusinessTester $tester;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -70,9 +67,6 @@ class ReplaceSalesOrderDiscountsByQuoteTest extends Unit
         $this->tester->ensureSalesDiscountTableIsEmpty();
     }
 
-    /**
-     * @return void
-     */
     public function testThrowsNullValueExceptionWhenIdSalesOrderIsNotSetInSaveOrderTransfer(): void
     {
         // Assert
@@ -83,9 +77,6 @@ class ReplaceSalesOrderDiscountsByQuoteTest extends Unit
         $this->tester->getFacade()->replaceSalesOrderDiscountsByQuote(new QuoteTransfer(), new SaveOrderTransfer());
     }
 
-    /**
-     * @return void
-     */
     public function testDeletesSalesDiscountRelatedEntities(): void
     {
         // Arrange
@@ -112,9 +103,6 @@ class ReplaceSalesOrderDiscountsByQuoteTest extends Unit
         $this->assertSame(0, $this->tester->getSalesDiscountCodeEntities()->count());
     }
 
-    /**
-     * @return void
-     */
     public function testAddsSalesDiscountRelatedEntities(): void
     {
         // Arrange
@@ -137,9 +125,6 @@ class ReplaceSalesOrderDiscountsByQuoteTest extends Unit
         $this->assertSame(1, $this->tester->getSalesDiscountCodeEntities()->count());
     }
 
-    /**
-     * @return void
-     */
     public function testReplacesSalesDiscountRelatedEntities(): void
     {
         // Arrange

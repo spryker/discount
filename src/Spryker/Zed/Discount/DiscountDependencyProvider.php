@@ -326,11 +326,6 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addValidationAdapter(Container $container): Container
     {
         $container->set(static::ADAPTER_VALIDATION, function () {
@@ -354,11 +349,6 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addCollectedDiscountGroupingPlugins(Container $container): Container
     {
         $container->set(static::COLLECTED_DISCOUNT_GROUPING_PLUGINS, function () {
@@ -476,11 +466,6 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
         return [];
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addDiscountVoucherApplyCheckerStrategyPlugins(Container $container): Container
     {
         $container->set(static::PLUGINS_DISCOUNT_VOUCHER_APPLY_CHECKER_STRATEGY, function () {
@@ -640,11 +625,6 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addLocaleFacade(Container $container): Container
     {
         $container->set(static::FACADE_LOCALE, function (Container $container) {
@@ -670,11 +650,6 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addDiscountableItemExpanderStrategyPlugins(Container $container): Container
     {
         $container->set(static::PLUGIN_DISCOUNTABLE_ITEM_TRANSFORMER_STRATEGY, function () {
@@ -701,11 +676,6 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
         );
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addTranslatorFacade(Container $container): Container
     {
         $container->set(static::FACADE_TRANSLATOR, function (Container $container) {
@@ -717,11 +687,6 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addMoneyCollectionFormTypePlugin(Container $container): Container
     {
         $container->set(static::PLUGIN_MONEY_COLLECTION_FORM_TYPE, function () {

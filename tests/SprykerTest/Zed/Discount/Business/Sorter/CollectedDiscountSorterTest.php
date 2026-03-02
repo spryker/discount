@@ -180,9 +180,6 @@ class CollectedDiscountSorterTest extends Unit
         ];
     }
 
-    /**
-     * @return \Spryker\Zed\Discount\Business\Sorter\CollectedDiscountSorterInterface
-     */
     protected function createCollectedDiscountSorter(): CollectedDiscountSorterInterface
     {
         return new CollectedDiscountSorter(
@@ -191,9 +188,6 @@ class CollectedDiscountSorterTest extends Unit
         );
     }
 
-    /**
-     * @return \Spryker\Zed\Discount\DiscountConfig
-     */
     protected function createDiscountConfig(): DiscountConfig
     {
         return new DiscountConfig();

@@ -31,9 +31,6 @@ use Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface;
  */
 class CollectorProviderTest extends Unit
 {
-    /**
-     * @return void
-     */
     public function testCreateAndShouldReturnInstanceOfAndCompositeSpecification(): void
     {
         $collectorProvider = $this->createCollectorProvider();
@@ -45,9 +42,6 @@ class CollectorProviderTest extends Unit
         $this->assertInstanceOf(CollectorAndSpecification::class, $compositeSpecification);
     }
 
-    /**
-     * @return void
-     */
     public function testCreateOrShouldReturnInstanceOfOrCompositeSpecification(): void
     {
         $collectorProvider = $this->createCollectorProvider();
@@ -59,9 +53,6 @@ class CollectorProviderTest extends Unit
         $this->assertInstanceOf(CollectorOrSpecification::class, $compositeSpecification);
     }
 
-    /**
-     * @return void
-     */
     public function testGetSpecificationContextShouldReturnContextWithClauseAndPlugin(): void
     {
         $decisionRulePluginMock = $this->createCollectorPluginMock();
@@ -79,9 +70,6 @@ class CollectorProviderTest extends Unit
         $this->assertInstanceOf(CollectorContext::class, $decisionRuleSpecificationContext);
     }
 
-    /**
-     * @return void
-     */
     public function testGetSpecificationContextShouldThrowExceptionWhenSpecificationNotFound(): void
     {
         $this->expectException(QueryStringException::class);

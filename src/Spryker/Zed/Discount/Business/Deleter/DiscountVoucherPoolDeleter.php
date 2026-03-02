@@ -13,18 +13,10 @@ use Spryker\Zed\Discount\Persistence\DiscountEntityManagerInterface;
 
 class DiscountVoucherPoolDeleter implements DiscountVoucherPoolDeleterInterface
 {
-    /**
-     * @param \Spryker\Zed\Discount\Persistence\DiscountEntityManagerInterface $discountEntityManager
-     */
     public function __construct(protected DiscountEntityManagerInterface $discountEntityManager)
     {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
-     *
-     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
-     */
     public function deleteDiscountVoucherPoolByDiscountConfigurator(
         DiscountConfiguratorTransfer $discountConfiguratorTransfer
     ): DiscountConfiguratorTransfer {

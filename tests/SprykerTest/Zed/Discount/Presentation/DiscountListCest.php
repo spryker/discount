@@ -32,24 +32,12 @@ class DiscountListCest
      */
     protected const CURRENCY_CODE = 'EUR';
 
-    /**
-     * @param \SprykerTest\Zed\Discount\DiscountPresentationTester $i
-     *
-     * @return void
-     */
     public function _before(DiscountPresentationTester $i): void
     {
         $i->amZed();
         $i->amLoggedInUser();
     }
 
-    /**
-     * @param \SprykerTest\Zed\Discount\DiscountPresentationTester $i
-     * @param \SprykerTest\Zed\Discount\PageObject\DiscountEditPage $editPage
-     * @param \SprykerTest\Zed\Discount\PageObject\DiscountViewPage $viewPage
-     *
-     * @return void
-     */
     public function showADiscountInList(DiscountPresentationTester $i, DiscountEditPage $editPage, DiscountViewPage $viewPage): void
     {
         $name = 'Works as test discount' . uniqid();
@@ -83,11 +71,6 @@ class DiscountListCest
         $i->see($name);
     }
 
-    /**
-     * @param \SprykerTest\Zed\Discount\DiscountPresentationTester $i
-     *
-     * @return void
-     */
     public function testPageShouldShowList(DiscountPresentationTester $i): void
     {
         $i->amOnPage(DiscountListPage::URL);

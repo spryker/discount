@@ -68,9 +68,6 @@ class DiscountFacadeTest extends Unit
      */
     protected $tester;
 
-    /**
-     * @return void
-     */
     public function testIsSatisfiedBySkuShouldReturnTrueWhenGiveSkuIsInQuote(): void
     {
         $discountFacade = $this->createDiscountFacade();
@@ -92,9 +89,6 @@ class DiscountFacadeTest extends Unit
         $this->assertTrue($isSatisfied);
     }
 
-    /**
-     * @return void
-     */
     public function testIsQuoteGrandTotalSatisfiedByShouldReturnTrueIfGrandTotalMatchesExpected(): void
     {
         $discountFacade = $this->createDiscountFacade();
@@ -120,9 +114,6 @@ class DiscountFacadeTest extends Unit
         $this->assertTrue($isSatisfied);
     }
 
-    /**
-     * @return void
-     */
     public function testIsTotalQuantitySatisfiedByShouldReturnTrueWhenQuoteTotalQuantityMatchesExpected(): void
     {
         $discountFacade = $this->createDiscountFacade();
@@ -152,9 +143,6 @@ class DiscountFacadeTest extends Unit
         $this->assertTrue($isSatisfied);
     }
 
-    /**
-     * @return void
-     */
     public function testIsSubTotalSatisfiedByShouldReturnTrueWhenSubtotalMatchesExpected(): void
     {
         $discountFacade = $this->createDiscountFacade();
@@ -180,9 +168,6 @@ class DiscountFacadeTest extends Unit
         $this->assertTrue($isSatisfied);
     }
 
-    /**
-     * @return void
-     */
     public function testCollectBySkuShouldReturnItemMatchingGivenSku(): void
     {
         $discountFacade = $this->createDiscountFacade();
@@ -204,9 +189,6 @@ class DiscountFacadeTest extends Unit
         $this->assertCount(1, $collected);
     }
 
-    /**
-     * @return void
-     */
     public function testGetQueryStringFieldsByTypeForCollectorShouldReturnListOfFieldsForGivenType(): void
     {
         $discountFacade = $this->createDiscountFacade();
@@ -215,9 +197,6 @@ class DiscountFacadeTest extends Unit
         $this->assertNotEmpty($fields);
     }
 
-    /**
-     * @return void
-     */
     public function testGetQueryStringFieldsByTypeForDecisionRuleShouldReturnListOfFieldsForGivenType(): void
     {
         $discountFacade = $this->createDiscountFacade();
@@ -226,9 +205,6 @@ class DiscountFacadeTest extends Unit
         $this->assertNotEmpty($fields);
     }
 
-    /**
-     * @return void
-     */
     public function testGetQueryStringValueOptionsByTypeForCollectorShouldReturnListOfValueOptionsForGivenType(): void
     {
         $discountRulePluginMock = $this->createDiscountRuleWithValueOptionsPluginMock();
@@ -245,9 +221,6 @@ class DiscountFacadeTest extends Unit
         $this->assertNotEmpty($fields['foo']);
     }
 
-    /**
-     * @return void
-     */
     public function testGetQueryStringValueOptionsByTypeForDecisionRuleShouldReturnListOfValueOptionsForGivenType(): void
     {
         $discountRulePluginMock = $this->createDiscountRuleWithValueOptionsPluginMock();
@@ -264,9 +237,6 @@ class DiscountFacadeTest extends Unit
         $this->assertNotEmpty($fields['foo']);
     }
 
-    /**
-     * @return void
-     */
     public function testGetQueryStringFieldExpressionsForFieldCollectorShouldReturnListOfExpressions(): void
     {
         $discountFacade = $this->createDiscountFacade();
@@ -275,9 +245,6 @@ class DiscountFacadeTest extends Unit
         $this->assertNotEmpty($expressions);
     }
 
-    /**
-     * @return void
-     */
     public function testGetQueryStringFieldExpressionsForFieldDecisionRuleShouldReturnListOfExpressions(): void
     {
         $discountFacade = $this->createDiscountFacade();
@@ -286,9 +253,6 @@ class DiscountFacadeTest extends Unit
         $this->assertNotEmpty($expressions);
     }
 
-    /**
-     * @return void
-     */
     public function testGetQueryStringComparatorExpressionsForDecisionRuleShouldReturnListOfComparatorExpressions(): void
     {
         $discountFacade = $this->createDiscountFacade();
@@ -297,9 +261,6 @@ class DiscountFacadeTest extends Unit
         $this->assertNotEmpty($expressions);
     }
 
-    /**
-     * @return void
-     */
     public function testGetQueryStringComparatorExpressionsForCollectorShouldReturnListOfComparatorExpressions(): void
     {
         $discountFacade = $this->createDiscountFacade();
@@ -308,9 +269,6 @@ class DiscountFacadeTest extends Unit
         $this->assertNotEmpty($logicalComparators);
     }
 
-    /**
-     * @return void
-     */
     public function testGetQueryStringLogicalComparatorsShouldReturnListOfComparators(): void
     {
         $discountFacade = $this->createDiscountFacade();
@@ -319,9 +277,6 @@ class DiscountFacadeTest extends Unit
         $this->assertNotEmpty($expressions);
     }
 
-    /**
-     * @return void
-     */
     public function testQueryStringCompareShouldReturnTrueWhenValuesMatches(): void
     {
         $discountFacade = $this->createDiscountFacade();
@@ -339,9 +294,6 @@ class DiscountFacadeTest extends Unit
         $this->assertTrue($isMatching);
     }
 
-    /**
-     * @return void
-     */
     public function testQueryStringCompareShouldReturnFalseWhenValuesNotMatching(): void
     {
         $discountFacade = $this->createDiscountFacade();
@@ -359,9 +311,6 @@ class DiscountFacadeTest extends Unit
         $this->assertFalse($isMatching);
     }
 
-    /**
-     * @return void
-     */
     public function testValidateQueryStringByTypeShouldReturnListErrorsWhenInvalidQueryString(): void
     {
         $discountFacade = $this->createDiscountFacade();
@@ -377,9 +326,6 @@ class DiscountFacadeTest extends Unit
         $this->assertCount(1, $errors);
     }
 
-    /**
-     * @return void
-     */
     public function testValidateVoucherDiscountsMaxUsageShouldReturnTrueWhenUsageLimitIsNotReached(): void
     {
         // Arrange
@@ -400,9 +346,6 @@ class DiscountFacadeTest extends Unit
         $this->assertTrue($result);
     }
 
-    /**
-     * @return void
-     */
     public function testValidateVoucherDiscountsMaxUsageShouldReturnFalseWhenUsageLimitIsReached(): void
     {
         // Arrange
@@ -432,9 +375,6 @@ class DiscountFacadeTest extends Unit
         $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
     }
 
-    /**
-     * @return void
-     */
     public function testValidateVoucherDiscountsMaxUsageShouldReturnFalseWhenUsageLimitIsReachedForTwoVouchers(): void
     {
         // Arrange
@@ -471,9 +411,6 @@ class DiscountFacadeTest extends Unit
         $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
     }
 
-    /**
-     * @return void
-     */
     public function testValidateVoucherDiscountsMaxUsageShouldReturnTrueWhenMaxUsageZeroAndNotUsed(): void
     {
         // Arrange
@@ -494,9 +431,6 @@ class DiscountFacadeTest extends Unit
         $this->assertCount(0, $checkoutResponseTransfer->getErrors());
     }
 
-    /**
-     * @return void
-     */
     public function testValidateVoucherDiscountsMaxUsageShouldReturnTrueWhenMaxUsageZeroAndUsed(): void
     {
         // Arrange
@@ -518,9 +452,6 @@ class DiscountFacadeTest extends Unit
         $this->assertCount(0, $checkoutResponseTransfer->getErrors());
     }
 
-    /**
-     * @return void
-     */
     public function testSaveDiscountDecisionRuleShouldPersistAllConfiguredData(): void
     {
         $discountConfiguratorTransfer = $this->tester->createDiscountConfiguratorTransfer();
@@ -549,9 +480,6 @@ class DiscountFacadeTest extends Unit
         $this->assertSame($discountConditionTransfer->getDecisionRuleQueryString(), $discountEntity->getDecisionRuleQueryString());
     }
 
-    /**
-     * @return void
-     */
     public function testSaveDiscountVoucherShouldCreateDiscountWithEmptyVoucherPool(): void
     {
         $discountConfiguratorTransfer = $this->tester->createDiscountConfiguratorTransfer();
@@ -571,9 +499,6 @@ class DiscountFacadeTest extends Unit
         $this->assertNotEmpty($voucherPool);
     }
 
-    /**
-     * @return void
-     */
     public function testSaveDiscountPersistsStoreRelation(): void
     {
         // Arrange
@@ -598,9 +523,6 @@ class DiscountFacadeTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testUpdateDiscountPersistsStoreRelation(): void
     {
         // Arrange
@@ -639,9 +561,6 @@ class DiscountFacadeTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testValidateQueryStringByTypeShouldReturnEmptySetWhenQueryStringIsValid(): void
     {
         $discountFacade = $this->createDiscountFacade();
@@ -657,9 +576,6 @@ class DiscountFacadeTest extends Unit
         $this->assertEmpty($errors);
     }
 
-    /**
-     * @return void
-     */
     public function testUpdateDiscountShouldUpdateExistingRecordWithNewData(): void
     {
         $discountFacade = $this->createDiscountFacade();
@@ -708,9 +624,6 @@ class DiscountFacadeTest extends Unit
         $this->assertSame($discountConditionTransfer->getDecisionRuleQueryString(), $discountEntity->getDecisionRuleQueryString());
     }
 
-    /**
-     * @return void
-     */
     public function testGetHydratedDiscountConfiguratorByIdDiscountShouldHydrateToSameObjectWhichWasPersisted(): void
     {
         $discountFacade = $this->createDiscountFacade();
@@ -731,9 +644,6 @@ class DiscountFacadeTest extends Unit
         $this->assertTrue($discountEntity->getIsActive());
     }
 
-    /**
-     * @return void
-     */
     public function testToggleDiscountVisibilityWhenDisableShouldSetToIsActiveToFalse(): void
     {
         $discountFacade = $this->createDiscountFacade();
@@ -748,9 +658,6 @@ class DiscountFacadeTest extends Unit
         $this->assertFalse($discountEntity->getIsActive());
     }
 
-    /**
-     * @return void
-     */
     public function testToggleDiscountVisibilityWhenDisableShouldSetToIsActiveToTrue(): void
     {
         $discountFacade = $this->createDiscountFacade();
@@ -763,9 +670,6 @@ class DiscountFacadeTest extends Unit
         $this->assertTrue($isUpdated);
     }
 
-    /**
-     * @return void
-     */
     public function testSaveVouchersShouldGenerateVouchers(): void
     {
         $discountFacade = $this->createDiscountFacade();
@@ -791,9 +695,6 @@ class DiscountFacadeTest extends Unit
         $this->assertCount(5, $voucherCodes);
     }
 
-    /**
-     * @return void
-     */
     public function testCalculatedPercentageShouldCalculatePercentageFromItemTotal(): void
     {
         $discountableItems = [];
@@ -818,9 +719,6 @@ class DiscountFacadeTest extends Unit
         $this->assertSame(9, $amount);
     }
 
-    /**
-     * @return void
-     */
     public function testCalculatedFixedShouldUseFixedAmountGiver(): void
     {
         $discountFacade = $this->createDiscountFacade();
@@ -838,9 +736,6 @@ class DiscountFacadeTest extends Unit
         $this->assertSame(50, $amount);
     }
 
-    /**
-     * @return void
-     */
     public function testDistributeAmountShouldDistributeDiscountToDiscountableItems(): void
     {
         $collectedDiscountTransfer = new CollectedDiscountTransfer();
@@ -877,9 +772,6 @@ class DiscountFacadeTest extends Unit
         $this->assertSame($totalDiscountAmount, $firstItemDistributedAmount + $secondItemDistributedAmount);
     }
 
-    /**
-     * @return void
-     */
     public function testReleaseUsedVoucherCodesShouldSetNumberOfUsesCounterBack(): void
     {
         $discountFacade = $this->createDiscountFacade();
@@ -912,9 +804,6 @@ class DiscountFacadeTest extends Unit
         $this->assertSame(1, $released);
     }
 
-    /**
-     * @return void
-     */
     public function testUseVoucherCodesShouldUpdateVoucherCounterThatItWasAlreadyUsed(): void
     {
         $discountFacade = $this->createDiscountFacade();
@@ -949,9 +838,6 @@ class DiscountFacadeTest extends Unit
         $this->assertSame(1, $voucherCodeEntity->getNumberOfUses());
     }
 
-    /**
-     * @return void
-     */
     public function testAddCartCodeAddsVoucherDiscountToQuote(): void
     {
         // Arrange
@@ -968,9 +854,6 @@ class DiscountFacadeTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testAddCartCodeCantAddVoucherDiscountToQuoteWithVoucherCodeAlreadyAddedToQuote(): void
     {
         // Arrange
@@ -983,9 +866,6 @@ class DiscountFacadeTest extends Unit
         $this->assertCount(1, $resultQuoteTransfer->getVoucherDiscounts());
     }
 
-    /**
-     * @return void
-     */
     public function testRemoveCartCodeRemovesVoucherDiscountFromQuote(): void
     {
         // Arrange
@@ -998,9 +878,6 @@ class DiscountFacadeTest extends Unit
         $this->assertCount(0, $resultQuoteTransfer->getVoucherDiscounts());
     }
 
-    /**
-     * @return void
-     */
     public function testClearCartCodesRemovesVoucherDiscountsFromQuote(): void
     {
         // Arrange
@@ -1013,9 +890,6 @@ class DiscountFacadeTest extends Unit
         $this->assertCount(0, $resultQuoteTransfer->getVoucherDiscounts());
     }
 
-    /**
-     * @return void
-     */
     public function testFindOperationResponseMessageReturnsMessageTransfer(): void
     {
         // Arrange
@@ -1028,11 +902,6 @@ class DiscountFacadeTest extends Unit
         $this->assertNotNull($messageTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountVoucherTransfer $discountVoucherTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
     protected function getQuoteWithVoucherDiscount(DiscountVoucherTransfer $discountVoucherTransfer): QuoteTransfer
     {
         $quoteTransfer = new QuoteTransfer();
@@ -1047,12 +916,6 @@ class DiscountFacadeTest extends Unit
         return $quoteTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountVoucherTransfer $discountVoucherTransfer
-     * @param int $numberOfUses
-     *
-     * @return void
-     */
     protected function updateVoucherCodesWithNumberOfUses(DiscountVoucherTransfer $discountVoucherTransfer, int $numberOfUses): void
     {
         $voucherCodeEntities = SpyDiscountQuery::create()

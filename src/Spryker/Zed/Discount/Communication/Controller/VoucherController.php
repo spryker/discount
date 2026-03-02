@@ -186,11 +186,6 @@ class VoucherController extends AbstractController
         return $redirectUrl;
     }
 
-    /**
-     * @param int $idDiscount
-     *
-     * @return string
-     */
     protected function createViewDiscountRedirectUrl(int $idDiscount): string
     {
         $redirectUrl = Url::generate(
@@ -206,11 +201,6 @@ class VoucherController extends AbstractController
         return $redirectUrl;
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return string
-     */
     protected function createVoucherCodeDeleteRedirectUrl(Request $request): string
     {
         $referrerUrl = $request->headers->get(static::REQUEST_HEADER_REFERER);

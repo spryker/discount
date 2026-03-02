@@ -65,25 +65,16 @@ class DiscountPersistenceFactory extends AbstractPersistenceFactory
         return SpyDiscountStoreQuery::create();
     }
 
-    /**
-     * @return \Orm\Zed\Sales\Persistence\SpySalesDiscountQuery
-     */
     public function createSalesDiscountQuery(): SpySalesDiscountQuery
     {
         return SpySalesDiscountQuery::create();
     }
 
-    /**
-     * @return \Orm\Zed\Sales\Persistence\SpySalesDiscountCodeQuery
-     */
     public function createSalesDiscountCodeQuery(): SpySalesDiscountCodeQuery
     {
         return SpySalesDiscountCodeQuery::create();
     }
 
-    /**
-     * @return \Spryker\Zed\Discount\Persistence\Propel\Mapper\DiscountMapper
-     */
     public function createDiscountMapper(): DiscountMapper
     {
         return new DiscountMapper();

@@ -30,9 +30,6 @@ class DiscountServiceTester extends Actor
 {
     use _generated\DiscountServiceTesterActions;
 
-    /**
-     * @return \Spryker\Service\Discount\DiscountServiceInterface
-     */
     public function getDiscountService(): DiscountServiceInterface
     {
         return $this->getLocator()->discount()->service();

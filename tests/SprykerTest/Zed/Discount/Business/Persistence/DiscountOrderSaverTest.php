@@ -64,9 +64,6 @@ class DiscountOrderSaverTest extends Unit
      */
     public const USED_CODE_2 = 'used code 2';
 
-    /**
-     * @return void
-     */
     public function testSaveDiscountMustSaveSalesItemsDiscount(): void
     {
         $discountSaver = $this->getDiscountOrderSaverMock(['persistSalesDiscount']);
@@ -92,9 +89,6 @@ class DiscountOrderSaverTest extends Unit
         $discountSaver->saveOrderDiscounts($quoteTransfer, $saverOrderTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testSaveDiscountMustNotSaveSalesDiscountCodeIfUsedCodesCanNotBeFound(): void
     {
         $discountSaver = $this->getDiscountOrderSaverMock(['persistSalesDiscount', 'saveUsedCodes']);
@@ -120,9 +114,6 @@ class DiscountOrderSaverTest extends Unit
         $discountSaver->saveOrderDiscounts($quoteTransfer, $saverOrderTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testSaveDiscountMustSaveSalesDiscountCodesIfUsedCodesPresent(): void
     {
         $discountSaver = $this->getDiscountOrderSaverMock(['persistSalesDiscount', 'persistSalesDiscountCode', 'getDiscountVoucherEntityByCode', 'getSalesDiscountEntityCollection']);
@@ -154,9 +145,6 @@ class DiscountOrderSaverTest extends Unit
         $discountSaver->saveOrderDiscounts($quoteTransfer, $saverOrderTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testSaveDiscountMustNotSaveSalesDiscountCodesIfUsedCodeCanNotBeFound(): void
     {
         $discountSaver = $this->getDiscountOrderSaverMock(['persistSalesDiscount', 'persistSalesDiscountCode', 'getDiscountVoucherEntityByCode', 'getSalesDiscountEntityCollection']);
@@ -188,9 +176,6 @@ class DiscountOrderSaverTest extends Unit
         $discountSaver->saveOrderDiscounts($quoteTransfer, $saverOrderTransfer);
     }
 
-    /**
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucher
-     */
     public function getDiscountVoucherEntityByCode(): SpyDiscountVoucher
     {
         $discountVoucherEntity = new SpyDiscountVoucher();
@@ -200,9 +185,6 @@ class DiscountOrderSaverTest extends Unit
         return $discountVoucherEntity;
     }
 
-    /**
-     * @return \Propel\Runtime\Collection\Collection
-     */
     public function getDiscountEntityCollectionByCode(): Collection
     {
         return new Collection([new SpySalesDiscount()]);
@@ -247,9 +229,6 @@ class DiscountOrderSaverTest extends Unit
         return $discountSaverMock;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\StoreTransfer
-     */
     protected function getCurrentStore(): StoreTransfer
     {
         return (new StoreTransfer())

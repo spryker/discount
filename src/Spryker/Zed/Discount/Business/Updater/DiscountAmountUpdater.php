@@ -63,11 +63,6 @@ class DiscountAmountUpdater implements DiscountAmountUpdaterInterface
         $this->discountCalculatorPlugins = $discountCalculatorPlugins;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
-     *
-     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
-     */
     public function updateDiscountAmounts(DiscountConfiguratorTransfer $discountConfiguratorTransfer): DiscountConfiguratorTransfer
     {
         return $this->getTransactionHandler()->handleTransaction(function () use ($discountConfiguratorTransfer) {
@@ -75,11 +70,6 @@ class DiscountAmountUpdater implements DiscountAmountUpdaterInterface
         });
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
-     *
-     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
-     */
     protected function executeUpdateDiscountAmountsTransaction(DiscountConfiguratorTransfer $discountConfiguratorTransfer): DiscountConfiguratorTransfer
     {
         $idDiscount = $discountConfiguratorTransfer->getDiscountGeneralOrFail()->getIdDiscountOrFail();
@@ -115,22 +105,11 @@ class DiscountAmountUpdater implements DiscountAmountUpdaterInterface
         return $discountConfiguratorTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountCalculatorTransfer $discountCalculatorTransfer
-     *
-     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface|null
-     */
     protected function getDiscountCalculatorPlugin(DiscountCalculatorTransfer $discountCalculatorTransfer): ?DiscountCalculatorPluginInterface
     {
         return $this->discountCalculatorPlugins[$discountCalculatorTransfer->getCalculatorPlugin()] ?? null;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountCalculatorTransfer $discountCalculatorTransfer
-     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
-     *
-     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
-     */
     protected function deleteDiscountAmountsForDiscount(
         DiscountCalculatorTransfer $discountCalculatorTransfer,
         DiscountConfiguratorTransfer $discountConfiguratorTransfer

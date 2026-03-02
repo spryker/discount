@@ -19,18 +19,8 @@ interface DiscountToMoneyInterface
      */
     public function fromInteger($amount, $isoCode = null): MoneyTransfer;
 
-    /**
-     * @param \Generated\Shared\Transfer\MoneyTransfer $moneyTransfer
-     *
-     * @return string
-     */
     public function formatWithoutSymbol(MoneyTransfer $moneyTransfer): string;
 
-    /**
-     * @param \Generated\Shared\Transfer\MoneyTransfer $moneyTransfer
-     *
-     * @return string
-     */
     public function formatWithSymbol(MoneyTransfer $moneyTransfer): string;
 
     /**

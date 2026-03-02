@@ -49,10 +49,6 @@ class VoucherValidator implements VoucherValidatorInterface
      */
     protected $messengerFacade;
 
-    /**
-     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainer
-     * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface $messengerFacade
-     */
     public function __construct(
         DiscountQueryContainerInterface $discountQueryContainer,
         DiscountToMessengerInterface $messengerFacade

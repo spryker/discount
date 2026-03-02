@@ -376,11 +376,6 @@ class DiscountableItemTransformerTest extends Unit
         ];
     }
 
-    /**
-     * @param \Spryker\Zed\Discount\Persistence\DiscountRepositoryInterface $discountRepository
-     *
-     * @return \Spryker\Zed\Discount\Business\Distributor\DiscountableItem\DiscountableItemTransformerInterface
-     */
     protected function createDiscountableItemTransformer(DiscountRepositoryInterface $discountRepository): DiscountableItemTransformerInterface
     {
         return new DiscountableItemTransformer($discountRepository);

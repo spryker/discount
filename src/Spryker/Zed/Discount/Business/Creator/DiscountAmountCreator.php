@@ -51,11 +51,6 @@ class DiscountAmountCreator implements DiscountAmountCreatorInterface
         $this->discountCalculatorPlugins = $discountCalculatorPlugins;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
-     *
-     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
-     */
     public function createDiscountAmounts(DiscountConfiguratorTransfer $discountConfiguratorTransfer): DiscountConfiguratorTransfer
     {
         $discountCalculatorPlugin = $this->getDiscountCalculatorPlugin($discountConfiguratorTransfer->getDiscountCalculator());
@@ -72,21 +67,11 @@ class DiscountAmountCreator implements DiscountAmountCreatorInterface
         });
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountCalculatorTransfer $discountCalculatorTransfer
-     *
-     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface|null
-     */
     protected function getDiscountCalculatorPlugin(DiscountCalculatorTransfer $discountCalculatorTransfer): ?DiscountCalculatorPluginInterface
     {
         return $this->discountCalculatorPlugins[$discountCalculatorTransfer->getCalculatorPlugin()] ?? null;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
-     *
-     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
-     */
     protected function executeCreateDiscountAmountsTransaction(DiscountConfiguratorTransfer $discountConfiguratorTransfer): DiscountConfiguratorTransfer
     {
         $idDiscount = $discountConfiguratorTransfer->getDiscountGeneralOrFail()->getIdDiscountOrFail();

@@ -25,9 +25,6 @@ use SprykerTest\Zed\Discount\Business\BaseRuleTester;
  */
 class ItemSkuDecisionRuleTest extends BaseRuleTester
 {
-    /**
-     * @return void
-     */
     public function testDecisionRuleWhenCurrentItemSkuMatchesShouldReturnTrue(): void
     {
         $comparatorMock = $this->createComparatorMock();
@@ -45,11 +42,6 @@ class ItemSkuDecisionRuleTest extends BaseRuleTester
         $this->assertTrue($isSatisfied);
     }
 
-    /**
-     * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface|null $comparatorMock
-     *
-     * @return \Spryker\Zed\Discount\Business\DecisionRule\ItemSkuDecisionRule
-     */
     protected function createItemSkuDecisionRule(?ComparatorOperatorsInterface $comparatorMock = null): ItemSkuDecisionRule
     {
         if ($comparatorMock === null) {

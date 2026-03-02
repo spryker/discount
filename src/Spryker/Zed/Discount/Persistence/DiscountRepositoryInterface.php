@@ -32,25 +32,10 @@ interface DiscountRepositoryInterface
      */
     public function getDiscountAmountCollectionForDiscount(int $idDiscount): array;
 
-    /**
-     * @param int $idDiscount
-     *
-     * @return \Generated\Shared\Transfer\StoreRelationTransfer
-     */
     public function getDiscountStoreRelations(int $idDiscount): StoreRelationTransfer;
 
-    /**
-     * @param int $idDiscount
-     *
-     * @return bool
-     */
     public function discountExists(int $idDiscount): bool;
 
-    /**
-     * @param int $idDiscount
-     *
-     * @return bool
-     */
     public function discountVoucherPoolExists(int $idDiscount): bool;
 
     /**

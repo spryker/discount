@@ -24,10 +24,6 @@ class DiscountVoucherPoolUpdater implements DiscountVoucherPoolUpdaterInterface
      */
     protected $discountEntityManager;
 
-    /**
-     * @param \Spryker\Zed\Discount\Persistence\DiscountRepositoryInterface $discountRepository
-     * @param \Spryker\Zed\Discount\Persistence\DiscountEntityManagerInterface $discountEntityManager
-     */
     public function __construct(
         DiscountRepositoryInterface $discountRepository,
         DiscountEntityManagerInterface $discountEntityManager
@@ -36,11 +32,6 @@ class DiscountVoucherPoolUpdater implements DiscountVoucherPoolUpdaterInterface
         $this->discountEntityManager = $discountEntityManager;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
-     *
-     * @return int|null
-     */
     public function updateDiscountVoucherPool(DiscountConfiguratorTransfer $discountConfiguratorTransfer): ?int
     {
         $discountGeneralTransfer = $discountConfiguratorTransfer->getDiscountGeneralOrFail();

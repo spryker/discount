@@ -29,9 +29,6 @@ use Spryker\Zed\Discount\Business\QueryString\Validator;
  */
 class ValidatorTest extends Unit
 {
-    /**
-     * @return void
-     */
     public function testValidateDecisionRuleWhenThereIsNoErrorShouldNotThrowException(): void
     {
         $decisionRuleMock = $this->createSpecificationBuilderMock();
@@ -46,9 +43,6 @@ class ValidatorTest extends Unit
         $this->assertCount(0, $messages);
     }
 
-    /**
-     * @return void
-     */
     public function testValidateCollectorWhenThereIsNoErrorShouldNotThrowException(): void
     {
         $collectorBuilderMock = $this->createSpecificationBuilderMock();
@@ -63,9 +57,6 @@ class ValidatorTest extends Unit
         $this->assertCount(0, $messages);
     }
 
-    /**
-     * @return void
-     */
     public function testValidateDecisionRuleShouldCaptureExceptionsThrownIntoResponseArray(): void
     {
         $queryStringException = 'Test';
@@ -86,9 +77,6 @@ class ValidatorTest extends Unit
         $this->assertSame($queryStringException, $messages[0]);
     }
 
-    /**
-     * @return void
-     */
     public function testValidateCollectorShouldCaptureExceptionsThrownIntoResponseArray(): void
     {
         $queryStringException = 'Test';
@@ -109,9 +97,6 @@ class ValidatorTest extends Unit
         $this->assertSame($queryStringException, $messages[0]);
     }
 
-    /**
-     * @return void
-     */
     public function testValidateCollectorWhenComparatorExceptionThrownShouldStoreIntoResponseArray(): void
     {
         $queryStringException = 'Test';
@@ -132,9 +117,6 @@ class ValidatorTest extends Unit
         $this->assertSame($queryStringException, $messages[0]);
     }
 
-    /**
-     * @return void
-     */
     public function testValidateCollectorShouldThrowExceptionWhenNonExistingTypeUsed(): void
     {
         $this->expectException(QueryBuilderException::class);
@@ -144,12 +126,6 @@ class ValidatorTest extends Unit
         $validator->validateByType('type', 'query string');
     }
 
-    /**
-     * @param \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder|null $decisionRuleMock
-     * @param \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder|null $collectorMock
-     *
-     * @return \Spryker\Zed\Discount\Business\QueryString\Validator
-     */
     protected function createValidator(
         ?SpecificationBuilder $decisionRuleMock = null,
         ?SpecificationBuilder $collectorMock = null

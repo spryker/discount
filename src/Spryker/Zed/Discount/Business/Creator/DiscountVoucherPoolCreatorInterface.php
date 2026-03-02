@@ -11,10 +11,5 @@ use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 
 interface DiscountVoucherPoolCreatorInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
-     *
-     * @return int|null
-     */
     public function createDiscountVoucherPool(DiscountConfiguratorTransfer $discountConfiguratorTransfer): ?int;
 }

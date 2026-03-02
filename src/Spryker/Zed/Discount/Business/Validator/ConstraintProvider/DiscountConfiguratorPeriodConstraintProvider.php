@@ -15,9 +15,6 @@ use Symfony\Component\Validator\Constraints\LessThan;
 
 class DiscountConfiguratorPeriodConstraintProvider implements DiscountConfiguratorConstraintProviderInterface
 {
-    /**
-     * @param \Spryker\Zed\Discount\DiscountConfig $discountConfig
-     */
     public function __construct(protected DiscountConfig $discountConfig)
     {
     }

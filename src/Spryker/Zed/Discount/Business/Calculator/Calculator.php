@@ -222,11 +222,6 @@ class Calculator implements CalculatorInterface
         }
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
-     *
-     * @return void
-     */
     protected function setSuccessfulDiscountAddMessage(DiscountTransfer $discountTransfer): void
     {
         if (!$discountTransfer->getAmount()) {
@@ -311,12 +306,6 @@ class Calculator implements CalculatorInterface
         return $calculatedDiscounts;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
-     *
-     * @return \Spryker\Zed\Discount\Dependency\Plugin\CollectorStrategyPluginInterface|null
-     */
     protected function resolveCollectorPluginStrategy(QuoteTransfer $quoteTransfer, DiscountTransfer $discountTransfer): ?CollectorStrategyPluginInterface
     {
         if (!$this->collectorStrategyResolver) {

@@ -12,10 +12,5 @@ use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 
 interface DiscountUpdateAggregatorInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
-     *
-     * @return \Generated\Shared\Transfer\DiscountConfiguratorResponseTransfer
-     */
     public function updateDiscountWithValidation(DiscountConfiguratorTransfer $discountConfiguratorTransfer): DiscountConfiguratorResponseTransfer;
 }

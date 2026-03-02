@@ -9,8 +9,5 @@ namespace Spryker\Zed\Discount\Dependency\Facade;
 
 interface DiscountToLocaleFacadeInterface
 {
-    /**
-     * @return string
-     */
     public function getCurrentLocaleName(): string;
 }

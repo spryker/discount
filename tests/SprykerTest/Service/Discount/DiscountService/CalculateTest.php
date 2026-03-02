@@ -73,9 +73,6 @@ class CalculateTest extends Unit
      */
     protected $tester;
 
-    /**
-     * @return void
-     */
     public function testReturnsExpectedAmountWhenUseCalculatorStrategyPercentagePlugin(): void
     {
         // Arrange
@@ -100,9 +97,6 @@ class CalculateTest extends Unit
         $this->assertSame(4200, $discountCalculationResponseTransfer->getAmount());
     }
 
-    /**
-     * @return void
-     */
     public function testReturnsExpectedAmountWhenUseCalculatorStrategyFixedPlugin(): void
     {
         // Arrange
@@ -126,9 +120,6 @@ class CalculateTest extends Unit
         $this->assertSame(static::TEST_DISCOUNT_AMOUNT, $discountCalculationResponseTransfer->getAmount());
     }
 
-    /**
-     * @return void
-     */
     public function testThrowsExceptionWhenCalculatorStrategyPluginNotFound(): void
     {
         // Arrange

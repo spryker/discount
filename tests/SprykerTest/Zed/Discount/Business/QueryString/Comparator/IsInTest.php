@@ -34,9 +34,6 @@ class IsInTest extends Unit
      */
     protected const LIST_DELIMITER = ';';
 
-    /**
-     * @return void
-     */
     public function testAcceptShouldReturnTrueWhenIsInExpressionProvided(): void
     {
         $isIn = $this->createIsIn();
@@ -49,9 +46,6 @@ class IsInTest extends Unit
         $this->assertTrue($isAccepted);
     }
 
-    /**
-     * @return void
-     */
     public function testCompareWhenValueIsInClauseShouldReturnTrue(): void
     {
         $isIn = $this->createIsIn();
@@ -66,9 +60,6 @@ class IsInTest extends Unit
         $this->assertTrue($isMatching);
     }
 
-    /**
-     * @return void
-     */
     public function testCompareWhenValueIsNotInClauseShouldReturnFalse(): void
     {
         $isIn = $this->createIsIn();
@@ -83,9 +74,6 @@ class IsInTest extends Unit
         $this->assertFalse($isMatching);
     }
 
-    /**
-     * @return void
-     */
     public function testCompareWhenNonScalarValueUsedShouldThrowException(): void
     {
         $this->expectException(ComparatorException::class);
@@ -97,9 +85,6 @@ class IsInTest extends Unit
         $isIn->compare($clauseTransfer, []);
     }
 
-    /**
-     * @return void
-     */
     public function testCompareShouldReturnTrueWhenAtLeastOneOfProvidedValuesIsInClause(): void
     {
         // Arrange
@@ -113,9 +98,6 @@ class IsInTest extends Unit
         $this->assertTrue($isMatching);
     }
 
-    /**
-     * @return void
-     */
     public function testCompareShouldReturnFalseWhenNoOneOfProvidedValuesIsInClause(): void
     {
         // Arrange
@@ -129,9 +111,6 @@ class IsInTest extends Unit
         $this->assertFalse($isMatching);
     }
 
-    /**
-     * @return void
-     */
     public function testCompareShouldReturnFalseWhenEmptyValueIsProvided(): void
     {
         // Arrange
@@ -144,9 +123,6 @@ class IsInTest extends Unit
         $this->assertFalse($isMatching);
     }
 
-    /**
-     * @return void
-     */
     public function testIsValidValueShouldReturnFalseWhenEmptyValueIsProvided(): void
     {
         // Act
@@ -156,9 +132,6 @@ class IsInTest extends Unit
         $this->assertFalse($isValidValue);
     }
 
-    /**
-     * @return \Spryker\Zed\Discount\Business\QueryString\Comparator\IsIn
-     */
     protected function createIsIn(): IsIn
     {
         return new IsIn();

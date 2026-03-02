@@ -24,10 +24,6 @@ class DecisionRuleContext implements DecisionRuleSpecificationInterface
      */
     protected $clauseTransfer;
 
-    /**
-     * @param \Spryker\Zed\DiscountExtension\Dependency\Plugin\DecisionRulePluginInterface $rulePlugin
-     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
-     */
     public function __construct(DecisionRulePluginInterface $rulePlugin, ClauseTransfer $clauseTransfer)
     {
         $this->rulePlugin = $rulePlugin;

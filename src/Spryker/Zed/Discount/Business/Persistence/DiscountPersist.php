@@ -408,11 +408,6 @@ class DiscountPersist implements DiscountPersistInterface
         }
     }
 
-    /**
-     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
-     *
-     * @return void
-     */
     protected function deleteDiscountMoneyValues(SpyDiscount $discountEntity): void
     {
         /** @var array<\Orm\Zed\Discount\Persistence\SpyDiscountAmount>|null $discountAmountEntities */

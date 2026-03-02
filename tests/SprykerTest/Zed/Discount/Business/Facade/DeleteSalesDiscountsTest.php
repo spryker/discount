@@ -35,9 +35,6 @@ class DeleteSalesDiscountsTest extends Unit
      */
     protected DiscountBusinessTester $tester;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -47,9 +44,6 @@ class DeleteSalesDiscountsTest extends Unit
         $this->tester->ensureSalesDiscountTableIsEmpty();
     }
 
-    /**
-     * @return void
-     */
     public function testDeletesSalesDiscountEntitiesBySalesExpenseIds(): void
     {
         // Arrange
@@ -104,9 +98,6 @@ class DeleteSalesDiscountsTest extends Unit
         $this->assertSalesDiscountEntities($salesDiscountEntity->getIdSalesDiscount());
     }
 
-    /**
-     * @return void
-     */
     public function testDoesNotDeleteAnySalesDiscountEntitiesWhenConditionsAreNotProvided(): void
     {
         // Arrange
@@ -126,9 +117,6 @@ class DeleteSalesDiscountsTest extends Unit
         $this->assertSame(2, $this->tester->getSalesDiscountCodeEntities()->count());
     }
 
-    /**
-     * @return void
-     */
     public function testDoesNotDeleteAnySalesDiscountEntitiesWhenEntitiesAreNotFoundByProvidedSalesExpenseIds(): void
     {
         // Arrange
@@ -148,9 +136,6 @@ class DeleteSalesDiscountsTest extends Unit
         $this->assertSalesDiscountEntities($salesDiscountEntity->getIdSalesDiscount());
     }
 
-    /**
-     * @return void
-     */
     public function testDoesNotDeleteAnySalesDiscountEntitiesWhenEntitiesAreNotFoundByProvidedSalesOrderItemIds(): void
     {
         // Arrange
@@ -172,11 +157,6 @@ class DeleteSalesDiscountsTest extends Unit
         $this->assertSalesDiscountEntities($salesDiscountEntity->getIdSalesDiscount());
     }
 
-    /**
-     * @param int $idSalesDiscount
-     *
-     * @return void
-     */
     protected function assertSalesDiscountEntities(int $idSalesDiscount): void
     {
         $salesDiscountEntities = $this->tester->getSalesDiscountEntities();

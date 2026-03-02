@@ -25,9 +25,6 @@ class DiscountEntityMapper implements DiscountEntityMapperInterface
      */
     protected static $currencyCache = [];
 
-    /**
-     * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToCurrencyInterface $currencyFacade
-     */
     public function __construct(DiscountToCurrencyInterface $currencyFacade)
     {
         $this->currencyFacade = $currencyFacade;

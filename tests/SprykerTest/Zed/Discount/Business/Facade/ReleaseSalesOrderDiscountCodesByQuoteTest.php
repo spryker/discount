@@ -47,9 +47,6 @@ class ReleaseSalesOrderDiscountCodesByQuoteTest extends Unit
      */
     protected DiscountBusinessTester $tester;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -57,9 +54,6 @@ class ReleaseSalesOrderDiscountCodesByQuoteTest extends Unit
         $this->tester->configureTestStateMachine([static::DEFAULT_OMS_PROCESS_NAME]);
     }
 
-    /**
-     * @return void
-     */
     public function testThrowsNullValueExceptionWhenIdSalesOrderIsNotSetInSaveOrderTransfer(): void
     {
         // Assert

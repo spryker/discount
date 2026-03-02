@@ -26,9 +26,6 @@ use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
  */
 class ComparatorOperatorsTest extends Unit
 {
-    /**
-     * @return void
-     */
     public function testCompareWhenComparatorEvaluatesToTrueShouldReturnTrue(): void
     {
         $equalComparatorMock = $this->createComparatorMock();
@@ -61,9 +58,6 @@ class ComparatorOperatorsTest extends Unit
         $this->assertTrue($isEqual);
     }
 
-    /**
-     * @return void
-     */
     public function testCompareWhenComparatorNotFoundShouldThrowException(): void
     {
         $this->expectException(ComparatorException::class);
@@ -81,9 +75,6 @@ class ComparatorOperatorsTest extends Unit
         $comparatorOperators->compare($clauseTransfer, '123');
     }
 
-    /**
-     * @return void
-     */
     public function testCompareWhenComparatorCannotHandleTypeShouldThrowException(): void
     {
         $this->expectException(ComparatorException::class);
@@ -113,9 +104,6 @@ class ComparatorOperatorsTest extends Unit
         $comparatorOperators->compare($clauseTransfer, '123');
     }
 
-    /**
-     * @return void
-     */
     public function testComparatorExpressionsByTypesShouldReturnAllOperatorsMatchingDataType(): void
     {
         $equalComparatorMock = $this->createComparatorMock();
@@ -156,9 +144,6 @@ class ComparatorOperatorsTest extends Unit
         $this->assertSame('>', $expressions[1]);
     }
 
-    /**
-     * @return void
-     */
     public function testGetAvailableComparatorShouldReturnAllAvailableExpressions(): void
     {
         $equalComparatorMock = $this->createComparatorMock();
@@ -180,9 +165,6 @@ class ComparatorOperatorsTest extends Unit
         $this->assertSame('>', $expressions[1]);
     }
 
-    /**
-     * @return void
-     */
     public function testGetCompoundComparatorExpressions(): void
     {
         $combinedOperator = 'combined operator';
@@ -203,9 +185,6 @@ class ComparatorOperatorsTest extends Unit
         $this->assertCount(2, $combinedOperators);
     }
 
-    /**
-     * @return void
-     */
     public function testIsValidComparatorWhenValidShouldReturnTrue(): void
     {
         $equalComparatorMock = $this->createComparatorMock();
@@ -222,9 +201,6 @@ class ComparatorOperatorsTest extends Unit
         $this->assertTrue($isValid);
     }
 
-    /**
-     * @return void
-     */
     public function testIsValidComparatorWhenInValidShouldReturnFalse(): void
     {
         $equalComparatorMock = $this->createComparatorMock();
@@ -241,9 +217,6 @@ class ComparatorOperatorsTest extends Unit
         $this->assertFalse($isValid);
     }
 
-    /**
-     * @return void
-     */
     public function testCompareWhenUsingMatchAllIdentifierShouldAlwaysReturnFalse(): void
     {
         $comparatorOperators = $this->createComparatorOperators([]);
@@ -256,9 +229,6 @@ class ComparatorOperatorsTest extends Unit
         $this->assertTrue($isValid);
     }
 
-    /**
-     * @return void
-     */
     public function testCompareWhenValueIsNotProvidedShouldReturnFalse(): void
     {
         $comparatorOperators = $this->createComparatorOperators([]);
@@ -271,9 +241,6 @@ class ComparatorOperatorsTest extends Unit
         $this->assertFalse($isValid);
     }
 
-    /**
-     * @return void
-     */
     public function testCompareWhenValueIsNumericZeroProvidedShouldReturnTrue(): void
     {
         $comparatorOperators = $this->createComparatorOperators([]);
@@ -286,9 +253,6 @@ class ComparatorOperatorsTest extends Unit
         $this->assertTrue($isValid);
     }
 
-    /**
-     * @return void
-     */
     public function testWhenNoneOfComparatorsAcceptsClauseShouldThrowException(): void
     {
         $equalComparatorMock = $this->createComparatorMock();

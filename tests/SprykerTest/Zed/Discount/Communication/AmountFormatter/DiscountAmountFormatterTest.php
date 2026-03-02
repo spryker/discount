@@ -30,9 +30,6 @@ class DiscountAmountFormatterTest extends Unit
      */
     protected DiscountCommunicationTester $tester;
 
-    /**
-     * @return void
-     */
     public function testFormatFormatsAmount(): void
     {
         // Arrange

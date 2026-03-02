@@ -26,9 +26,6 @@ use Spryker\Zed\Discount\Business\QueryString\Comparator\LessEqual;
  */
 class LessEqualTest extends Unit
 {
-    /**
-     * @return void
-     */
     public function testAcceptShouldReturnTrueWhenLessEqualExpressionProvided(): void
     {
         $lessEqual = $this->createLessEqual();
@@ -41,9 +38,6 @@ class LessEqualTest extends Unit
         $this->assertTrue($isAccepted);
     }
 
-    /**
-     * @return void
-     */
     public function testCompareWhenValueLessClauseShouldReturnTrue(): void
     {
         $lessEqual = $this->createLessEqual();
@@ -56,9 +50,6 @@ class LessEqualTest extends Unit
         $this->assertTrue($isMatching);
     }
 
-    /**
-     * @return void
-     */
     public function testCompareWhenValueEqualClauseShouldReturnTrue(): void
     {
         $lessEqual = $this->createLessEqual();
@@ -71,9 +62,6 @@ class LessEqualTest extends Unit
         $this->assertTrue($isMatching);
     }
 
-    /**
-     * @return void
-     */
     public function testCompareWhenValueNotLessThanClauseShouldReturnFalse(): void
     {
         $lessEqual = $this->createLessEqual();
@@ -86,9 +74,6 @@ class LessEqualTest extends Unit
         $this->assertFalse($isMatching);
     }
 
-    /**
-     * @return void
-     */
     public function testCompareWhenNonNumericValueUsedShouldThrowException(): void
     {
         $this->expectException(ComparatorException::class);
@@ -100,9 +85,6 @@ class LessEqualTest extends Unit
         $lessEqual->compare($clauseTransfer, 'as');
     }
 
-    /**
-     * @return void
-     */
     public function testCompareShouldReturnFalseWhenEmptyValueIsProvided(): void
     {
         // Arrange
@@ -115,9 +97,6 @@ class LessEqualTest extends Unit
         $this->assertFalse($isMatching);
     }
 
-    /**
-     * @return void
-     */
     public function testIsValueValidShouldReturnFalseWhenEmptyValueIsProvided(): void
     {
         // Act
@@ -127,9 +106,6 @@ class LessEqualTest extends Unit
         $this->assertFalse($isValueValid);
     }
 
-    /**
-     * @return \Spryker\Zed\Discount\Business\QueryString\Comparator\LessEqual
-     */
     protected function createLessEqual(): LessEqual
     {
         return new LessEqual();

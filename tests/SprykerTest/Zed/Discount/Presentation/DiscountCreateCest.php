@@ -22,12 +22,6 @@ use SprykerTest\Zed\Discount\PageObject\DiscountCreatePage;
  */
 class DiscountCreateCest
 {
-    /**
-     * @param \SprykerTest\Zed\Discount\DiscountPresentationTester $i
-     * @param \SprykerTest\Zed\Discount\PageObject\DiscountCreatePage $createPage
-     *
-     * @return void
-     */
     public function createExclusiveDiscount(DiscountPresentationTester $i, DiscountCreatePage $createPage): void
     {
         $i->markTestSkipped('Requires refactoring');
@@ -35,12 +29,6 @@ class DiscountCreateCest
         $i->see($createPage::MESSAGE_SUCCESSFUL_ALERT_CREATION);
     }
 
-    /**
-     * @param \SprykerTest\Zed\Discount\DiscountPresentationTester $i
-     * @param \SprykerTest\Zed\Discount\PageObject\DiscountCreatePage $createPage
-     *
-     * @return void
-     */
     public function createNotExclusiveDiscount(DiscountPresentationTester $i, DiscountCreatePage $createPage): void
     {
         $i->markTestSkipped('Requires refactoring');
@@ -48,12 +36,6 @@ class DiscountCreateCest
         $i->see($createPage::MESSAGE_SUCCESSFUL_ALERT_CREATION);
     }
 
-    /**
-     * @param \SprykerTest\Zed\Discount\DiscountPresentationTester $i
-     * @param \SprykerTest\Zed\Discount\PageObject\DiscountCreatePage $createPage
-     *
-     * @return void
-     */
     public function createInvalidDiscount(DiscountPresentationTester $i, DiscountCreatePage $createPage): void
     {
         $createPage->createDiscount(DiscountCreatePage::EMPTY_DISCOUNT, ['name' => null]);

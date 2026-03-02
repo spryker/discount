@@ -47,11 +47,6 @@ class BaseRuleTester extends Unit
         return $clauseTransfer;
     }
 
-    /**
-     * @param array $items
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
     protected function createQuoteTransfer(array $items = []): QuoteTransfer
     {
         $quoteTransfer = new QuoteTransfer();
@@ -65,13 +60,6 @@ class BaseRuleTester extends Unit
         return $quoteTransfer;
     }
 
-    /**
-     * @param int $price
-     * @param int $quantity
-     * @param string $sku
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer
-     */
     protected function createItemTransfer(int $price = 0, int $quantity = 0, string $sku = ''): ItemTransfer
     {
         $itemTransfer = new ItemTransfer();

@@ -18,9 +18,6 @@ class SkuCollector extends BaseCollector implements CollectorInterface
      */
     protected $comparators;
 
-    /**
-     * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface $comparators
-     */
     public function __construct(ComparatorOperatorsInterface $comparators)
     {
         $this->comparators = $comparators;

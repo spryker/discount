@@ -57,11 +57,6 @@ class ConditionsForm extends AbstractType
         $this->addMinimumItemAmount($builder, $options);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
-     * @return void
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
@@ -155,9 +150,6 @@ class ConditionsForm extends AbstractType
         $event->setData($data);
     }
 
-    /**
-     * @return string
-     */
     public function getBlockPrefix(): string
     {
         return 'discount_conditions';

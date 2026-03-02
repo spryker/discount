@@ -26,12 +26,6 @@ class DiscountMapper
      */
     protected const DATE_TIME_FORMAT = 'Y-d-m H:i:s';
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
-     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
-     *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscount
-     */
     public function mapDiscountTransferToDiscountEntity(DiscountTransfer $discountTransfer, SpyDiscount $discountEntity): SpyDiscount
     {
         $discountEntity->fromArray($discountTransfer->toArray());
@@ -39,12 +33,6 @@ class DiscountMapper
         return $discountEntity;
     }
 
-    /**
-     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
-     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
-     *
-     * @return \Generated\Shared\Transfer\DiscountTransfer
-     */
     public function mapDiscountEntityToDiscountTransfer(SpyDiscount $discountEntity, DiscountTransfer $discountTransfer): DiscountTransfer
     {
         /** @var string|null $validFrom */
@@ -57,12 +45,6 @@ class DiscountMapper
             ->setValidTo($validTo);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountGeneralTransfer $discountGeneralTransfer
-     * @param \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool $discountVoucherPoolEntity
-     *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool
-     */
     public function mapDiscountGeneralTransferToDiscountVoucherPoolEntity(
         DiscountGeneralTransfer $discountGeneralTransfer,
         SpyDiscountVoucherPool $discountVoucherPoolEntity
@@ -72,12 +54,6 @@ class DiscountMapper
             ->setIsActive(true);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountMoneyAmountTransfer $discountMoneyAmountTransfer
-     * @param \Orm\Zed\Discount\Persistence\SpyDiscountAmount $discountAmountEntity
-     *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscountAmount
-     */
     public function mapDiscountMoneyAmountTransferToDiscountAmountEntity(
         DiscountMoneyAmountTransfer $discountMoneyAmountTransfer,
         SpyDiscountAmount $discountAmountEntity
@@ -87,12 +63,6 @@ class DiscountMapper
         return $discountAmountEntity;
     }
 
-    /**
-     * @param \Orm\Zed\Discount\Persistence\SpyDiscountAmount $discountAmountEntity
-     * @param \Generated\Shared\Transfer\DiscountMoneyAmountTransfer $discountMoneyAmountTransfer
-     *
-     * @return \Generated\Shared\Transfer\DiscountMoneyAmountTransfer
-     */
     public function mapDiscountAmountEntityToDiscountMoneyAmountTransfer(
         SpyDiscountAmount $discountAmountEntity,
         DiscountMoneyAmountTransfer $discountMoneyAmountTransfer
@@ -137,12 +107,6 @@ class DiscountMapper
         return $storeRelationTransfer;
     }
 
-    /**
-     * @param \Orm\Zed\Discount\Persistence\SpyDiscountAmount $discountAmountEntity
-     * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
-     *
-     * @return \Generated\Shared\Transfer\MoneyValueTransfer
-     */
     protected function mapDiscountAmountEntityToMoneyValueTransfer(
         SpyDiscountAmount $discountAmountEntity,
         MoneyValueTransfer $moneyValueTransfer
@@ -152,12 +116,6 @@ class DiscountMapper
             ->setIdEntity($discountAmountEntity->getIdDiscountAmount());
     }
 
-    /**
-     * @param \Orm\Zed\Store\Persistence\SpyStore $storeEntity
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return \Generated\Shared\Transfer\StoreTransfer
-     */
     protected function mapStoreEntityToStoreTransfer(SpyStore $storeEntity, StoreTransfer $storeTransfer): StoreTransfer
     {
         return $storeTransfer->fromArray($storeEntity->toArray(), true);

@@ -26,9 +26,6 @@ use Spryker\Zed\Discount\Business\QueryString\Comparator\GreaterEqual;
  */
 class GreaterEqualTest extends Unit
 {
-    /**
-     * @return void
-     */
     public function testAcceptShouldReturnTrueWhenMoreEqualExpressionProvided(): void
     {
         $moreEqual = $this->createMoreEqual();
@@ -41,9 +38,6 @@ class GreaterEqualTest extends Unit
         $this->assertTrue($isAccepted);
     }
 
-    /**
-     * @return void
-     */
     public function testCompareWhenClauseValueIsBiggerThanProvidedShouldReturnTrue(): void
     {
         $moreEqual = $this->createMoreEqual();
@@ -56,9 +50,6 @@ class GreaterEqualTest extends Unit
         $this->assertTrue($isMatching);
     }
 
-    /**
-     * @return void
-     */
     public function testCompareWhenClauseValueIsSmallerThanProvidedShouldReturnFalse(): void
     {
         $moreEqual = $this->createMoreEqual();
@@ -71,9 +62,6 @@ class GreaterEqualTest extends Unit
         $this->assertFalse($isMatching);
     }
 
-    /**
-     * @return void
-     */
     public function testCompareWhenClauseValueIsEqualShouldReturnTrue(): void
     {
         $moreEqual = $this->createMoreEqual();
@@ -86,9 +74,6 @@ class GreaterEqualTest extends Unit
         $this->assertTrue($isMatching);
     }
 
-    /**
-     * @return void
-     */
     public function testCompareWhenNonNumericValueUsedShouldThrowException(): void
     {
         $this->expectException(ComparatorException::class);
@@ -100,9 +85,6 @@ class GreaterEqualTest extends Unit
         $moreEqual->compare($clauseTransfer, 'as');
     }
 
-    /**
-     * @return void
-     */
     public function testCompareShouldReturnFalseWhenEmptyValueIsProvided(): void
     {
         // Arrange
@@ -115,9 +97,6 @@ class GreaterEqualTest extends Unit
         $this->assertFalse($isMatching);
     }
 
-    /**
-     * @return void
-     */
     public function testIsValueValidShouldReturnFalseWhenEmptyValueIsProvided(): void
     {
         // Act
@@ -127,9 +106,6 @@ class GreaterEqualTest extends Unit
         $this->assertFalse($isValueValid);
     }
 
-    /**
-     * @return \Spryker\Zed\Discount\Business\QueryString\Comparator\GreaterEqual
-     */
     protected function createMoreEqual(): GreaterEqual
     {
         return new GreaterEqual();

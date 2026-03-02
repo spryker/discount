@@ -190,11 +190,6 @@ class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterfac
         return $discountConfiguratorTransfer;
     }
 
-    /**
-     * @param int $idDiscount
-     *
-     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer|null
-     */
     public function findByIdDiscount(int $idDiscount): ?DiscountConfiguratorTransfer
     {
         $discountEntity = $this->discountQueryContainer
@@ -209,11 +204,6 @@ class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterfac
         return $this->hydrateDiscountConfigurator($discountEntity);
     }
 
-    /**
-     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
-     *
-     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
-     */
     protected function hydrateDiscountConfigurator(SpyDiscount $discountEntity): DiscountConfiguratorTransfer
     {
         $discountConfigurator = $this->createDiscountConfiguratorTransfer();

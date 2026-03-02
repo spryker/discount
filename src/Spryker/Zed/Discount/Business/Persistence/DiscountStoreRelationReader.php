@@ -21,10 +21,6 @@ class DiscountStoreRelationReader implements DiscountStoreRelationReaderInterfac
      */
     protected $discountStoreRelationMapper;
 
-    /**
-     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainer
-     * @param \Spryker\Zed\Discount\Business\Persistence\DiscountStoreRelationMapperInterface $discountStoreRelationMapper
-     */
     public function __construct(
         DiscountQueryContainerInterface $discountQueryContainer,
         DiscountStoreRelationMapperInterface $discountStoreRelationMapper

@@ -26,9 +26,6 @@ use Spryker\Zed\Discount\Business\QueryString\Comparator\Equal;
  */
 class EqualTest extends Unit
 {
-    /**
-     * @return void
-     */
     public function testAcceptShouldReturnTrueWhenEqualExpressionProvided(): void
     {
         $equal = $this->createEqual();
@@ -41,9 +38,6 @@ class EqualTest extends Unit
         $this->assertTrue($isAccepted);
     }
 
-    /**
-     * @return void
-     */
     public function testCompareWhenValueMatchingClauseShouldReturnTrue(): void
     {
         $equal = $this->createEqual();
@@ -56,9 +50,6 @@ class EqualTest extends Unit
         $this->assertTrue($isMatching);
     }
 
-    /**
-     * @return void
-     */
     public function testCompareWhenValueNotMatchingClauseShouldReturnFalse(): void
     {
         $equal = $this->createEqual();
@@ -71,9 +62,6 @@ class EqualTest extends Unit
         $this->assertFalse($isMatching);
     }
 
-    /**
-     * @return void
-     */
     public function testCompareWhenNonScalarValueUsedShouldThrowException(): void
     {
         $this->expectException(ComparatorException::class);
@@ -85,9 +73,6 @@ class EqualTest extends Unit
         $equal->compare($clauseTransfer, []);
     }
 
-    /**
-     * @return void
-     */
     public function testCompareShouldReturnFalseWhenEmptyValueIsProvided(): void
     {
         // Arrange
@@ -100,9 +85,6 @@ class EqualTest extends Unit
         $this->assertFalse($isMatching);
     }
 
-    /**
-     * @return void
-     */
     public function testIsValueValidShouldReturnFalseWhenEmptyValueIsProvided(): void
     {
         // Act
@@ -112,9 +94,6 @@ class EqualTest extends Unit
         $this->assertFalse($isValueValid);
     }
 
-    /**
-     * @return \Spryker\Zed\Discount\Business\QueryString\Comparator\Equal
-     */
     protected function createEqual(): Equal
     {
         return new Equal();

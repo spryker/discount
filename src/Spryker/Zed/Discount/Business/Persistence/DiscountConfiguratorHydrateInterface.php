@@ -20,10 +20,5 @@ interface DiscountConfiguratorHydrateInterface
      */
     public function getByIdDiscount($idDiscount);
 
-    /**
-     * @param int $idDiscount
-     *
-     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer|null
-     */
     public function findByIdDiscount(int $idDiscount): ?DiscountConfiguratorTransfer;
 }

@@ -35,8 +35,5 @@ interface DiscountToCurrencyInterface
      */
     public function getByIdCurrency($idCurrency): CurrencyTransfer;
 
-    /**
-     * @return \Generated\Shared\Transfer\CurrencyTransfer
-     */
     public function getCurrent(): CurrencyTransfer;
 }

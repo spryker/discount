@@ -25,12 +25,6 @@ class DiscountConfiguratorValidatorComposite implements DiscountConfiguratorVali
         $this->discountConfiguratorValidators = $discountConfiguratorValidators;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
-     * @param \Generated\Shared\Transfer\DiscountConfiguratorResponseTransfer $discountConfiguratorResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\DiscountConfiguratorResponseTransfer
-     */
     public function validateDiscountConfigurator(
         DiscountConfiguratorTransfer $discountConfiguratorTransfer,
         DiscountConfiguratorResponseTransfer $discountConfiguratorResponseTransfer

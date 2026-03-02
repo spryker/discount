@@ -23,10 +23,6 @@ class DiscountStoreRelationWriter implements DiscountStoreRelationWriterInterfac
      */
     protected $discountStoreRelationReader;
 
-    /**
-     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainer
-     * @param \Spryker\Zed\Discount\Business\Persistence\DiscountStoreRelationReaderInterface $discountStoreRelationReader
-     */
     public function __construct(DiscountQueryContainerInterface $discountQueryContainer, DiscountStoreRelationReaderInterface $discountStoreRelationReader)
     {
         $this->discountQueryContainer = $discountQueryContainer;

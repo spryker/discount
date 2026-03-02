@@ -69,9 +69,6 @@ class CalculatorTest extends Unit
      */
     protected $tester;
 
-    /**
-     * @return void
-     */
     public function testCalculationWithoutAnyDiscountShouldReturnEmptyData(): void
     {
         $calculator = $this->getCalculator();
@@ -83,9 +80,6 @@ class CalculatorTest extends Unit
         $this->assertSame(0, count($result));
     }
 
-    /**
-     * @return void
-     */
     public function testCalculateShouldExecuteCollectorWhenThereIsDiscounts(): void
     {
         $discountTransfer = $this->createDiscountTransfer(100);
@@ -110,9 +104,6 @@ class CalculatorTest extends Unit
         $this->assertNotEmpty($collectedDiscounts);
     }
 
-    /**
-     * @return void
-     */
     public function testOneDiscountShouldNotBeFilteredOut(): void
     {
         $discountCollection = [];
@@ -136,15 +127,6 @@ class CalculatorTest extends Unit
         $this->assertSame(1, count($result));
     }
 
-    /**
-     * @param string $displayName
-     * @param string $calculatorPlugin
-     * @param int $amount
-     * @param bool $isActive
-     * @param bool $isExclusive
-     *
-     * @return \Generated\Shared\Transfer\DiscountTransfer
-     */
     protected function initializeDiscount(
         string $displayName,
         string $calculatorPlugin,
@@ -163,9 +145,6 @@ class CalculatorTest extends Unit
         return $discountTransfer;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
     protected function getQuoteTransferWithTwoItems(): QuoteTransfer
     {
         $quoteTransfer = new QuoteTransfer();
@@ -180,9 +159,6 @@ class CalculatorTest extends Unit
         return $quoteTransfer;
     }
 
-    /**
-     * @return \Spryker\Zed\Discount\Business\Calculator\Calculator
-     */
     protected function getCalculator(): Calculator
     {
         $calculatorPlugins = $this->createCalculatorPlugins();
@@ -202,9 +178,6 @@ class CalculatorTest extends Unit
         );
     }
 
-    /**
-     * @return \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder
-     */
     protected function createCollectorBuilder(): SpecificationBuilder
     {
         return new SpecificationBuilder(
@@ -216,9 +189,6 @@ class CalculatorTest extends Unit
         );
     }
 
-    /**
-     * @return \Spryker\Zed\Discount\Business\QueryString\ComparatorOperators
-     */
     protected function createComparatorOperators(): ComparatorOperators
     {
         $operators = (new OperatorProvider())->createComparators();
@@ -226,9 +196,6 @@ class CalculatorTest extends Unit
         return new ComparatorOperators($operators);
     }
 
-    /**
-     * @return \Spryker\Zed\Discount\Business\QueryString\ClauseValidator
-     */
     protected function createClauseValidator(): ClauseValidator
     {
         return new ClauseValidator(
@@ -237,9 +204,6 @@ class CalculatorTest extends Unit
         );
     }
 
-    /**
-     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProvider
-     */
     protected function createMetaDataProvider(): MetaDataProvider
     {
         return new MetaDataProvider(
@@ -259,9 +223,6 @@ class CalculatorTest extends Unit
         ];
     }
 
-    /**
-     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorProvider
-     */
     protected function createCollectorSpecificationProvider(): CollectorProvider
     {
         $collectorPlugins = $this->createCollectorPlugins();
@@ -281,9 +242,6 @@ class CalculatorTest extends Unit
         return $collectorProviderPlugins;
     }
 
-    /**
-     * @return \Spryker\Zed\Discount\Business\Distributor\Distributor
-     */
     protected function createDistributor(): Distributor
     {
         return new Distributor(
@@ -292,9 +250,6 @@ class CalculatorTest extends Unit
         );
     }
 
-    /**
-     * @return \Spryker\Zed\Discount\Business\Distributor\DiscountableItem\DiscountableItemTransformerInterface
-     */
     protected function createDiscountableItemTransformer(): DiscountableItemTransformerInterface
     {
         return new DiscountableItemTransformer(
@@ -310,25 +265,16 @@ class CalculatorTest extends Unit
         return [];
     }
 
-    /**
-     * @return \Spryker\Zed\Messenger\Business\MessengerFacade
-     */
     protected function createMessengerFacade(): MessengerFacade
     {
         return new MessengerFacade();
     }
 
-    /**
-     * @return \Spryker\Zed\Discount\Communication\Plugin\Calculator\PercentagePlugin
-     */
     protected function createPercentageCalculator(): PercentagePlugin
     {
         return new PercentagePlugin();
     }
 
-    /**
-     * @return \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerBridge
-     */
     protected function createDiscountToMessengerBridge(): DiscountToMessengerBridge
     {
         return new DiscountToMessengerBridge($this->createMessengerFacade());
@@ -364,25 +310,16 @@ class CalculatorTest extends Unit
         ];
     }
 
-    /**
-     * @return \Spryker\Zed\Discount\Business\QueryString\Tokenizer
-     */
     protected function createTokenizer(): Tokenizer
     {
         return new Tokenizer();
     }
 
-    /**
-     * @return \Spryker\Zed\Discount\Business\QueryString\LogicalComparators
-     */
     protected function createLogicalOperators(): LogicalComparators
     {
         return new LogicalComparators();
     }
 
-    /**
-     * @return void
-     */
     public function testCalculateShouldExecuteCollectorWhenThereIsDiscountsFoo(): void
     {
         $discountTransfer = $this->createDiscountTransfer(100);
@@ -407,9 +344,6 @@ class CalculatorTest extends Unit
         $this->assertNotEmpty($collectedDiscounts);
     }
 
-    /**
-     * @return void
-     */
     public function testCalculateShouldTakeHighestAmountExclusiveDiscountWhenThereIsMoreThanOne(): void
     {
         $discounts = [];
@@ -439,9 +373,6 @@ class CalculatorTest extends Unit
         $this->assertSame(30, $collectedDiscounts[0]->getDiscount()->getAmount());
     }
 
-    /**
-     * @return void
-     */
     public function testCalculateShouldTakeHighestExclusiveWithinGroup(): void
     {
         $discounts = [];
@@ -476,9 +407,6 @@ class CalculatorTest extends Unit
         $this->assertEqualsCanonicalizing($discountAmounts, [20, 30]);
     }
 
-    /**
-     * @return void
-     */
     public function testCalculateWhenCalculatorNotFoundShouldThrowException(): void
     {
         $this->expectException(CalculatorException::class);
@@ -504,9 +432,6 @@ class CalculatorTest extends Unit
         $calculator->calculate($discounts, $quoteTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testCalculateWhenQueryBuilderThrowsExceptionShouldLogErrorAndReturnEmptyArray(): void
     {
         $discounts = [];
@@ -526,9 +451,6 @@ class CalculatorTest extends Unit
         $this->assertEmpty($collectedDiscounts);
     }
 
-    /**
-     * @return void
-     */
     public function testCalculateWhenDiscountableAmountPluginUsed(): void
     {
         $discountAmount = 100;
@@ -569,9 +491,6 @@ class CalculatorTest extends Unit
         $this->assertNotEmpty($collectedDiscounts);
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
     protected function createQuoteTransfer(): QuoteTransfer
     {
         $quoteTransfer = new QuoteTransfer();
@@ -698,11 +617,6 @@ class CalculatorTest extends Unit
         return $discountableItems;
     }
 
-    /**
-     * @param int $amount
-     *
-     * @return \Generated\Shared\Transfer\DiscountTransfer
-     */
     protected function createDiscountTransfer(int $amount): DiscountTransfer
     {
         $discountTransfer = new DiscountTransfer();
@@ -713,17 +627,11 @@ class CalculatorTest extends Unit
         return $discountTransfer;
     }
 
-    /**
-     * @return \Spryker\Zed\Discount\Business\Filter\CollectedDiscountItemFilterInterface
-     */
     protected function createCollectedDiscountItemFilter(): CollectedDiscountItemFilterInterface
     {
         return new CollectedDiscountItemFilter();
     }
 
-    /**
-     * @return \Spryker\Zed\Discount\Business\Sorter\CollectedDiscountSorterInterface
-     */
     protected function createCollectedDiscountSorter(): CollectedDiscountSorterInterface
     {
         return new CollectedDiscountSorter(
@@ -732,9 +640,6 @@ class CalculatorTest extends Unit
         );
     }
 
-    /**
-     * @return \Spryker\Zed\Discount\DiscountConfig
-     */
     protected function createDiscountConfig(): DiscountConfig
     {
         return new DiscountConfig();

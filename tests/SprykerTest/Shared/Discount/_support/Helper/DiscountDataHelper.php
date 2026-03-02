@@ -43,12 +43,6 @@ class DiscountDataHelper extends Module
     use LocatorHelperTrait;
     use InstancePoolingHelperTrait;
 
-    /**
-     * @param array $override
-     * @param array $discountAmounts
-     *
-     * @return \Generated\Shared\Transfer\DiscountGeneralTransfer
-     */
     public function haveDiscount(array $override = [], array $discountAmounts = []): DiscountGeneralTransfer
     {
         $discountFacade = $this->getDiscountFacade();
@@ -104,12 +98,6 @@ class DiscountDataHelper extends Module
         return $discountVoucherTransfer;
     }
 
-    /**
-     * @param string $name
-     * @param bool $isActive
-     *
-     * @return int
-     */
     public function haveDiscountVoucherPool(string $name, bool $isActive = true): int
     {
         $discountVoucherPoolEntity = (new SpyDiscountVoucherPool())
@@ -124,12 +112,6 @@ class DiscountDataHelper extends Module
         return $discountVoucherPoolEntity->getIdDiscountVoucherPool();
     }
 
-    /**
-     * @param array $discountOverride
-     * @param int $discountMinimumItemAmount
-     *
-     * @return \Generated\Shared\Transfer\DiscountTransfer
-     */
     public function haveDiscountWithMinimumItemAmount(array $discountOverride = [], int $discountMinimumItemAmount = 1): DiscountTransfer
     {
         $discountTransfer = (new DiscountBuilder($discountOverride))->build();
@@ -146,12 +128,6 @@ class DiscountDataHelper extends Module
         return $discountTransfer->fromArray($discountEntity->toArray(), true);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
-     *
-     * @return int
-     */
     public function haveDiscountStore(StoreTransfer $storeTransfer, DiscountTransfer $discountTransfer): int
     {
         $discountStoreEntity = (new SpyDiscountStore())
@@ -166,11 +142,6 @@ class DiscountDataHelper extends Module
         return $discountStoreEntity->getIdDiscountStore();
     }
 
-    /**
-     * @param array $discountAmountOverride
-     *
-     * @return \Generated\Shared\Transfer\DiscountMoneyAmountTransfer
-     */
     public function haveDiscountAmount(array $discountAmountOverride = []): DiscountMoneyAmountTransfer
     {
         $discountMoneyAmountTransfer = (new DiscountMoneyAmountBuilder($discountAmountOverride))->build();
@@ -210,25 +181,16 @@ class DiscountDataHelper extends Module
             ->fromArray($voucherEntity->toArray(), true);
     }
 
-    /**
-     * @return \Spryker\Zed\Discount\Business\DiscountFacadeInterface
-     */
     private function getDiscountFacade(): DiscountFacadeInterface
     {
         return $this->getLocator()->discount()->facade();
     }
 
-    /**
-     * @return \Spryker\Zed\Discount\Persistence\DiscountQueryContainer
-     */
     private function getDiscountQuery(): DiscountQueryContainer
     {
         return $this->getLocator()->discount()->queryContainer();
     }
 
-    /**
-     * @return void
-     */
     public function resetCurrentDiscounts(): void
     {
         $discounts = SpyDiscountQuery::create()->find();
@@ -239,11 +201,6 @@ class DiscountDataHelper extends Module
         }
     }
 
-    /**
-     * @param array $seedData
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesDiscount
-     */
     public function haveSalesDiscount(array $seedData = []): SpySalesDiscount
     {
         $discountTransfer = (new DiscountBuilder($seedData))->build();
@@ -291,11 +248,6 @@ class DiscountDataHelper extends Module
         ]);
     }
 
-    /**
-     * @param \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool $discountVoucherPoolEntity
-     *
-     * @return void
-     */
     protected function cleanupDiscountVoucherPool(SpyDiscountVoucherPool $discountVoucherPoolEntity): void
     {
         SpyDiscountVoucherPoolQuery::create()
@@ -303,11 +255,6 @@ class DiscountDataHelper extends Module
             ->delete();
     }
 
-    /**
-     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
-     *
-     * @return void
-     */
     protected function cleanupDiscount(SpyDiscount $discountEntity): void
     {
         SpyDiscountQuery::create()
@@ -315,11 +262,6 @@ class DiscountDataHelper extends Module
             ->delete();
     }
 
-    /**
-     * @param \Orm\Zed\Discount\Persistence\SpyDiscountStore $discountStoreEntity
-     *
-     * @return void
-     */
     protected function cleanupDiscountStore(SpyDiscountStore $discountStoreEntity): void
     {
         SpyDiscountStoreQuery::create()
@@ -327,11 +269,6 @@ class DiscountDataHelper extends Module
             ->delete();
     }
 
-    /**
-     * @param \Orm\Zed\Discount\Persistence\SpyDiscountAmount $discountAmountEntity
-     *
-     * @return void
-     */
     protected function cleanupDiscountAmount(SpyDiscountAmount $discountAmountEntity): void
     {
         SpyDiscountAmountQuery::create()

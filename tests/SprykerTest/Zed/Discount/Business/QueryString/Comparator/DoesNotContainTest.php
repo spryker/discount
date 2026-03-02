@@ -26,9 +26,6 @@ use Spryker\Zed\Discount\Business\QueryString\Comparator\DoesNotContain;
  */
 class DoesNotContainTest extends Unit
 {
-    /**
-     * @return void
-     */
     public function testAcceptShouldReturnTrueWhenDoesNotContainExpressionProvided(): void
     {
         $doesNotContain = $this->createDoesNotContains();
@@ -41,9 +38,6 @@ class DoesNotContainTest extends Unit
         $this->assertTrue($isAccepted);
     }
 
-    /**
-     * @return void
-     */
     public function testCompareWhenValueNotExistingInClauseShouldReturnTrue(): void
     {
         $doesNotContain = $this->createDoesNotContains();
@@ -56,9 +50,6 @@ class DoesNotContainTest extends Unit
         $this->assertTrue($isMatching);
     }
 
-    /**
-     * @return void
-     */
     public function testCompareWhenValueExistingInClauseShouldReturnFalse(): void
     {
         $contains = $this->createDoesNotContains();
@@ -71,9 +62,6 @@ class DoesNotContainTest extends Unit
         $this->assertFalse($isMatching);
     }
 
-    /**
-     * @return void
-     */
     public function testCompareWhenNonScalarValueUsedShouldThrowException(): void
     {
         $this->expectException(ComparatorException::class);
@@ -85,9 +73,6 @@ class DoesNotContainTest extends Unit
         $contains->compare($clauseTransfer, []);
     }
 
-    /**
-     * @return void
-     */
     public function testCompareShouldReturnFalseWhenEmptyValueIsProvided(): void
     {
         // Arrange
@@ -100,9 +85,6 @@ class DoesNotContainTest extends Unit
         $this->assertFalse($isMatching);
     }
 
-    /**
-     * @return void
-     */
     public function testIsValueValidShouldReturnFalseWhenEmptyValueIsProvided(): void
     {
         // Act
@@ -112,9 +94,6 @@ class DoesNotContainTest extends Unit
         $this->assertFalse($isValueValid);
     }
 
-    /**
-     * @return \Spryker\Zed\Discount\Business\QueryString\Comparator\DoesNotContain
-     */
     protected function createDoesNotContains(): DoesNotContain
     {
         return new DoesNotContain();

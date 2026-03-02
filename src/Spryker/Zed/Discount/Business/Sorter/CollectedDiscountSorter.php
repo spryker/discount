@@ -23,10 +23,6 @@ class CollectedDiscountSorter implements CollectedDiscountSorterInterface
      */
     protected $discountConfig;
 
-    /**
-     * @param \Spryker\Zed\Discount\Persistence\DiscountRepositoryInterface $discountRepository
-     * @param \Spryker\Zed\Discount\DiscountConfig $discountConfig
-     */
     public function __construct(
         DiscountRepositoryInterface $discountRepository,
         DiscountConfig $discountConfig

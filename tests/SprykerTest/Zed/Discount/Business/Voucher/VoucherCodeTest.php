@@ -26,9 +26,6 @@ use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
  */
 class VoucherCodeTest extends Unit
 {
-    /**
-     * @return void
-     */
     public function testUseCodesShouldPersistIncrementedNumberOfUses(): void
     {
         $discountVoucherEntity = $this->createDiscountVoucherMock();
@@ -66,9 +63,6 @@ class VoucherCodeTest extends Unit
         $this->assertSame(1, $updated);
     }
 
-    /**
-     * @return void
-     */
     public function testUseVoucherCodesWhenThereIsNoVoucherShouldReturnFalse(): void
     {
         $discountQueryMock = $this->createDiscountQueryMock();
@@ -84,9 +78,6 @@ class VoucherCodeTest extends Unit
         $this->assertSame(0, $updated);
     }
 
-    /**
-     * @return void
-     */
     public function testUseVoucherWhenVoucherNotActiveShouldNotUpdate(): void
     {
         $discountVoucherEntity = $this->createDiscountVoucherMock();
@@ -108,9 +99,6 @@ class VoucherCodeTest extends Unit
         $this->assertSame(0, $updated);
     }
 
-    /**
-     * @return void
-     */
     public function testUseVoucherShouldUpdateCounterForUnlimited(): void
     {
         $discountVoucherEntity = $this->createDiscountVoucherMock();
@@ -144,9 +132,6 @@ class VoucherCodeTest extends Unit
         $this->assertSame(1, $updated);
     }
 
-    /**
-     * @return void
-     */
     public function testReleaseCodesShouldPersistDecrementedNumberOfUses(): void
     {
         $discountVoucherEntity = $this->createDiscountVoucherMock();
@@ -180,9 +165,6 @@ class VoucherCodeTest extends Unit
         $this->assertSame(1, $updated);
     }
 
-    /**
-     * @return void
-     */
     public function testReleaseCodesNotVouchersFoundShouldReturnZeroUpdatedItems(): void
     {
         $discountQueryMock = $this->createDiscountQueryMock();
@@ -198,9 +180,6 @@ class VoucherCodeTest extends Unit
         $this->assertSame(0, $updated);
     }
 
-    /**
-     * @return void
-     */
     public function testReleaseCodeWhenVoucherIsWithoutCounterShouldReturnZeroUpdatedItems(): void
     {
         $discountVoucherEntity = $this->createDiscountVoucherMock();
@@ -222,11 +201,6 @@ class VoucherCodeTest extends Unit
         $this->assertSame(0, $updated);
     }
 
-    /**
-     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface|null $discountQueryContainerMock
-     *
-     * @return \Spryker\Zed\Discount\Business\Voucher\VoucherCode
-     */
     protected function createVoucherCode(
         ?DiscountQueryContainerInterface $discountQueryContainerMock = null
     ): VoucherCode {

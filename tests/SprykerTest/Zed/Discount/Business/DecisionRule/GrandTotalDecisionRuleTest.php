@@ -26,9 +26,6 @@ use SprykerTest\Zed\Discount\Business\BaseRuleTester;
  */
 class GrandTotalDecisionRuleTest extends BaseRuleTester
 {
-    /**
-     * @return void
-     */
     public function testWhenGrandTotalMatchesShouldReturnTrue(): void
     {
         $comparatorMock = $this->createComparatorMock();
@@ -95,9 +92,6 @@ class GrandTotalDecisionRuleTest extends BaseRuleTester
         ];
     }
 
-    /**
-     * @return void
-     */
     public function testWhenGrandTotalNotMatchingShouldReturnFalse(): void
     {
         $comparatorMock = $this->createComparatorMock();
@@ -121,9 +115,6 @@ class GrandTotalDecisionRuleTest extends BaseRuleTester
         $this->assertFalse($isSatisfied);
     }
 
-    /**
-     * @return void
-     */
     public function testWhenGrandTotalIsNotSetShouldReturnFalse(): void
     {
         $grandTotalDecisionRule = $this->createGrandTotalDecisionRule();
@@ -137,11 +128,6 @@ class GrandTotalDecisionRuleTest extends BaseRuleTester
         $this->assertFalse($isSatisfied);
     }
 
-    /**
-     * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface|null $comparatorMock
-     *
-     * @return \Spryker\Zed\Discount\Business\DecisionRule\GrandTotalDecisionRule
-     */
     protected function createGrandTotalDecisionRule(?ComparatorOperatorsInterface $comparatorMock = null): GrandTotalDecisionRule
     {
         if ($comparatorMock === null) {

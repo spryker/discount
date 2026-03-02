@@ -11,11 +11,5 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface QuoteChangeObserverInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $resultQuoteTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $sourceQuoteTransfer
-     *
-     * @return void
-     */
     public function checkDiscountChanges(QuoteTransfer $resultQuoteTransfer, QuoteTransfer $sourceQuoteTransfer): void;
 }

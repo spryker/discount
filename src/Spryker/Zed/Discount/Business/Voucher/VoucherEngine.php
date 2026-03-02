@@ -33,10 +33,6 @@ class VoucherEngine implements VoucherEngineInterface
      */
     protected $queryContainer;
 
-    /**
-     * @param \Spryker\Zed\Discount\DiscountConfig $discountConfig
-     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $queryContainer
-     */
     public function __construct(
         DiscountConfig $discountConfig,
         DiscountQueryContainerInterface $queryContainer

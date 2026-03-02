@@ -26,9 +26,6 @@ use Spryker\Zed\Discount\Business\QueryString\Comparator\Less;
  */
 class LessTest extends Unit
 {
-    /**
-     * @return void
-     */
     public function testAcceptShouldReturnTrueWhenLessExpressionProvided(): void
     {
         $less = $this->createLess();
@@ -41,9 +38,6 @@ class LessTest extends Unit
         $this->assertTrue($isAccepted);
     }
 
-    /**
-     * @return void
-     */
     public function testCompareWhenValueLessThanClauseShouldReturnTrue(): void
     {
         $less = $this->createLess();
@@ -56,9 +50,6 @@ class LessTest extends Unit
         $this->assertTrue($isMatching);
     }
 
-    /**
-     * @return void
-     */
     public function testCompareWhenValueNotLessThanClauseShouldReturnFalse(): void
     {
         $less = $this->createLess();
@@ -71,9 +62,6 @@ class LessTest extends Unit
         $this->assertFalse($isMatching);
     }
 
-    /**
-     * @return void
-     */
     public function testCompareWhenNonNumericValueUsedShouldThrowException(): void
     {
         $this->expectException(ComparatorException::class);
@@ -85,9 +73,6 @@ class LessTest extends Unit
         $less->compare($clauseTransfer, 'as');
     }
 
-    /**
-     * @return void
-     */
     public function testCompareShouldReturnFalseWhenEmptyValueIsProvided(): void
     {
         // Arrange
@@ -100,9 +85,6 @@ class LessTest extends Unit
         $this->assertFalse($isMatching);
     }
 
-    /**
-     * @return void
-     */
     public function testIsValueValidShouldReturnFalseWhenEmptyValueIsProvided(): void
     {
         // Act
@@ -112,9 +94,6 @@ class LessTest extends Unit
         $this->assertFalse($isValueValid);
     }
 
-    /**
-     * @return \Spryker\Zed\Discount\Business\QueryString\Comparator\Less
-     */
     protected function createLess(): Less
     {
         return new Less();

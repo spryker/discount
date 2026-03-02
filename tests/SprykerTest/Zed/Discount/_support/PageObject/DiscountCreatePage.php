@@ -108,9 +108,6 @@ class DiscountCreatePage
      */
     protected $tester;
 
-    /**
-     * @param \SprykerTest\Zed\Discount\DiscountPresentationTester $i
-     */
     public function __construct(DiscountPresentationTester $i)
     {
         $this->tester = $i;
@@ -141,12 +138,6 @@ class DiscountCreatePage
         return $this;
     }
 
-    /**
-     * @param string $discountName
-     * @param array $override
-     *
-     * @return void
-     */
     public function createDiscount(string $discountName, array $override = []): void
     {
         $i = $this->tester;
@@ -188,14 +179,6 @@ class DiscountCreatePage
         $i->click('#create-discount-button');
     }
 
-    /**
-     * @param int $number
-     * @param string $filter
-     * @param string $operator
-     * @param string $value
-     *
-     * @return void
-     */
     public function fillInDiscountRule(int $number, string $filter, string $operator, string $value): void
     {
         $i = $this->tester;
@@ -205,22 +188,11 @@ class DiscountCreatePage
         $i->fillField("builder_calculation_rule_{$number}_value_0", $value);
     }
 
-    /**
-     * @param string $operator
-     * @param string $group
-     *
-     * @return void
-     */
     public function changeDiscountGroupOperator(string $operator, string $group = '0'): void
     {
         $this->tester->click(Locator::contains('label', $operator), "#builder_calculation_group_$group");
     }
 
-    /**
-     * @param string $query
-     *
-     * @return void
-     */
     public function assertDiscountQuery(string $query): void
     {
         $i = $this->tester;

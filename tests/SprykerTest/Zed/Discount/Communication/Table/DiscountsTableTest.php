@@ -78,9 +78,6 @@ class DiscountsTableTest extends Unit
         $this->assertEmpty($diff);
     }
 
-    /**
-     * @return \SprykerTest\Zed\Discount\Communication\Table\DiscountsTableMock
-     */
     protected function createDiscountsTableMock(): DiscountsTableMock
     {
         return new DiscountsTableMock(
@@ -183,25 +180,16 @@ class DiscountsTableTest extends Unit
         ];
     }
 
-    /**
-     * @return \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
-     */
     protected function createDiscountQueryContainer(): DiscountQueryContainerInterface
     {
         return new DiscountQueryContainer();
     }
 
-    /**
-     * @return \Spryker\Zed\Discount\Persistence\DiscountRepositoryInterface
-     */
     protected function createDiscountRepository(): DiscountRepositoryInterface
     {
         return new DiscountRepository();
     }
 
-    /**
-     * @return \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory
-     */
     protected function getFactory(): DiscountCommunicationFactory
     {
         return $this->tester->getFactory();

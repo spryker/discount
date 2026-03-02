@@ -11,11 +11,5 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface VoucherCartCodeAdderInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $cartCode
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
     public function addCartCode(QuoteTransfer $quoteTransfer, string $cartCode): QuoteTransfer;
 }

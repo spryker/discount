@@ -24,10 +24,6 @@ class ItemPriceCollector extends BaseCollector implements CollectorInterface
      */
     protected $currencyConverter;
 
-    /**
-     * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface $comparators
-     * @param \Spryker\Zed\Discount\Business\QueryString\Converter\MoneyValueConverterInterface $currencyConverter
-     */
     public function __construct(
         ComparatorOperatorsInterface $comparators,
         MoneyValueConverterInterface $currencyConverter

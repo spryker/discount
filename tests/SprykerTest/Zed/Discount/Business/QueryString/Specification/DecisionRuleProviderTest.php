@@ -31,9 +31,6 @@ use Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface;
  */
 class DecisionRuleProviderTest extends Unit
 {
-    /**
-     * @return void
-     */
     public function testCreateAndShouldReturnInstanceOfAndCompositeSpecification(): void
     {
         $decisionRuleProvider = $this->createDecisionRuleProvider();
@@ -45,9 +42,6 @@ class DecisionRuleProviderTest extends Unit
         $this->assertInstanceOf(DecisionRuleAndSpecification::class, $compositeSpecification);
     }
 
-    /**
-     * @return void
-     */
     public function testCreateOrShouldReturnInstanceOfOrCompositeSpecification(): void
     {
         $decisionRuleProvider = $this->createDecisionRuleProvider();
@@ -59,9 +53,6 @@ class DecisionRuleProviderTest extends Unit
         $this->assertInstanceOf(DecisionRuleOrSpecification::class, $compositeSpecification);
     }
 
-    /**
-     * @return void
-     */
     public function testGetSpecificationContextShouldReturnContextWithClauseAndPlugin(): void
     {
         $decisionRulePluginMock = $this->createDecisionRulePluginMock();
@@ -79,9 +70,6 @@ class DecisionRuleProviderTest extends Unit
         $this->assertInstanceOf(DecisionRuleContext::class, $decisionRuleSpecificationContext);
     }
 
-    /**
-     * @return void
-     */
     public function testGetSpecificationContextShouldThrowExceptionWhenSpecificationNotFound(): void
     {
         $this->expectException(QueryStringException::class);

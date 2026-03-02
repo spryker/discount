@@ -48,9 +48,6 @@ class PercentageTest extends Unit
      */
     public const DISCOUNT_PERCENTAGE_200 = 20000;
 
-    /**
-     * @return void
-     */
     public function testCalculatePercentageShouldNotGrantDiscountsHigherThanHundredPercent(): void
     {
         $items = $this->getDiscountableItems(
@@ -68,9 +65,6 @@ class PercentageTest extends Unit
         $this->assertSame(static::ITEM_GROSS_PRICE_1000 * 3, $discountAmount);
     }
 
-    /**
-     * @return void
-     */
     public function testCalculatePercentageShouldNotGrantDiscountsLessThanZeroPercent(): void
     {
         $items = $this->getDiscountableItems(
@@ -88,9 +82,6 @@ class PercentageTest extends Unit
         $this->assertSame(0, $discountAmount);
     }
 
-    /**
-     * @return void
-     */
     public function testCalculatePercentageShouldThrowAnExceptionForNonNumericValues(): void
     {
         $items = $this->getDiscountableItems(
@@ -107,9 +98,6 @@ class PercentageTest extends Unit
         $calculator->calculateDiscount($items, $discountCalculatorTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testCalculatePercentageShouldNotGiveNegativeDiscountAmounts(): void
     {
         $items = $this->getDiscountableItems(
@@ -127,9 +115,6 @@ class PercentageTest extends Unit
         $this->assertSame(0, $discountAmount);
     }
 
-    /**
-     * @return void
-     */
     public function testCalculatePercentageWhenQuantityIsNotSetShouldSetItToOne(): void
     {
         $items = $this->getDiscountableItems(

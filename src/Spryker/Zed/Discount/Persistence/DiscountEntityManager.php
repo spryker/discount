@@ -23,11 +23,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
  */
 class DiscountEntityManager extends AbstractEntityManager implements DiscountEntityManagerInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
-     *
-     * @return \Generated\Shared\Transfer\DiscountTransfer
-     */
     public function createDiscount(DiscountTransfer $discountTransfer): DiscountTransfer
     {
         $discountEntity = new SpyDiscount();
@@ -35,11 +30,6 @@ class DiscountEntityManager extends AbstractEntityManager implements DiscountEnt
         return $this->saveDiscount($discountEntity, $discountTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
-     *
-     * @return \Generated\Shared\Transfer\DiscountTransfer
-     */
     public function updateDiscount(DiscountTransfer $discountTransfer): DiscountTransfer
     {
         $discountEntity = $this->getFactory()->createDiscountQuery()
@@ -49,11 +39,6 @@ class DiscountEntityManager extends AbstractEntityManager implements DiscountEnt
         return $this->saveDiscount($discountEntity, $discountTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountMoneyAmountTransfer $discountMoneyAmountTransfer
-     *
-     * @return \Generated\Shared\Transfer\DiscountMoneyAmountTransfer
-     */
     public function createDiscountAmount(DiscountMoneyAmountTransfer $discountMoneyAmountTransfer): DiscountMoneyAmountTransfer
     {
         $discountMapper = $this->getFactory()->createDiscountMapper();
@@ -67,11 +52,6 @@ class DiscountEntityManager extends AbstractEntityManager implements DiscountEnt
         return $discountMapper->mapDiscountAmountEntityToDiscountMoneyAmountTransfer($discountAmountEntity, $discountMoneyAmountTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountMoneyAmountTransfer $discountMoneyAmountTransfer
-     *
-     * @return void
-     */
     public function updateDiscountAmount(DiscountMoneyAmountTransfer $discountMoneyAmountTransfer): void
     {
         $discountAmountEntity = $this->getFactory()
@@ -85,11 +65,6 @@ class DiscountEntityManager extends AbstractEntityManager implements DiscountEnt
         $discountAmountEntity->save();
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountGeneralTransfer $discountGeneralTransfer
-     *
-     * @return int
-     */
     public function createDiscountVoucherPool(DiscountGeneralTransfer $discountGeneralTransfer): int
     {
         $discountVoucherPoolEntity = $this->getFactory()
@@ -117,11 +92,6 @@ class DiscountEntityManager extends AbstractEntityManager implements DiscountEnt
         }
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountGeneralTransfer $discountGeneralTransfer
-     *
-     * @return int
-     */
     public function updateDiscountVoucherPool(DiscountGeneralTransfer $discountGeneralTransfer): int
     {
         /** @var \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool $discountVoucherPoolEntity */
@@ -142,11 +112,6 @@ class DiscountEntityManager extends AbstractEntityManager implements DiscountEnt
         return $discountVoucherPoolEntity->getIdDiscountVoucherPool();
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountAmountCriteriaTransfer $discountAmountCriteriaTransfer
-     *
-     * @return void
-     */
     public function deleteDiscountAmounts(DiscountAmountCriteriaTransfer $discountAmountCriteriaTransfer): void
     {
         $discountAmountQuery = $this->getFactory()->createDiscountAmountQuery();
@@ -203,11 +168,6 @@ class DiscountEntityManager extends AbstractEntityManager implements DiscountEnt
             ->delete();
     }
 
-    /**
-     * @param int $idDiscountVoucherPool
-     *
-     * @return void
-     */
     public function deleteDiscountVouchersByIdDiscountVoucherPool(int $idDiscountVoucherPool): void
     {
         $this->getFactory()
@@ -216,11 +176,6 @@ class DiscountEntityManager extends AbstractEntityManager implements DiscountEnt
             ->delete();
     }
 
-    /**
-     * @param int $idDiscountVoucherPool
-     *
-     * @return void
-     */
     public function deleteDiscountVoucherPoolByIdDiscountVoucherPool(int $idDiscountVoucherPool): void
     {
         $this->getFactory()
@@ -229,12 +184,6 @@ class DiscountEntityManager extends AbstractEntityManager implements DiscountEnt
             ->delete();
     }
 
-    /**
-     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
-     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
-     *
-     * @return \Generated\Shared\Transfer\DiscountTransfer
-     */
     protected function saveDiscount(SpyDiscount $discountEntity, DiscountTransfer $discountTransfer): DiscountTransfer
     {
         $discountMapper = $this->getFactory()->createDiscountMapper();
@@ -245,12 +194,6 @@ class DiscountEntityManager extends AbstractEntityManager implements DiscountEnt
         return $discountMapper->mapDiscountEntityToDiscountTransfer($discountEntity, $discountTransfer);
     }
 
-    /**
-     * @param \Orm\Zed\Discount\Persistence\SpyDiscountAmountQuery $discountAmountQuery
-     * @param \Generated\Shared\Transfer\DiscountAmountCriteriaTransfer $discountAmountCriteriaTransfer
-     *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscountAmountQuery
-     */
     protected function applyDiscountAmountCriteria(
         SpyDiscountAmountQuery $discountAmountQuery,
         DiscountAmountCriteriaTransfer $discountAmountCriteriaTransfer

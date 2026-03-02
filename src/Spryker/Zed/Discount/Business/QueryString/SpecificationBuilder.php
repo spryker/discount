@@ -59,13 +59,6 @@ class SpecificationBuilder implements SpecificationBuilderInterface
      */
     protected $availableFields;
 
-    /**
-     * @param \Spryker\Zed\Discount\Business\QueryString\TokenizerInterface $tokenizer
-     * @param \Spryker\Zed\Discount\Business\QueryString\Specification\SpecificationProviderInterface $specificationProvider
-     * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface $comparatorOperators
-     * @param \Spryker\Zed\Discount\Business\QueryString\ClauseValidatorInterface $clauseValidator
-     * @param \Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProviderInterface $metaDataProvider
-     */
     public function __construct(
         TokenizerInterface $tokenizer,
         SpecificationProviderInterface $specificationProvider,

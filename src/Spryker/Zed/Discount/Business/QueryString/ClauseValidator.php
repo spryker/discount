@@ -23,10 +23,6 @@ class ClauseValidator implements ClauseValidatorInterface
      */
     protected $metaDataProvider;
 
-    /**
-     * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface $comparatorOperators
-     * @param \Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProviderInterface $metaDataProvider
-     */
     public function __construct(
         ComparatorOperatorsInterface $comparatorOperators,
         MetaDataProviderInterface $metaDataProvider

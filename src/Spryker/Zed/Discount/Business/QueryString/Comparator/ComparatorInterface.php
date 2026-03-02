@@ -28,16 +28,8 @@ interface ComparatorInterface
      */
     public function isValidValue($withValue): bool;
 
-    /**
-     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
-     *
-     * @return bool
-     */
     public function accept(ClauseTransfer $clauseTransfer): bool;
 
-    /**
-     * @return string
-     */
     public function getExpression(): string;
 
     /**

@@ -12,12 +12,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 class VoucherCartCodeAdder implements VoucherCartCodeAdderInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $cartCode
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
     public function addCartCode(QuoteTransfer $quoteTransfer, string $cartCode): QuoteTransfer
     {
         if ($this->isCartCodeInQuote($quoteTransfer, $cartCode)) {
@@ -30,12 +24,6 @@ class VoucherCartCodeAdder implements VoucherCartCodeAdderInterface
         return $quoteTransfer->addVoucherDiscount($voucherDiscount);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $cartCode
-     *
-     * @return bool
-     */
     protected function isCartCodeInQuote(QuoteTransfer $quoteTransfer, string $cartCode): bool
     {
         foreach ($quoteTransfer->getVoucherDiscounts() as $voucherDiscount) {

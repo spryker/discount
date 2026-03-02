@@ -11,11 +11,6 @@ use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 
 interface DiscountVoucherPoolDeleterInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
-     *
-     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
-     */
     public function deleteDiscountVoucherPoolByDiscountConfigurator(
         DiscountConfiguratorTransfer $discountConfiguratorTransfer
     ): DiscountConfiguratorTransfer;

@@ -37,9 +37,6 @@ use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
  */
 class DiscountPersistTest extends Unit
 {
-    /**
-     * @return void
-     */
     public function testSaveDiscountWithVoucherShouldSaveEntityWithVoucherPool(): void
     {
         $discountPersist = $this->createDiscountPersist();
@@ -55,9 +52,6 @@ class DiscountPersistTest extends Unit
         $discountPersist->save($discountConfiguratorTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testUpdateWhenDiscountExistShouldCallSaveOnDiscountEntity(): void
     {
         $discountEntityMock = $this->createDiscountEntityMock();
@@ -87,9 +81,6 @@ class DiscountPersistTest extends Unit
         $discountPersist->update($discountConfiguratorTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testUpdateWhenDiscountNotFoundShouldThrowException(): void
     {
         $this->expectException(PersistenceException::class);
@@ -110,9 +101,6 @@ class DiscountPersistTest extends Unit
         $discountPersist->update($discountConfiguratorTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testSaveVoucherCodesShouldCallVoucherEngineForCodeGeneration(): void
     {
         $discountEntityMock = $this->createDiscountEntityMock();
@@ -146,9 +134,6 @@ class DiscountPersistTest extends Unit
         $discountPersist->saveVoucherCodes($discountVoucherTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testSaveVoucherCodesWhenDiscountNotFoundShouldThrowException(): void
     {
         $this->expectException(PersistenceException::class);
@@ -169,9 +154,6 @@ class DiscountPersistTest extends Unit
         $discountPersist->saveVoucherCodes($discountVoucherTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testToggleDiscountVisibilityShouldChangeActiveFlag(): void
     {
         $discountEntityMock = $this->createDiscountEntityMock();
@@ -200,9 +182,6 @@ class DiscountPersistTest extends Unit
         $discountPersist->toggleDiscountVisibility(1, true);
     }
 
-    /**
-     * @return void
-     */
     public function testToggleDiscountVisibilityShouldThrowExceptionWhenDiscountNotFound(): void
     {
         $this->expectException(PersistenceException::class);
@@ -223,9 +202,6 @@ class DiscountPersistTest extends Unit
         $discountPersist->toggleDiscountVisibility(1, true);
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
-     */
     protected function createDiscountConfiguratorTransfer(): DiscountConfiguratorTransfer
     {
         $discountConfiguratorTransfer = new DiscountConfiguratorTransfer();

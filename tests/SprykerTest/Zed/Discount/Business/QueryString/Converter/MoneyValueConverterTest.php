@@ -43,9 +43,6 @@ class MoneyValueConverterTest extends Unit
      */
     protected const EXPRESSION_IS_NOT_IN = 'is not in';
 
-    /**
-     * @return void
-     */
     public function testConvertDecimalToCentWhenIsNotInUsedShouldUpdateAllItems(): void
     {
         $currencyConverterMock = $this->createMoneyValueConverter();
@@ -64,9 +61,6 @@ class MoneyValueConverterTest extends Unit
         $this->assertSame('1230', $convertedValues[2]);
     }
 
-    /**
-     * @return void
-     */
     public function testConvertDecimalToCentWhenIsInUsedShouldUpdateAllItems(): void
     {
         $currencyConverterMock = $this->createMoneyValueConverter();
@@ -85,9 +79,6 @@ class MoneyValueConverterTest extends Unit
         $this->assertSame('1230', $convertedValues[2]);
     }
 
-    /**
-     * @return void
-     */
     public function testConvertDecimalToCentWhenSingleValueUsedShouldUpdateAllItems(): void
     {
         $currencyConverterMock = $this->createMoneyValueConverter();
@@ -101,9 +92,6 @@ class MoneyValueConverterTest extends Unit
         $this->assertSame('1050', $clauseTransfer->getValue());
     }
 
-    /**
-     * @return \Spryker\Zed\Discount\Business\QueryString\Converter\MoneyValueConverterInterface
-     */
     protected function createMoneyValueConverter(): MoneyValueConverterInterface
     {
         $discountToMoneyBridge = new DiscountToMoneyBridge(new MoneyFacade());

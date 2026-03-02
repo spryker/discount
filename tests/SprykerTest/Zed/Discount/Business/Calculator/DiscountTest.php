@@ -213,9 +213,6 @@ class DiscountTest extends Unit
         $this->assertEquals([$expectedDiscount], $actualResult->getCartRuleDiscounts()->getArrayCopy());
     }
 
-    /**
-     * @return void
-     */
     public function testCalculateDiscountsWithNonApplicableButValidVoucherShouldNotApply(): void
     {
         // Assign
@@ -254,9 +251,6 @@ class DiscountTest extends Unit
         $this->assertCount(0, $actualResult->getVoucherDiscounts());
     }
 
-    /**
-     * @return void
-     */
     public function testCalculateDiscountsWithUseNumberLimitReachedVoucherShouldAddErrorMessage(): void
     {
         // Assign
@@ -304,9 +298,6 @@ class DiscountTest extends Unit
         $this->assertCount(0, $actualResult->getVoucherDiscounts());
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\StoreTransfer
-     */
     protected function getCurrentStore(): StoreTransfer
     {
         return (new StoreTransfer())

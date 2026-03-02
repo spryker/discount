@@ -30,10 +30,6 @@ class DiscountFormDataProvider extends BaseDiscountFormDataProvider
      */
     protected $localeFacade;
 
-    /**
-     * @param \Spryker\Zed\Discount\Business\DiscountFacadeInterface $discountFacade
-     * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToLocaleFacadeInterface $localeFacade
-     */
     public function __construct(
         DiscountFacadeInterface $discountFacade,
         DiscountToLocaleFacadeInterface $localeFacade
@@ -67,9 +63,6 @@ class DiscountFormDataProvider extends BaseDiscountFormDataProvider
         ];
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
-     */
     protected function createDefaultDiscountConfiguratorTransfer(): DiscountConfiguratorTransfer
     {
         $discountConfiguratorTransfer = new DiscountConfiguratorTransfer();
@@ -106,9 +99,6 @@ class DiscountFormDataProvider extends BaseDiscountFormDataProvider
         return $discountCalculatorTransfer;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\DiscountConditionTransfer
-     */
     protected function createDiscountConditionTransfer(): DiscountConditionTransfer
     {
         $discountConditionTransfer = new DiscountConditionTransfer();

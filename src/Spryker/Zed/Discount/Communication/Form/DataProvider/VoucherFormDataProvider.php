@@ -18,19 +18,11 @@ class VoucherFormDataProvider extends BaseDiscountFormDataProvider
      */
     protected DiscountToLocaleFacadeInterface $localeFacade;
 
-    /**
-     * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToLocaleFacadeInterface $localeFacade
-     */
     public function __construct(DiscountToLocaleFacadeInterface $localeFacade)
     {
         $this->localeFacade = $localeFacade;
     }
 
-    /**
-     * @param int|null $idDiscount
-     *
-     * @return \Generated\Shared\Transfer\DiscountVoucherTransfer
-     */
     public function getData(?int $idDiscount = null): DiscountVoucherTransfer
     {
         $discountVoucherTransfer = new DiscountVoucherTransfer();

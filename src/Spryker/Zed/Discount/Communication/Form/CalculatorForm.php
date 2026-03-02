@@ -99,11 +99,6 @@ class CalculatorForm extends AbstractType
         );
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
-     * @return void
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
@@ -348,17 +343,11 @@ class CalculatorForm extends AbstractType
         $event->setData($data);
     }
 
-    /**
-     * @return string
-     */
     public function getBlockPrefix(): string
     {
         return 'discount_calculator';
     }
 
-    /**
-     * @return string
-     */
     protected function getMoneyValueCollectionType(): string
     {
         if ($this->getConfig()->isMoneyCollectionFormTypePluginEnabled()) {

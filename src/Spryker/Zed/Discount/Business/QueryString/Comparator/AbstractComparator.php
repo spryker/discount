@@ -41,19 +41,11 @@ abstract class AbstractComparator implements ComparatorInterface
         return static::ALLOW_EMPTY_VALUE || !$this->isEmptyValue($withValue);
     }
 
-    /**
-     * @return string
-     */
     public function getExpression(): string
     {
         return static::EXPRESSION;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
-     *
-     * @return bool
-     */
     public function accept(ClauseTransfer $clauseTransfer): bool
     {
         return strcasecmp($clauseTransfer->getOperatorOrFail(), $this->getExpression()) === 0;

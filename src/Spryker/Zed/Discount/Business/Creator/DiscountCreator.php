@@ -32,11 +32,6 @@ class DiscountCreator implements DiscountCreatorInterface
      */
     protected $discountVoucherPoolCreator;
 
-    /**
-     * @param \Spryker\Zed\Discount\Business\Mapper\DiscountMapperInterface $discountMapper
-     * @param \Spryker\Zed\Discount\Persistence\DiscountEntityManagerInterface $discountEntityManager
-     * @param \Spryker\Zed\Discount\Business\Creator\DiscountVoucherPoolCreatorInterface $discountVoucherPoolCreator
-     */
     public function __construct(
         DiscountMapperInterface $discountMapper,
         DiscountEntityManagerInterface $discountEntityManager,
@@ -47,11 +42,6 @@ class DiscountCreator implements DiscountCreatorInterface
         $this->discountVoucherPoolCreator = $discountVoucherPoolCreator;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
-     *
-     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
-     */
     public function createDiscount(DiscountConfiguratorTransfer $discountConfiguratorTransfer): DiscountConfiguratorTransfer
     {
         return $this->getTransactionHandler()->handleTransaction(function () use ($discountConfiguratorTransfer) {
@@ -59,11 +49,6 @@ class DiscountCreator implements DiscountCreatorInterface
         });
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
-     *
-     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
-     */
     protected function executeCreateDiscountTransaction(DiscountConfiguratorTransfer $discountConfiguratorTransfer): DiscountConfiguratorTransfer
     {
         $idDiscountVoucherPool = $this->discountVoucherPoolCreator->createDiscountVoucherPool($discountConfiguratorTransfer);

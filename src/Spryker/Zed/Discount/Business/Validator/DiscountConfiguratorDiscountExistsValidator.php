@@ -35,10 +35,6 @@ class DiscountConfiguratorDiscountExistsValidator implements DiscountConfigurato
      */
     protected $translatorFacade;
 
-    /**
-     * @param \Spryker\Zed\Discount\Persistence\DiscountRepositoryInterface $discountRepository
-     * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToTranslatorFacadeInterface $translatorFacade
-     */
     public function __construct(
         DiscountRepositoryInterface $discountRepository,
         DiscountToTranslatorFacadeInterface $translatorFacade
@@ -47,12 +43,6 @@ class DiscountConfiguratorDiscountExistsValidator implements DiscountConfigurato
         $this->translatorFacade = $translatorFacade;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
-     * @param \Generated\Shared\Transfer\DiscountConfiguratorResponseTransfer $discountConfiguratorResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\DiscountConfiguratorResponseTransfer
-     */
     public function validateDiscountConfigurator(
         DiscountConfiguratorTransfer $discountConfiguratorTransfer,
         DiscountConfiguratorResponseTransfer $discountConfiguratorResponseTransfer

@@ -62,11 +62,6 @@ class DiscountUpdateAggregator implements DiscountUpdateAggregatorInterface
         $this->discountPostUpdatePlugins = $discountPostUpdatePlugins;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
-     *
-     * @return \Generated\Shared\Transfer\DiscountConfiguratorResponseTransfer
-     */
     public function updateDiscountWithValidation(DiscountConfiguratorTransfer $discountConfiguratorTransfer): DiscountConfiguratorResponseTransfer
     {
         $discountConfiguratorResponseTransfer = (new DiscountConfiguratorResponseTransfer())->setDiscountConfigurator($discountConfiguratorTransfer);
@@ -84,12 +79,6 @@ class DiscountUpdateAggregator implements DiscountUpdateAggregatorInterface
         });
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
-     * @param \Generated\Shared\Transfer\DiscountConfiguratorResponseTransfer $discountConfiguratorResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\DiscountConfiguratorResponseTransfer
-     */
     protected function executeUpdateDiscountWithValidationTransaction(
         DiscountConfiguratorTransfer $discountConfiguratorTransfer,
         DiscountConfiguratorResponseTransfer $discountConfiguratorResponseTransfer
@@ -105,11 +94,6 @@ class DiscountUpdateAggregator implements DiscountUpdateAggregatorInterface
             ->setIsSuccessful(true);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
-     *
-     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
-     */
     protected function executeDiscountPostUpdatePlugins(DiscountConfiguratorTransfer $discountConfiguratorTransfer): DiscountConfiguratorTransfer
     {
         foreach ($this->discountPostUpdatePlugins as $discountPostUpdatePlugin) {

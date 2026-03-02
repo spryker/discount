@@ -24,10 +24,6 @@ class Validator implements ValidatorInterface
      */
     protected $collectorBuilder;
 
-    /**
-     * @param \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilderInterface $decisionRuleBuilder
-     * @param \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilderInterface $collectorBuilder
-     */
     public function __construct(
         SpecificationBuilderInterface $decisionRuleBuilder,
         SpecificationBuilderInterface $collectorBuilder

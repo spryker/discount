@@ -87,9 +87,6 @@ class DiscountOrderHydratePluginTest extends Unit
         $this->tester->addCurrentStore($storeTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testOrderHydratedWithDiscount(): void
     {
         //Arrange
@@ -106,9 +103,6 @@ class DiscountOrderHydratePluginTest extends Unit
         $this->assertNotEmpty($orderTransfer->getCalculatedDiscounts());
     }
 
-    /**
-     * @return void
-     */
     public function testOrderHydratedWithDiscountVouchers(): void
     {
         // Arrange
@@ -133,9 +127,6 @@ class DiscountOrderHydratePluginTest extends Unit
         $this->assertEquals($discountVoucherTransfer->getCode(), $orderTransfer->getVoucherDiscounts()->getIterator()->current()->getVoucherCode());
     }
 
-    /**
-     * @return array
-     */
     public function orderHydratorItemsDataProvider(): array
     {
         return [
@@ -146,9 +137,6 @@ class DiscountOrderHydratePluginTest extends Unit
         ];
     }
 
-    /**
-     * @return \Generated\Shared\DataBuilder\QuoteBuilder
-     */
     protected function getBaseQuoteBuilder(): QuoteBuilder
     {
         return (new QuoteBuilder())
@@ -159,9 +147,6 @@ class DiscountOrderHydratePluginTest extends Unit
             ->withCurrency();
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
     protected function getMultipleItemsMixedQuantityQuote(): QuoteTransfer
     {
         return $this->getBaseQuoteBuilder()
@@ -171,9 +156,6 @@ class DiscountOrderHydratePluginTest extends Unit
             ->build();
     }
 
-    /**
-     * @return array
-     */
     protected function getDataForOrderHydratorMultipleItemsMixedQuantity(): array
     {
         $quoteTransfer = $this->getMultipleItemsMixedQuantityQuote();
@@ -195,9 +177,6 @@ class DiscountOrderHydratePluginTest extends Unit
         ];
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
     protected function getSingleItemHigherQuantityQuote(): QuoteTransfer
     {
         return $this->getBaseQuoteBuilder()
@@ -205,9 +184,6 @@ class DiscountOrderHydratePluginTest extends Unit
             ->build();
     }
 
-    /**
-     * @return array
-     */
     protected function getDataForOrderHydratorSingleItemHigherQuantity(): array
     {
         $quoteTransfer = $this->getSingleItemHigherQuantityQuote();
@@ -225,9 +201,6 @@ class DiscountOrderHydratePluginTest extends Unit
         ];
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
     protected function getSingleItemQuote(): QuoteTransfer
     {
         return $this->getBaseQuoteBuilder()
@@ -235,9 +208,6 @@ class DiscountOrderHydratePluginTest extends Unit
             ->build();
     }
 
-    /**
-     * @return array
-     */
     protected function getDataForOrderHydratorSingleItem(): array
     {
         $quoteTransfer = $this->getSingleItemQuote();
@@ -255,9 +225,6 @@ class DiscountOrderHydratePluginTest extends Unit
         ];
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
     protected function getMultipleItemsQuote(): QuoteTransfer
     {
         return $this->getBaseQuoteBuilder()
@@ -267,9 +234,6 @@ class DiscountOrderHydratePluginTest extends Unit
             ->build();
     }
 
-    /**
-     * @return array
-     */
     protected function getDataForOrderHydratorMultipleItem(): array
     {
         $quoteTransfer = $this->getMultipleItemsQuote();
@@ -362,9 +326,6 @@ class DiscountOrderHydratePluginTest extends Unit
         }
     }
 
-    /**
-     * @return array
-     */
     protected function getDataForOrderHydratorMultipleItemsMixedQuantityOrderLevel(): array
     {
         $quoteTransfer = $this->getMultipleItemsMixedQuantityQuote();
@@ -378,9 +339,6 @@ class DiscountOrderHydratePluginTest extends Unit
         ];
     }
 
-    /**
-     * @return array
-     */
     protected function getDataForOrderHydratorMultipleItemOrderLevel(): array
     {
         $quoteTransfer = $this->getMultipleItemsQuote();
@@ -394,9 +352,6 @@ class DiscountOrderHydratePluginTest extends Unit
         ];
     }
 
-    /**
-     * @return array
-     */
     protected function getDataForOrderHydratorSingleItemHigherQuantityOrderLevel(): array
     {
         $quoteTransfer = $this->getSingleItemHigherQuantityQuote();
@@ -410,9 +365,6 @@ class DiscountOrderHydratePluginTest extends Unit
         ];
     }
 
-    /**
-     * @return array
-     */
     protected function getDataForOrderHydratorSingleItemOrderLevel(): array
     {
         $quoteTransfer = $this->getSingleItemQuote();
@@ -426,9 +378,6 @@ class DiscountOrderHydratePluginTest extends Unit
         ];
     }
 
-    /**
-     * @return array
-     */
     public function orderHydratorDataProvider(): array
     {
         return [
@@ -439,12 +388,6 @@ class DiscountOrderHydratePluginTest extends Unit
         ];
     }
 
-    /**
-     * @param int $idSalesOrder
-     * @param int $idSalesOrderItem
-     *
-     * @return array
-     */
     protected function getSeedDataForSalesDiscount(int $idSalesOrder, int $idSalesOrderItem): array
     {
         return [
@@ -456,27 +399,16 @@ class DiscountOrderHydratePluginTest extends Unit
         ];
     }
 
-    /**
-     * @param string $fieldName
-     *
-     * @return string
-     */
     protected function getDiscountPhpFieldName(string $fieldName): string
     {
         return SpySalesDiscountTableMap::translateFieldName($fieldName, SpySalesDiscountTableMap::TYPE_COLNAME, SpySalesDiscountTableMap::TYPE_FIELDNAME);
     }
 
-    /**
-     * @return \Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface
-     */
     protected function createDiscountOrderHydratePlugin(): HydrateOrderPluginInterface
     {
         return new DiscountOrderHydratePlugin();
     }
 
-    /**
-     * @return \Spryker\Zed\Sales\Business\SalesFacadeInterface
-     */
     protected function getSalesFacade(): SalesFacadeInterface
     {
         /**
@@ -487,11 +419,6 @@ class DiscountOrderHydratePluginTest extends Unit
         return $salesFacade;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
     protected function findOrder(SaveOrderTransfer $saveOrderTransfer): OrderTransfer
     {
         $salesFacade = $this->getSalesFacade();
@@ -501,11 +428,6 @@ class DiscountOrderHydratePluginTest extends Unit
         return $orderTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return void
-     */
     protected function createDiscountForOrder(OrderTransfer $orderTransfer): void
     {
         $orderTransfer->requireItems();
@@ -515,13 +437,6 @@ class DiscountOrderHydratePluginTest extends Unit
         }
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param \Generated\Shared\Transfer\DiscountGeneralTransfer $discountGeneralTransfer
-     * @param \Generated\Shared\Transfer\DiscountVoucherTransfer $discountVoucherTransfer
-     *
-     * @return void
-     */
     protected function addVoucherDiscountToOrder(
         OrderTransfer $orderTransfer,
         DiscountGeneralTransfer $discountGeneralTransfer,

@@ -27,20 +27,11 @@ class QuoteDiscountMaxUsageValidator implements QuoteDiscountValidatorInterface
      */
     protected $discountRepository;
 
-    /**
-     * @param \Spryker\Zed\Discount\Persistence\DiscountRepositoryInterface $discountRepository
-     */
     public function __construct(DiscountRepositoryInterface $discountRepository)
     {
         $this->discountRepository = $discountRepository;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
-     *
-     * @return bool
-     */
     public function validate(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
     {
         $voucherDiscounts = $quoteTransfer->getVoucherDiscounts();
@@ -60,11 +51,6 @@ class QuoteDiscountMaxUsageValidator implements QuoteDiscountValidatorInterface
         return $voucherCodesExceedingUsageLimit === [];
     }
 
-    /**
-     * @param string $voucherCode
-     *
-     * @return \Generated\Shared\Transfer\MessageTransfer
-     */
     protected function createVoucherCodeLimitReachedMessageTransfer(string $voucherCode): MessageTransfer
     {
         return (new MessageTransfer())
@@ -102,13 +88,6 @@ class QuoteDiscountMaxUsageValidator implements QuoteDiscountValidatorInterface
         return $codes;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\MessageTransfer $message
-     * @param int $errorCode
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
-     *
-     * @return void
-     */
     protected function addError(MessageTransfer $message, int $errorCode, CheckoutResponseTransfer $checkoutResponseTransfer): void
     {
         $checkoutErrorTransfer = (new CheckoutErrorTransfer())

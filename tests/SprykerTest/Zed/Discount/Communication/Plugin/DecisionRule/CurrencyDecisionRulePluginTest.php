@@ -29,9 +29,6 @@ class CurrencyDecisionRulePluginTest extends Unit
      */
     protected $tester;
 
-    /**
-     * @return void
-     */
     public function testGetQueryStringValueOptionsReturnsAllAvailableCurrencies(): void
     {
         // Arrange

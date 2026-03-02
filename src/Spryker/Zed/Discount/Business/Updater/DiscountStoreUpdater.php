@@ -26,21 +26,12 @@ class DiscountStoreUpdater implements DiscountStoreUpdaterInterface
      */
     protected $discountEntityManager;
 
-    /**
-     * @param \Spryker\Zed\Discount\Persistence\DiscountRepositoryInterface $discountRepository
-     * @param \Spryker\Zed\Discount\Persistence\DiscountEntityManagerInterface $discountEntityManager
-     */
     public function __construct(DiscountRepositoryInterface $discountRepository, DiscountEntityManagerInterface $discountEntityManager)
     {
         $this->discountRepository = $discountRepository;
         $this->discountEntityManager = $discountEntityManager;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
-     *
-     * @return void
-     */
     public function updateDiscountStoreRelationships(DiscountConfiguratorTransfer $discountConfiguratorTransfer): void
     {
         $this->getTransactionHandler()->handleTransaction(function () use ($discountConfiguratorTransfer) {
@@ -48,11 +39,6 @@ class DiscountStoreUpdater implements DiscountStoreUpdaterInterface
         });
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
-     *
-     * @return void
-     */
     protected function executeUpdateDiscountStoreRelationshipsTransaction(DiscountConfiguratorTransfer $discountConfiguratorTransfer): void
     {
         $idDiscount = $discountConfiguratorTransfer->getDiscountGeneralOrFail()->getIdDiscountOrFail();

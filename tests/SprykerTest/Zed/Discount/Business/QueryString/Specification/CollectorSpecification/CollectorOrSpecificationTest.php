@@ -28,9 +28,6 @@ use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecificati
  */
 class CollectorOrSpecificationTest extends Unit
 {
-    /**
-     * @return void
-     */
     public function testCollectShouldMergedUniqueDataFromBothCollections(): void
     {
         $leftMock = $this->createCollectorSpecificationMock();
@@ -59,12 +56,6 @@ class CollectorOrSpecificationTest extends Unit
         $this->assertCount(5, $collected);
     }
 
-    /**
-     * @param \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface $leftMock
-     * @param \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface $rightMock
-     *
-     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorOrSpecification
-     */
     protected function createCollectorOrSpecification(
         CollectorSpecificationInterface $leftMock,
         CollectorSpecificationInterface $rightMock

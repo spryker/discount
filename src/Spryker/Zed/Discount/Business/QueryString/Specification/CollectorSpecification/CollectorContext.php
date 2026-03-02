@@ -23,10 +23,6 @@ class CollectorContext implements CollectorSpecificationInterface
      */
     protected $clauseTransfer;
 
-    /**
-     * @param \Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountableItemCollectorPluginInterface $collectorPlugin
-     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
-     */
     public function __construct(DiscountableItemCollectorPluginInterface $collectorPlugin, ClauseTransfer $clauseTransfer)
     {
         $this->collectorPlugin = $collectorPlugin;

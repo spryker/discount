@@ -28,17 +28,11 @@ class TableFilterFormDataProvider
      */
     public const OPTION_TYPES = 'types';
 
-    /**
-     * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToStoreFacadeInterface $storeFacade
-     */
     public function __construct(
         protected DiscountToStoreFacadeInterface $storeFacade
     ) {
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\DiscountTableCriteriaTransfer
-     */
     public function getData(): DiscountTableCriteriaTransfer
     {
         return new DiscountTableCriteriaTransfer();

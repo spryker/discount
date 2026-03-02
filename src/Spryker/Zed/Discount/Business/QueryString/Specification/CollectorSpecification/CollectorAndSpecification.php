@@ -22,10 +22,6 @@ class CollectorAndSpecification implements CollectorSpecificationInterface
      */
     protected $right;
 
-    /**
-     * @param \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface $left
-     * @param \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface $right
-     */
     public function __construct(CollectorSpecificationInterface $left, CollectorSpecificationInterface $right)
     {
         $this->left = $left;

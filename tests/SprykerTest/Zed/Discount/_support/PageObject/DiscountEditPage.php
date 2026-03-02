@@ -26,10 +26,6 @@ class DiscountEditPage
      */
     protected $createPage;
 
-    /**
-     * @param \SprykerTest\Zed\Discount\DiscountPresentationTester $i
-     * @param \SprykerTest\Zed\Discount\PageObject\DiscountCreatePage $createPage
-     */
     public function __construct(DiscountPresentationTester $i, DiscountCreatePage $createPage)
     {
         $this->tester = $i;

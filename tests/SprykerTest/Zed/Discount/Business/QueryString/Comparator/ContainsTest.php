@@ -26,9 +26,6 @@ use Spryker\Zed\Discount\Business\QueryString\Comparator\Contains;
  */
 class ContainsTest extends Unit
 {
-    /**
-     * @return void
-     */
     public function testAcceptShouldReturnTrueWhenContainsExpressionProvided(): void
     {
         $contains = $this->createContains();
@@ -41,9 +38,6 @@ class ContainsTest extends Unit
         $this->assertTrue($isAccepted);
     }
 
-    /**
-     * @return void
-     */
     public function testCompareWhenValueExistsInClauseShouldReturnTrue(): void
     {
         $contains = $this->createContains();
@@ -56,9 +50,6 @@ class ContainsTest extends Unit
         $this->assertTrue($isMatching);
     }
 
-    /**
-     * @return void
-     */
     public function testCompareWhenValueNotExistingInClauseShouldReturnFalse(): void
     {
         $contains = $this->createContains();
@@ -71,9 +62,6 @@ class ContainsTest extends Unit
         $this->assertFalse($isMatching);
     }
 
-    /**
-     * @return void
-     */
     public function testCompareWhenNonScalarValueUsedShouldThrowException(): void
     {
         $this->expectException(ComparatorException::class);
@@ -85,9 +73,6 @@ class ContainsTest extends Unit
         $contains->compare($clauseTransfer, []);
     }
 
-    /**
-     * @return void
-     */
     public function testCompareShouldReturnFalseWhenEmptyValueIsProvided(): void
     {
         // Arrange
@@ -100,9 +85,6 @@ class ContainsTest extends Unit
         $this->assertFalse($isMatching);
     }
 
-    /**
-     * @return void
-     */
     public function testIsValueValidShouldReturnFalseWhenEmptyValueIsProvided(): void
     {
         // Act
@@ -112,9 +94,6 @@ class ContainsTest extends Unit
         $this->assertFalse($isValueValid);
     }
 
-    /**
-     * @return \Spryker\Zed\Discount\Business\QueryString\Comparator\Contains
-     */
     protected function createContains(): Contains
     {
         return new Contains();

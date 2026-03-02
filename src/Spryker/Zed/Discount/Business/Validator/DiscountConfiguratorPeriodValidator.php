@@ -33,11 +33,6 @@ class DiscountConfiguratorPeriodValidator implements DiscountConfiguratorValidat
      */
     protected $translatorFacade;
 
-    /**
-     * @param \Symfony\Component\Validator\Validator\ValidatorInterface $validator
-     * @param \Spryker\Zed\Discount\Business\Validator\ConstraintProvider\DiscountConfiguratorConstraintProviderInterface $discountConfiguratorConstraintProvider
-     * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToTranslatorFacadeInterface $translatorFacade
-     */
     public function __construct(
         ValidatorInterface $validator,
         DiscountConfiguratorConstraintProviderInterface $discountConfiguratorConstraintProvider,
@@ -48,12 +43,6 @@ class DiscountConfiguratorPeriodValidator implements DiscountConfiguratorValidat
         $this->translatorFacade = $translatorFacade;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
-     * @param \Generated\Shared\Transfer\DiscountConfiguratorResponseTransfer $discountConfiguratorResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\DiscountConfiguratorResponseTransfer
-     */
     public function validateDiscountConfigurator(
         DiscountConfiguratorTransfer $discountConfiguratorTransfer,
         DiscountConfiguratorResponseTransfer $discountConfiguratorResponseTransfer
@@ -79,11 +68,6 @@ class DiscountConfiguratorPeriodValidator implements DiscountConfiguratorValidat
         return $discountConfiguratorResponseTransfer->setIsSuccessful(false);
     }
 
-    /**
-     * @param \Symfony\Component\Validator\ConstraintViolationInterface $constraintViolation
-     *
-     * @return \Generated\Shared\Transfer\MessageTransfer
-     */
     protected function createMessageTransfer(
         ConstraintViolationInterface $constraintViolation
     ): MessageTransfer {

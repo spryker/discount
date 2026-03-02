@@ -23,9 +23,6 @@ use Spryker\Zed\Discount\Business\QueryString\Tokenizer;
  */
 class TokenizerTest extends Unit
 {
-    /**
-     * @return void
-     */
     public function testWhenSpaceUsedShouldReturnEachWordAsAToken(): void
     {
         $tokenizer = $this->createTokenizer();
@@ -33,9 +30,6 @@ class TokenizerTest extends Unit
         $this->assertCount(4, $tokens);
     }
 
-    /**
-     * @return void
-     */
     public function testWhenQuotesUsedShouldThreadAsASingleTokenWhatIsInside(): void
     {
         $tokenizer = $this->createTokenizer();
@@ -44,9 +38,6 @@ class TokenizerTest extends Unit
         $this->assertCount(3, $tokens);
     }
 
-    /**
-     * @return void
-     */
     public function testWhenParenthesisIsUsedShouldBeUsedAsSeparateToken(): void
     {
         $tokenizer = $this->createTokenizer();
@@ -55,9 +46,6 @@ class TokenizerTest extends Unit
         $this->assertCount(5, $tokens);
     }
 
-    /**
-     * @return \Spryker\Zed\Discount\Business\QueryString\Tokenizer
-     */
     protected function createTokenizer(): Tokenizer
     {
         return new Tokenizer();

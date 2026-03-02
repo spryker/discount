@@ -71,14 +71,6 @@ class Discount implements DiscountInterface
      */
     protected $storeFacade;
 
-    /**
-     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $queryContainer
-     * @param \Spryker\Zed\Discount\Business\Calculator\CalculatorInterface $calculator
-     * @param \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilderInterface $decisionRuleBuilder
-     * @param \Spryker\Zed\Discount\Business\Voucher\VoucherValidatorInterface $voucherValidator
-     * @param \Spryker\Zed\Discount\Business\Persistence\DiscountEntityMapperInterface $discountEntityMapper
-     * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToStoreFacadeInterface $storeFacade
-     */
     public function __construct(
         DiscountQueryContainerInterface $queryContainer,
         CalculatorInterface $calculator,
@@ -222,12 +214,6 @@ class Discount implements DiscountInterface
         return array_merge($voucherCodes, $quoteTransfer->getUsedNotAppliedVoucherCodes());
     }
 
-    /**
-     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\DiscountTransfer
-     */
     protected function hydrateDiscountTransfer(SpyDiscount $discountEntity, QuoteTransfer $quoteTransfer): DiscountTransfer
     {
         $discountTransfer = $this->discountEntityMapper->mapFromEntity($discountEntity);
@@ -237,12 +223,6 @@ class Discount implements DiscountInterface
         return $discountTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
-     *
-     * @return bool
-     */
     protected function isDiscountApplicable(QuoteTransfer $quoteTransfer, SpyDiscount $discountEntity): bool
     {
         if ($this->isDiscountEntityOfTypeVoucher($discountEntity)) {
@@ -301,11 +281,6 @@ class Discount implements DiscountInterface
         return $isDiscountApplicable;
     }
 
-    /**
-     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
-     *
-     * @return bool
-     */
     protected function isDiscountEntityOfTypeVoucher(SpyDiscount $discountEntity): bool
     {
         return $discountEntity->getDiscountType() === DiscountConstants::TYPE_VOUCHER;
@@ -341,21 +316,11 @@ class Discount implements DiscountInterface
         $this->discountApplicableFilterPlugins = $discountApplicableFilterPlugins;
     }
 
-    /**
-     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
-     *
-     * @return bool
-     */
     protected function hasDiscountItemQuantityDecisionRule(SpyDiscount $discountEntity): bool
     {
         return strpos($discountEntity->getDecisionRuleQueryString(), static::ITEM_QUANTITY_DECISION_RULE) !== false;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
     protected function mergeQuoteItemsBySku(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         $itemTransfers = $quoteTransfer->getItems();
@@ -378,12 +343,6 @@ class Discount implements DiscountInterface
         return $quoteTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $mergeableItemTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer $mergedItemTransfer
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer
-     */
     protected function mergeQuoteItemTransfer(ItemTransfer $mergeableItemTransfer, ItemTransfer $mergedItemTransfer): ItemTransfer
     {
         $mergedItemTransfer->setQuantity($mergeableItemTransfer->getQuantity() + $mergedItemTransfer->getQuantity());

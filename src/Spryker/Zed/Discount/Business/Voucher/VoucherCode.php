@@ -17,9 +17,6 @@ class VoucherCode implements VoucherCodeInterface
      */
     protected $discountQueryContainer;
 
-    /**
-     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainer
-     */
     public function __construct(DiscountQueryContainerInterface $discountQueryContainer)
     {
         $this->discountQueryContainer = $discountQueryContainer;

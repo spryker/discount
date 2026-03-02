@@ -27,9 +27,6 @@ class MetaProviderFactory implements MetaProviderFactoryInterface
      */
     protected $discountBusinessFactory;
 
-    /**
-     * @param \Spryker\Zed\Discount\Business\DiscountBusinessFactory $discountBusinessFactory
-     */
     public function __construct(DiscountBusinessFactory $discountBusinessFactory)
     {
         $this->discountBusinessFactory = $discountBusinessFactory;

@@ -23,22 +23,12 @@ use SprykerTest\Zed\Discount\DiscountCommunicationTester;
  */
 class IndexControllerCest
 {
-    /**
-     * @param \SprykerTest\Zed\Discount\DiscountCommunicationTester $i
-     *
-     * @return void
-     */
     public function testICanOpenDiscountPage(DiscountCommunicationTester $i): void
     {
         $i->amOnPage('/discount/index/list');
         $i->seeResponseCodeIs(200);
     }
 
-    /**
-     * @param \SprykerTest\Zed\Discount\DiscountCommunicationTester $i
-     *
-     * @return void
-     */
     public function testICanGoFromOverviewPageToCreatePage(DiscountCommunicationTester $i): void
     {
         $i->registerStoreRelationToggleFormTypePlugin();
@@ -50,11 +40,6 @@ class IndexControllerCest
         $i->canSeeCurrentUrlEquals('/discount/index/create');
     }
 
-    /**
-     * @param \SprykerTest\Zed\Discount\DiscountCommunicationTester $i
-     *
-     * @return void
-     */
     public function testICanSeeAllCurrenciesInMoneyCollection(DiscountCommunicationTester $i): void
     {
         $i->registerStoreRelationToggleFormTypePlugin();

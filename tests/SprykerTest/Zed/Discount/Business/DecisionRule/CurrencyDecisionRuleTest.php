@@ -25,9 +25,6 @@ use SprykerTest\Zed\Discount\Business\BaseRuleTester;
  */
 class CurrencyDecisionRuleTest extends BaseRuleTester
 {
-    /**
-     * @return void
-     */
     public function testDecisionRuleWhenCurrencyMatchesShouldReturnTrue(): void
     {
         $comparatorMock = $this->createComparatorMock();
@@ -45,11 +42,6 @@ class CurrencyDecisionRuleTest extends BaseRuleTester
         $this->assertTrue($isSatisfied);
     }
 
-    /**
-     * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface|null $comparatorMock
-     *
-     * @return \Spryker\Zed\Discount\Business\DecisionRule\CurrencyDecisionRule
-     */
     protected function createCurrencyDecisionRuleMock(?ComparatorOperatorsInterface $comparatorMock = null): CurrencyDecisionRule
     {
         if ($comparatorMock === null) {

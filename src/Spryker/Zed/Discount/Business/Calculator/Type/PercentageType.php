@@ -101,9 +101,6 @@ class PercentageType implements CalculatorTypeInterface
         return $quantity;
     }
 
-    /**
-     * @return void
-     */
     protected function resetRoundingError(): void
     {
         static::$roundingError = 0.0;

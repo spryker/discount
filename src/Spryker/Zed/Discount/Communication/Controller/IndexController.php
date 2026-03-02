@@ -147,12 +147,6 @@ class IndexController extends AbstractController
         ];
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Symfony\Component\Form\FormInterface $voucherForm
-     *
-     * @return bool
-     */
     protected function isVoucherFormSubmittedSuccessfully(Request $request, FormInterface $voucherForm): bool
     {
         $voucherForm->handleRequest($request);
@@ -331,11 +325,6 @@ class IndexController extends AbstractController
         return new RedirectResponse($redirectUrl);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\VoucherCreateInfoTransfer $voucherCreateInfoInterface
-     *
-     * @return bool
-     */
     protected function addVoucherCreateMessage(VoucherCreateInfoTransfer $voucherCreateInfoInterface): bool
     {
         if ($voucherCreateInfoInterface->getType() === DiscountConstants::MESSAGE_TYPE_SUCCESS) {
@@ -418,12 +407,6 @@ class IndexController extends AbstractController
         return $voucherCodesTable;
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Symfony\Component\Form\FormInterface $discountForm
-     *
-     * @return bool
-     */
     protected function isDiscountFormSubmittedSuccessfully(Request $request, FormInterface $discountForm): bool
     {
         $discountForm->handleRequest($request);

@@ -25,9 +25,6 @@ use SprykerTest\Zed\Discount\Business\BaseRuleTester;
  */
 class ItemPriceCollectorTest extends BaseRuleTester
 {
-    /**
-     * @return void
-     */
     public function testCollectWhenMatchesPriceShouldReturnListOfDiscountableItems(): void
     {
         $comparatorMock = $this->createComparatorMock();
@@ -49,11 +46,6 @@ class ItemPriceCollectorTest extends BaseRuleTester
         $this->assertInstanceOf(DiscountableItemTransfer::class, $discountableItems[0]);
     }
 
-    /**
-     * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface|null $comparatorMock
-     *
-     * @return \Spryker\Zed\Discount\Business\Collector\ItemPriceCollector
-     */
     protected function createItemPriceCollector(?ComparatorOperatorsInterface $comparatorMock = null): ItemPriceCollector
     {
         if (!$comparatorMock) {

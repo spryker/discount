@@ -27,19 +27,11 @@ class DiscountableItemTransformer implements DiscountableItemTransformerInterfac
      */
     protected $discountRepository;
 
-    /**
-     * @param \Spryker\Zed\Discount\Persistence\DiscountRepositoryInterface $discountRepository
-     */
     public function __construct(DiscountRepositoryInterface $discountRepository)
     {
         $this->discountRepository = $discountRepository;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountableItemTransformerTransfer $discountableItemTransformerTransfer
-     *
-     * @return \Generated\Shared\Transfer\DiscountableItemTransformerTransfer
-     */
     public function transformSplittableDiscountableItem(
         DiscountableItemTransformerTransfer $discountableItemTransformerTransfer
     ): DiscountableItemTransformerTransfer {
@@ -86,12 +78,6 @@ class DiscountableItemTransformer implements DiscountableItemTransformerInterfac
         return $discountableItemTransformerTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountableItemTransfer $discountableItemTransfer
-     * @param \Generated\Shared\Transfer\CalculatedDiscountTransfer $distributedCalculatedDiscountTransfer
-     *
-     * @return bool
-     */
     protected function isCalculatedDiscountAddable(
         DiscountableItemTransfer $discountableItemTransfer,
         CalculatedDiscountTransfer $distributedCalculatedDiscountTransfer
@@ -113,11 +99,6 @@ class DiscountableItemTransformer implements DiscountableItemTransformerInterfac
         return true;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
-     *
-     * @return \Generated\Shared\Transfer\CalculatedDiscountTransfer
-     */
     protected function createBaseCalculatedDiscountTransfer(DiscountTransfer $discountTransfer): CalculatedDiscountTransfer
     {
         $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
@@ -126,13 +107,6 @@ class DiscountableItemTransformer implements DiscountableItemTransformerInterfac
         return $calculatedDiscountTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountableItemTransfer $discountableItemTransfer
-     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
-     * @param int $iterationUnitPrice
-     *
-     * @return int
-     */
     protected function calculatePriorityIterationUnitPrice(
         DiscountableItemTransfer $discountableItemTransfer,
         DiscountTransfer $discountTransfer,
@@ -152,12 +126,6 @@ class DiscountableItemTransformer implements DiscountableItemTransformerInterfac
         return $iterationUnitPrice;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountableItemTransfer $discountableItemTransfer
-     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
-     *
-     * @return bool
-     */
     protected function isDiscountPriorityIterationApplicable(
         DiscountableItemTransfer $discountableItemTransfer,
         DiscountTransfer $discountTransfer
@@ -175,12 +143,6 @@ class DiscountableItemTransformer implements DiscountableItemTransformerInterfac
         return false;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CalculatedDiscountTransfer $calculatedDiscountTransfer
-     * @param \Generated\Shared\Transfer\CalculatedDiscountTransfer $distributedCalculatedDiscountTransfer
-     *
-     * @return bool
-     */
     protected function isSameVoucherCode(
         CalculatedDiscountTransfer $calculatedDiscountTransfer,
         CalculatedDiscountTransfer $distributedCalculatedDiscountTransfer

@@ -67,14 +67,6 @@ class Distributor implements DistributorInterface
         }
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountableItemTransfer $discountableItemTransfer
-     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
-     * @param int $totalDiscountAmount
-     * @param int $totalAmount
-     *
-     * @return void
-     */
     protected function transformItemsPerStrategyPlugin(
         DiscountableItemTransfer $discountableItemTransfer,
         DiscountTransfer $discountTransfer,
@@ -119,15 +111,6 @@ class Distributor implements DistributorInterface
         $this->roundingError = $discountableItemTransformerTransfer->getRoundingError();
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountableItemTransfer $discountableItemTransfer
-     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
-     * @param int $totalDiscountAmount
-     * @param int $totalAmount
-     * @param int $quantity
-     *
-     * @return \Generated\Shared\Transfer\DiscountableItemTransformerTransfer
-     */
     protected function mapDiscountableItemTransformerTransfer(
         DiscountableItemTransfer $discountableItemTransfer,
         DiscountTransfer $discountTransfer,
@@ -146,11 +129,6 @@ class Distributor implements DistributorInterface
         return $discountableItemTransformerTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CollectedDiscountTransfer $collectedDiscountTransfer
-     *
-     * @return int
-     */
     protected function getTotalAmountOfDiscountableObjects(CollectedDiscountTransfer $collectedDiscountTransfer): int
     {
         $totalGrossAmount = 0;
@@ -162,11 +140,6 @@ class Distributor implements DistributorInterface
         return $totalGrossAmount;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountableItemTransfer $discountableItemTransfer
-     *
-     * @return int
-     */
     protected function getDiscountableItemQuantity(DiscountableItemTransfer $discountableItemTransfer): int
     {
         $quantity = 1;

@@ -25,10 +25,6 @@ class ItemPriceDecisionRule implements DecisionRuleInterface
      */
     protected $moneyValueConverter;
 
-    /**
-     * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface $comparators
-     * @param \Spryker\Zed\Discount\Business\QueryString\Converter\MoneyValueConverterInterface $moneyValueConverter
-     */
     public function __construct(
         ComparatorOperatorsInterface $comparators,
         MoneyValueConverterInterface $moneyValueConverter

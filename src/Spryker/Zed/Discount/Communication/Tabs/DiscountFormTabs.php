@@ -31,11 +31,6 @@ class DiscountFormTabs extends AbstractTabs
      */
     protected $discountConfiguratorTransfer;
 
-    /**
-     * @param \Symfony\Component\Form\FormInterface $discountForm
-     * @param \Symfony\Component\Form\FormInterface|null $voucherForm
-     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer|null $discountConfiguratorTransfer
-     */
     public function __construct(
         FormInterface $discountForm,
         ?FormInterface $voucherForm = null,

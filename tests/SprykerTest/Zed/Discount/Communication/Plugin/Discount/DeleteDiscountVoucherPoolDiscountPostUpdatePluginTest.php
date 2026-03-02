@@ -35,9 +35,6 @@ class DeleteDiscountVoucherPoolDiscountPostUpdatePluginTest extends Unit
      */
     protected DiscountCommunicationTester $tester;
 
-    /**
-     * @return void
-     */
     public function testPostUpdateDeletesDiscountVoucherPoolWhenDiscountTypeIsCartRuleAndDiscountVoucherPoolIdIsSet(): void
     {
         // Arrange
@@ -57,9 +54,6 @@ class DeleteDiscountVoucherPoolDiscountPostUpdatePluginTest extends Unit
         ));
     }
 
-    /**
-     * @return void
-     */
     public function testPostUpdateDoesNothingWhenDiscountTypeIsVoucher(): void
     {
         // Arrange
@@ -79,9 +73,6 @@ class DeleteDiscountVoucherPoolDiscountPostUpdatePluginTest extends Unit
         ));
     }
 
-    /**
-     * @return void
-     */
     public function testPostUpdateDoesNothingWhenDiscountVoucherIsNotSetToDiscountConfiguration(): void
     {
         // Arrange
@@ -103,9 +94,6 @@ class DeleteDiscountVoucherPoolDiscountPostUpdatePluginTest extends Unit
         ));
     }
 
-    /**
-     * @return void
-     */
     public function testPostUpdateDoesNothingWhenDiscountVoucherPoolIdIsNotSetToDiscountVoucher(): void
     {
         // Arrange
@@ -126,9 +114,6 @@ class DeleteDiscountVoucherPoolDiscountPostUpdatePluginTest extends Unit
         ));
     }
 
-    /**
-     * @return void
-     */
     public function testPostUpdateThrowsExceptionWhenDiscountGeneralIsNotSetToDiscountConfigurator(): void
     {
         // Arrange
@@ -143,9 +128,6 @@ class DeleteDiscountVoucherPoolDiscountPostUpdatePluginTest extends Unit
         (new DeleteDiscountVoucherPoolDiscountPostUpdatePlugin())->postUpdate($discountConfiguratorTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testPostUpdateThrowsExceptionWhenDiscountTypeIsNotSetToDiscountGeneral(): void
     {
         // Arrange
@@ -160,11 +142,6 @@ class DeleteDiscountVoucherPoolDiscountPostUpdatePluginTest extends Unit
         (new DeleteDiscountVoucherPoolDiscountPostUpdatePlugin())->postUpdate($discountConfiguratorTransfer);
     }
 
-    /**
-     * @param string $discountType
-     *
-     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
-     */
     protected function getDiscountConfiguration(string $discountType = DiscountConstants::TYPE_CART_RULE): DiscountConfiguratorTransfer
     {
         $discountGeneralTransfer = $this->tester->haveDiscount([

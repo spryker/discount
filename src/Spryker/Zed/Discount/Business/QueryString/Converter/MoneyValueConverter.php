@@ -32,9 +32,6 @@ class MoneyValueConverter implements MoneyValueConverterInterface
      */
     protected $moneyFacade;
 
-    /**
-     * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToMoneyInterface $moneyFacade
-     */
     public function __construct(DiscountToMoneyInterface $moneyFacade)
     {
         $this->moneyFacade = $moneyFacade;

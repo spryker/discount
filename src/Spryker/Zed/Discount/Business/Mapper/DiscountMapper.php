@@ -17,12 +17,6 @@ use Generated\Shared\Transfer\MoneyValueTransfer;
 
 class DiscountMapper implements DiscountMapperInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
-     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
-     *
-     * @return \Generated\Shared\Transfer\DiscountTransfer
-     */
     public function mapDiscountConfiguratorTransferToDiscountTransfer(
         DiscountConfiguratorTransfer $discountConfiguratorTransfer,
         DiscountTransfer $discountTransfer
@@ -38,12 +32,6 @@ class DiscountMapper implements DiscountMapperInterface
         return $discountTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
-     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
-     *
-     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
-     */
     public function mapDiscountTransferToDiscountConfiguratorTransfer(
         DiscountTransfer $discountTransfer,
         DiscountConfiguratorTransfer $discountConfiguratorTransfer
@@ -62,12 +50,6 @@ class DiscountMapper implements DiscountMapperInterface
             ->setDiscountCondition($discountConditionTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
-     * @param \Generated\Shared\Transfer\DiscountMoneyAmountTransfer $discountMoneyAmountTransfer
-     *
-     * @return \Generated\Shared\Transfer\DiscountMoneyAmountTransfer
-     */
     public function mapMoneyValueTransferToDiscountMoneyAmountTransfer(
         MoneyValueTransfer $moneyValueTransfer,
         DiscountMoneyAmountTransfer $discountMoneyAmountTransfer
@@ -77,12 +59,6 @@ class DiscountMapper implements DiscountMapperInterface
             ->setIdDiscountAmount($moneyValueTransfer->getIdEntity());
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountMoneyAmountTransfer $discountMoneyAmountTransfer
-     * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
-     *
-     * @return \Generated\Shared\Transfer\MoneyValueTransfer
-     */
     public function mapDiscountMoneyAmountTransferToMoneyValueTransfer(
         DiscountMoneyAmountTransfer $discountMoneyAmountTransfer,
         MoneyValueTransfer $moneyValueTransfer

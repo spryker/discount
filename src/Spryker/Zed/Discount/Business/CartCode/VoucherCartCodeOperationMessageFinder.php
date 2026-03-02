@@ -49,12 +49,6 @@ class VoucherCartCodeOperationMessageFinder implements VoucherCartCodeOperationM
         $this->discountVoucherApplyCheckerStrategyPlugins = $discountVoucherApplyCheckerStrategyPlugins;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $cartCode
-     *
-     * @return \Generated\Shared\Transfer\MessageTransfer|null
-     */
     public function findOperationResponseMessage(QuoteTransfer $quoteTransfer, string $cartCode): ?MessageTransfer
     {
         $messageTransfer = $this->executeDiscountVoucherApplyCheckerStrategyPlugins($quoteTransfer, $cartCode);
@@ -75,12 +69,6 @@ class VoucherCartCodeOperationMessageFinder implements VoucherCartCodeOperationM
         return null;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $code
-     *
-     * @return \Generated\Shared\Transfer\MessageTransfer|null
-     */
     protected function findVoucherApplySuccessMessage(QuoteTransfer $quoteTransfer, string $code): ?MessageTransfer
     {
         if (
@@ -95,12 +83,6 @@ class VoucherCartCodeOperationMessageFinder implements VoucherCartCodeOperationM
             ->setType(static::MESSAGE_TYPE_SUCCESS);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $code
-     *
-     * @return bool
-     */
     protected function isVoucherCodeApplied(QuoteTransfer $quoteTransfer, string $code): bool
     {
         foreach ($quoteTransfer->getVoucherDiscounts() as $discountTransfer) {
@@ -112,12 +94,6 @@ class VoucherCartCodeOperationMessageFinder implements VoucherCartCodeOperationM
         return false;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $code
-     *
-     * @return \Generated\Shared\Transfer\MessageTransfer|null
-     */
     protected function findNonApplicableErrorMessage(QuoteTransfer $quoteTransfer, string $code): ?MessageTransfer
     {
         if (in_array($code, $quoteTransfer->getUsedNotAppliedVoucherCodes(), true)) {
@@ -131,12 +107,6 @@ class VoucherCartCodeOperationMessageFinder implements VoucherCartCodeOperationM
         return null;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $cartCode
-     *
-     * @return \Generated\Shared\Transfer\MessageTransfer|null
-     */
     protected function executeDiscountVoucherApplyCheckerStrategyPlugins(
         QuoteTransfer $quoteTransfer,
         string $cartCode

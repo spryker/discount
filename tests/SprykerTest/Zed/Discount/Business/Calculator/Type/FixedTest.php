@@ -40,9 +40,6 @@ class FixedTest extends Unit
 
     public const DISCOUNT_AMOUNT_FIXED_MINUS_100 = -100;
 
-    /**
-     * @return void
-     */
     public function testCalculateFixedShouldReturnTheGivenAmount(): void
     {
         $items = $this->getItems(
@@ -60,9 +57,6 @@ class FixedTest extends Unit
         $this->assertSame(static::DISCOUNT_AMOUNT_FIXED_100, $discountAmount);
     }
 
-    /**
-     * @return void
-     */
     public function testCalculateFixedShouldReturnNullForGivenNegativeAmounts(): void
     {
         $items = $this->getItems(
@@ -80,11 +74,6 @@ class FixedTest extends Unit
         $this->assertSame(0, $discountAmount);
     }
 
-    /**
-     * @param int $amount
-     *
-     * @return \Generated\Shared\Transfer\DiscountTransfer
-     */
     protected function createDiscountTransfer(int $amount): DiscountTransfer
     {
         $discountTransfer = new DiscountTransfer();

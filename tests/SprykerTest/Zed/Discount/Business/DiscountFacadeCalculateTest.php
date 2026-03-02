@@ -65,9 +65,6 @@ class DiscountFacadeCalculateTest extends Unit
      */
     protected $tester;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -79,9 +76,6 @@ class DiscountFacadeCalculateTest extends Unit
         }
     }
 
-    /**
-     * @return void
-     */
     public function testCalculateWhenQueryStringMatchesAllItemsIncludeAllProvidedDiscounts(): void
     {
         // Arrange
@@ -120,9 +114,6 @@ class DiscountFacadeCalculateTest extends Unit
         $this->assertSame($discountTransfer->getAmount(), $cartRuleDiscounts[0]->getAmount());
     }
 
-    /**
-     * @return void
-     */
     public function testCalculateWhenMinimumItemAmountNotMatchesItemsIncludeAllProvidedDiscounts(): void
     {
         // Arrange
@@ -161,9 +152,6 @@ class DiscountFacadeCalculateTest extends Unit
         $this->assertCount(0, $cartRuleDiscounts);
     }
 
-    /**
-     * @return void
-     */
     public function testCalculateWhenMinimumItemAmountMatchesMoreThanOneItemIncludeAllProvidedDiscounts(): void
     {
         // Arrange
@@ -203,9 +191,6 @@ class DiscountFacadeCalculateTest extends Unit
         $this->assertSame($discountTransfer->getAmount(), $cartRuleDiscounts[0]->getAmount());
     }
 
-    /**
-     * @return void
-     */
     public function testCalculateWithEmptyDecisionRuleShouldIncludeDiscount(): void
     {
         // Arrange
@@ -244,9 +229,6 @@ class DiscountFacadeCalculateTest extends Unit
         $this->assertSame($discountTransfer->getAmount(), $cartRuleDiscounts[0]->getAmount());
     }
 
-    /**
-     * @return void
-     */
     public function testCalculateWithIncorrectDecisionRuleShouldSkipDiscount(): void
     {
         // Arrange
@@ -284,9 +266,6 @@ class DiscountFacadeCalculateTest extends Unit
         $this->assertCount(0, $cartRuleDiscounts);
     }
 
-    /**
-     * @return void
-     */
     public function testWhenMultipleVouchersFromSamePoolUsedShouldUseOnlyOnce(): void
     {
         // Arrange
@@ -340,9 +319,6 @@ class DiscountFacadeCalculateTest extends Unit
         $this->assertSame($code1, $quoteTransfer->getVoucherDiscounts()[0]->getVoucherCode());
     }
 
-    /**
-     * @return void
-     */
     public function testWhenDiscountFilterUsedShouldFilterOutItems(): void
     {
         // Arrange
@@ -400,9 +376,6 @@ class DiscountFacadeCalculateTest extends Unit
         $this->assertSame($discountTransfer->getAmount(), $cartRuleDiscounts[0]->getAmount());
     }
 
-    /**
-     * @return void
-     */
     public function testWhenQuoteHaveUsedNotAppliedVoucherCodes(): void
     {
         // Arrange
@@ -444,9 +417,6 @@ class DiscountFacadeCalculateTest extends Unit
         $this->assertSame($code1, $quoteTransfer->getVoucherDiscounts()[0]->getVoucherCode());
     }
 
-    /**
-     * @return void
-     */
     public function testCalculateDiscountsShouldNotFilterApplicableDiscounts(): void
     {
         // Arrange
@@ -492,9 +462,6 @@ class DiscountFacadeCalculateTest extends Unit
         $this->assertSame(100, $cartRuleDiscounts[1]->getAmount());
     }
 
-    /**
-     * @return void
-     */
     public function testCalculateDiscountsShouldFilterNotApplicableDiscounts(): void
     {
         // Arrange
@@ -536,9 +503,6 @@ class DiscountFacadeCalculateTest extends Unit
         $this->assertSame(50, $cartRuleDiscounts[1]->getAmount());
     }
 
-    /**
-     * @return void
-     */
     public function testCalculateDiscountsShouldFilterRemoveDiscountsWithoutItems(): void
     {
         // Arrange
@@ -573,19 +537,11 @@ class DiscountFacadeCalculateTest extends Unit
         $this->assertSame(1000, $cartRuleDiscounts[0]->getAmount());
     }
 
-    /**
-     * @return \Spryker\Zed\Discount\Business\DiscountFacadeInterface
-     */
     protected function getFacade(): DiscountFacadeInterface
     {
         return $this->getLocator()->discount()->facade();
     }
 
-    /**
-     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountableItemFilterPluginInterface $filterPluginMock
-     *
-     * @return \Spryker\Zed\Discount\Business\DiscountFacadeInterface
-     */
     protected function createMockedDiscountFacade(DiscountableItemFilterPluginInterface $filterPluginMock): DiscountFacadeInterface
     {
         $discountBusinessFactory = new DiscountBusinessFactory();

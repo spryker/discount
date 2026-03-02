@@ -62,11 +62,6 @@ class DiscountCreateAggregator implements DiscountCreateAggregatorInterface
         $this->discountPostCreatePlugins = $discountPostCreatePlugins;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
-     *
-     * @return \Generated\Shared\Transfer\DiscountConfiguratorResponseTransfer
-     */
     public function createDiscount(DiscountConfiguratorTransfer $discountConfiguratorTransfer): DiscountConfiguratorResponseTransfer
     {
         $discountConfiguratorResponseTransfer = (new DiscountConfiguratorResponseTransfer())->setDiscountConfigurator($discountConfiguratorTransfer);
@@ -84,12 +79,6 @@ class DiscountCreateAggregator implements DiscountCreateAggregatorInterface
         });
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
-     * @param \Generated\Shared\Transfer\DiscountConfiguratorResponseTransfer $discountConfiguratorResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\DiscountConfiguratorResponseTransfer
-     */
     protected function executeCreateDiscountTransaction(
         DiscountConfiguratorTransfer $discountConfiguratorTransfer,
         DiscountConfiguratorResponseTransfer $discountConfiguratorResponseTransfer
@@ -105,11 +94,6 @@ class DiscountCreateAggregator implements DiscountCreateAggregatorInterface
             ->setIsSuccessful(true);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
-     *
-     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
-     */
     protected function executeDiscountPostCreatePlugins(DiscountConfiguratorTransfer $discountConfiguratorTransfer): DiscountConfiguratorTransfer
     {
         foreach ($this->discountPostCreatePlugins as $discountPostCreatePlugin) {

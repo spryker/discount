@@ -22,9 +22,6 @@ class DiscountToLocaleFacadeBridge implements DiscountToLocaleFacadeInterface
         $this->localeFacade = $localeFacade;
     }
 
-    /**
-     * @return string
-     */
     public function getCurrentLocaleName(): string
     {
         return $this->localeFacade->getCurrentLocaleName();

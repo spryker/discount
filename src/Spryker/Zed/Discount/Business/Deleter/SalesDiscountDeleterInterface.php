@@ -11,11 +11,6 @@ use Generated\Shared\Transfer\SalesDiscountCollectionDeleteCriteriaTransfer;
 
 interface SalesDiscountDeleterInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\SalesDiscountCollectionDeleteCriteriaTransfer $salesDiscountCollectionDeleteCriteriaTransfer
-     *
-     * @return void
-     */
     public function deleteSalesDiscounts(
         SalesDiscountCollectionDeleteCriteriaTransfer $salesDiscountCollectionDeleteCriteriaTransfer
     ): void;

@@ -37,20 +37,11 @@ class QuoteChangeObserver implements QuoteChangeObserverInterface
      */
     protected $messengerFacade;
 
-    /**
-     * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface $messengerFacade
-     */
     public function __construct(DiscountToMessengerInterface $messengerFacade)
     {
         $this->messengerFacade = $messengerFacade;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $resultQuoteTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $sourceQuoteTransfer
-     *
-     * @return void
-     */
     public function checkDiscountChanges(QuoteTransfer $resultQuoteTransfer, QuoteTransfer $sourceQuoteTransfer): void
     {
         $indexResultDiscountTransferCollection = $this->indexDiscountTransferCollection($resultQuoteTransfer->getVoucherDiscounts());
@@ -168,24 +159,12 @@ class QuoteChangeObserver implements QuoteChangeObserverInterface
         return $itemSkuCollection;
     }
 
-    /**
-     * @param string $key
-     * @param array $skuCollection
-     *
-     * @return void
-     */
     protected function createInfoMessageWithSkuCollection(string $key, array $skuCollection): void
     {
         $skuCollection = array_unique($skuCollection);
         $this->createInfoMessage($key, ['skus' => implode(', ', $skuCollection)]);
     }
 
-    /**
-     * @param string $key
-     * @param array $parameters
-     *
-     * @return void
-     */
     protected function createInfoMessage(string $key, array $parameters = []): void
     {
         $messageTransfer = new MessageTransfer();
@@ -195,11 +174,6 @@ class QuoteChangeObserver implements QuoteChangeObserverInterface
         $this->messengerFacade->addInfoMessage($messageTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
-     */
     protected function filterNotUsableVouchersForCurrentCurrency(QuoteTransfer $quoteTransfer): void
     {
         $voucherDiscounts = $quoteTransfer->getVoucherDiscounts();
@@ -219,12 +193,6 @@ class QuoteChangeObserver implements QuoteChangeObserverInterface
         }
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
     protected function isVoucherUsableForCurrentCurrency(DiscountTransfer $discountTransfer, QuoteTransfer $quoteTransfer): bool
     {
         if ($discountTransfer->getCalculatorPlugin() === DiscountDependencyProvider::PLUGIN_CALCULATOR_PERCENTAGE) {

@@ -31,9 +31,6 @@ class JavascriptQueryBuilderTransformer implements JavascriptQueryBuilderTransfo
         'is not in' => 'not_in',
     ];
 
-    /**
-     * @param \Spryker\Zed\Discount\Business\DiscountFacade $discountFacade
-     */
     public function __construct(DiscountFacade $discountFacade)
     {
         $this->discountFacade = $discountFacade;

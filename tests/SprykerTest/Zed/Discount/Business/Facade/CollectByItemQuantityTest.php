@@ -31,9 +31,6 @@ class CollectByItemQuantityTest extends Unit
      */
     protected $tester;
 
-    /**
-     * @return void
-     */
     public function testWillReturnDiscountableItemsForOneItem(): void
     {
         // Arrange
@@ -49,9 +46,6 @@ class CollectByItemQuantityTest extends Unit
         $this->assertCount(1, $discountableItemTransfers);
     }
 
-    /**
-     * @return void
-     */
     public function testWillReturnDiscountableItemsForMultipleItems(): void
     {
         // Arrange
@@ -75,9 +69,6 @@ class CollectByItemQuantityTest extends Unit
         $this->assertCount(5, $discountableItemTransfers);
     }
 
-    /**
-     * @return void
-     */
     public function testWillNotReturnDiscountableItemsForItemsNotMatchingClause(): void
     {
         // Arrange
@@ -93,9 +84,6 @@ class CollectByItemQuantityTest extends Unit
         $this->assertCount(0, $discountableItemTransfers);
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\ClauseTransfer
-     */
     protected function createClauseTransfer(): ClauseTransfer
     {
         return (new ClauseBuilder([

@@ -51,9 +51,6 @@ class CreateDiscountTest extends Unit
      */
     protected $tester;
 
-    /**
-     * @return void
-     */
     public function testWillPersistAllConfiguredData(): void
     {
         // Arrange
@@ -89,9 +86,6 @@ class CreateDiscountTest extends Unit
         $this->assertSame($discountConditionTransfer->getDecisionRuleQueryString(), $discountEntity->getDecisionRuleQueryString());
     }
 
-    /**
-     * @return void
-     */
     public function testWillCreateDiscountWithEmptyVoucherPool(): void
     {
         // Arrange
@@ -118,9 +112,6 @@ class CreateDiscountTest extends Unit
         $this->assertSame($discountConfiguratorTransfer->getDiscountGeneral()->getDisplayName(), $discountVoucherPoolEntity->getName());
     }
 
-    /**
-     * @return void
-     */
     public function testWillPersisStoreRelation(): void
     {
         // Arrange
@@ -144,9 +135,6 @@ class CreateDiscountTest extends Unit
         $this->assertSame($storeTransfer->getIdStore(), $discountStoreEntityCollection[0]->getFkStore());
     }
 
-    /**
-     * @return void
-     */
     public function testWillValidateDatesFormat(): void
     {
         // Arrange
@@ -163,9 +151,6 @@ class CreateDiscountTest extends Unit
         $this->assertCount(4, $discountConfiguratorResponseTransfer->getMessages());
     }
 
-    /**
-     * @return void
-     */
     public function testWillValidateDatesMaxValue(): void
     {
         // Arrange
@@ -187,9 +172,6 @@ class CreateDiscountTest extends Unit
         $this->assertArrayHasKey('{{ compared_value }}', $messageTransfer->getParameters());
     }
 
-    /**
-     * @return void
-     */
     public function testWillValidateDatePeriod(): void
     {
         // Arrange
@@ -210,9 +192,6 @@ class CreateDiscountTest extends Unit
         $this->assertSame('The discount cannot end before the starting date.', $messageTransfer->getValue());
     }
 
-    /**
-     * @return void
-     */
     public function testCreateDiscountShouldNotAddDiscountAmountForPercentageType(): void
     {
         // Arrange
@@ -233,9 +212,6 @@ class CreateDiscountTest extends Unit
         $this->assertEmpty($discountEntity->getDiscountAmounts());
     }
 
-    /**
-     * @return void
-     */
     public function testCreateDiscountShouldAddDiscountAmountForFixedType(): void
     {
         // Arrange

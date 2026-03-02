@@ -16,19 +16,10 @@ class SalesDiscountDeleter implements SalesDiscountDeleterInterface
 {
     use TransactionTrait;
 
-    /**
-     * @param \Spryker\Zed\Discount\Persistence\DiscountEntityManagerInterface $discountEntityManager
-     * @param \Spryker\Zed\Discount\Persistence\DiscountRepositoryInterface $discountRepository
-     */
     public function __construct(protected DiscountEntityManagerInterface $discountEntityManager, protected DiscountRepositoryInterface $discountRepository)
     {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SalesDiscountCollectionDeleteCriteriaTransfer $salesDiscountCollectionDeleteCriteriaTransfer
-     *
-     * @return void
-     */
     public function deleteSalesDiscounts(
         SalesDiscountCollectionDeleteCriteriaTransfer $salesDiscountCollectionDeleteCriteriaTransfer
     ): void {

@@ -11,11 +11,6 @@ use Generated\Shared\Transfer\DiscountableItemTransformerTransfer;
 
 interface DiscountableItemTransformerInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\DiscountableItemTransformerTransfer $discountableItemTransformerTransfer
-     *
-     * @return \Generated\Shared\Transfer\DiscountableItemTransformerTransfer
-     */
     public function transformSplittableDiscountableItem(
         DiscountableItemTransformerTransfer $discountableItemTransformerTransfer
     ): DiscountableItemTransformerTransfer;

@@ -76,9 +76,6 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
-    /**
-     * @return \Symfony\Component\Form\FormInterface
-     */
     public function getDeleteVoucherCodeForm(): FormInterface
     {
         return $this->getFormFactory()->create(DeleteVoucherCodeForm::class, null, [
@@ -120,9 +117,6 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
         return $calculatorDataProvider;
     }
 
-    /**
-     * @return \Spryker\Zed\Discount\Communication\Form\DataProvider\VoucherFormDataProvider
-     */
     public function createVoucherFormDataProvider(): VoucherFormDataProvider
     {
         $voucherFormDataProvider = new VoucherFormDataProvider($this->getLocaleFacade());
@@ -211,17 +205,11 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
         return new MoneyCollectionType();
     }
 
-    /**
-     * @return \Symfony\Component\Form\FormInterface
-     */
     public function createDiscountVisibilityForm(): FormInterface
     {
         return $this->getFormFactory()->create(DiscountVisibilityForm::class);
     }
 
-    /**
-     * @return \Spryker\Zed\Discount\Communication\Form\Encoder\FormFieldEncoderInterface
-     */
     public function createFormFieldEncoder(): FormFieldEncoderInterface
     {
         return new FormFieldEncoder();
@@ -267,17 +255,11 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
         return $this->getProvidedDependency(DiscountDependencyProvider::FACADE_CURRENCY);
     }
 
-    /**
-     * @return \Spryker\Zed\Discount\Dependency\Facade\DiscountToLocaleFacadeInterface
-     */
     public function getLocaleFacade(): DiscountToLocaleFacadeInterface
     {
         return $this->getProvidedDependency(DiscountDependencyProvider::FACADE_LOCALE);
     }
 
-    /**
-     * @return \Spryker\Zed\Discount\Dependency\Facade\DiscountToStoreFacadeInterface
-     */
     public function getStoreFacade(): DiscountToStoreFacadeInterface
     {
         return $this->getProvidedDependency(DiscountDependencyProvider::FACADE_STORE);
@@ -299,25 +281,16 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
         return $this->getProvidedDependency(DiscountDependencyProvider::PLUGIN_STORE_RELATION_FORM_TYPE);
     }
 
-    /**
-     * @return \Spryker\Zed\Discount\Dependency\Facade\DiscountToTranslatorFacadeInterface
-     */
     public function getTranslatorFacade(): DiscountToTranslatorFacadeInterface
     {
         return $this->getProvidedDependency(DiscountDependencyProvider::FACADE_TRANSLATOR);
     }
 
-    /**
-     * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
-     */
     public function getMoneyCollectionFormTypePlugin(): FormTypeInterface
     {
         return $this->getProvidedDependency(DiscountDependencyProvider::PLUGIN_MONEY_COLLECTION_FORM_TYPE);
     }
 
-    /**
-     * @return \Symfony\Component\Form\FormInterface
-     */
     public function createTableFilterForm(): FormInterface
     {
         $tableFilterFormDataProvider = $this->createTableFilterFormDataProvider();
@@ -329,9 +302,6 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
-    /**
-     * @return \Spryker\Zed\Discount\Communication\Form\DataProvider\TableFilterFormDataProvider
-     */
     public function createTableFilterFormDataProvider(): TableFilterFormDataProvider
     {
         return new TableFilterFormDataProvider(

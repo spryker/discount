@@ -26,29 +26,16 @@ class DiscountViewPage
      */
     protected $createPage;
 
-    /**
-     * @param \SprykerTest\Zed\Discount\DiscountPresentationTester $i
-     */
     public function __construct(DiscountPresentationTester $i)
     {
         $this->tester = $i;
     }
 
-    /**
-     * @param string $identifier
-     *
-     * @return void
-     */
     public function open(string $identifier): void
     {
         $this->tester->amOnPage($this->url($identifier));
     }
 
-    /**
-     * @param string $identifier
-     *
-     * @return string
-     */
     public function url(string $identifier): string
     {
         return static::URL . "?id-discount=$identifier";

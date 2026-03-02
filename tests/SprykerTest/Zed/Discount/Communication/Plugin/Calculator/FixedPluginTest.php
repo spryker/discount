@@ -25,9 +25,6 @@ use Spryker\Zed\Discount\Communication\Plugin\Calculator\FixedPlugin;
  */
 class FixedPluginTest extends Unit
 {
-    /**
-     * @return void
-     */
     public function testTransformForPersistenceShouldConvertDecimalToInteger(): void
     {
         $plugin = new FixedPlugin();
@@ -36,9 +33,6 @@ class FixedPluginTest extends Unit
         $this->assertSame(1113, $result);
     }
 
-    /**
-     * @return void
-     */
     public function testTransformFromPersistenceShouldConvertIntegerToDecimalWithoutSymbol(): void
     {
         $this->setLocaleForTest();
@@ -50,9 +44,6 @@ class FixedPluginTest extends Unit
         $this->assertEqualsWithDelta(11.13, $result, 0.001, '');
     }
 
-    /**
-     * @return void
-     */
     private function setLocaleForTest(): void
     {
         if ($this->isDynamicStoreEnabled() === false) {
@@ -60,9 +51,6 @@ class FixedPluginTest extends Unit
         }
     }
 
-    /**
-     * @return bool
-     */
     protected function isDynamicStoreEnabled(): bool
     {
         return (bool)getenv('SPRYKER_DYNAMIC_STORE_MODE');

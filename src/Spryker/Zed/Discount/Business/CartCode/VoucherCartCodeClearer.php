@@ -12,11 +12,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 class VoucherCartCodeClearer implements VoucherCartCodeClearerInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
     public function clearCartCodes(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         $quoteTransfer->setVoucherDiscounts(new ArrayObject());

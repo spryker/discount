@@ -102,9 +102,6 @@ class DistributorTest extends Unit
      */
     protected $tester;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -112,9 +109,6 @@ class DistributorTest extends Unit
         $this->discountFacade = new DiscountFacade();
     }
 
-    /**
-     * @return void
-     */
     public function testDistributeAmountLimitTheDiscountAmountToTheObjectGrossPrice(): void
     {
         $items = $this->getItems(
@@ -141,9 +135,6 @@ class DistributorTest extends Unit
         }
     }
 
-    /**
-     * @return void
-     */
     public function testDistributeShouldDistributeAmountEquallyToEqualExpensiveObjects(): void
     {
         $items = $this->getItems(
@@ -170,9 +161,6 @@ class DistributorTest extends Unit
         }
     }
 
-    /**
-     * @return void
-     */
     public function testDistributeShouldDistributeAmountWithRoundingErrorCorrection(): void
     {
         $items = $this->getItems(
@@ -208,9 +196,6 @@ class DistributorTest extends Unit
         }
     }
 
-    /**
-     * @return void
-     */
     public function testDistributeShouldDistributeDiscountAmountInRelationToObjectGrossPrice(): void
     {
         $items = $this->getItems(
@@ -246,9 +231,6 @@ class DistributorTest extends Unit
         }
     }
 
-    /**
-     * @return void
-     */
     public function testDistributionForNegativeDiscountAmountShouldNotDistributeAnyDiscounts(): void
     {
         $items = $this->getItems(
@@ -273,9 +255,6 @@ class DistributorTest extends Unit
         $this->assertSame(0, $items[2]->getOriginalItemCalculatedDiscounts()->count());
     }
 
-    /**
-     * @return void
-     */
     public function testDistributeShouldNotDistributeDiscountsForObjectsWithZeroGrossPrices(): void
     {
         $items = $this->getItems(
@@ -320,9 +299,6 @@ class DistributorTest extends Unit
         return $items;
     }
 
-    /**
-     * @return void
-     */
     public function testWhenDiscountAmountCouldNotEvenlySplitShouldAdjustDistributedAmount(): void
     {
         $distributor = $this->createDistributor();
@@ -355,9 +331,6 @@ class DistributorTest extends Unit
         $this->assertSame($discountAmount, $totalAmount);
     }
 
-    /**
-     * @return void
-     */
     public function testWhenTotalAmountIsNegativeShouldTerminateDistribution(): void
     {
         $distributor = $this->createDistributor();
@@ -390,9 +363,6 @@ class DistributorTest extends Unit
         $this->assertEmpty($totalAmount);
     }
 
-    /**
-     * @return void
-     */
     public function testWhenTotalDiscountAmountIsNegativeShouldTerminateDistribution(): void
     {
         $distributor = $this->createDistributor();
@@ -421,9 +391,6 @@ class DistributorTest extends Unit
         $this->assertEmpty($totalAmount);
     }
 
-    /**
-     * @return void
-     */
     public function testWhenTotalDiscountAmountIsMoreThanTotalGrossAmountShouldUseTotalGrossAmount(): void
     {
         $distributor = $this->createDistributor();
@@ -452,9 +419,6 @@ class DistributorTest extends Unit
         $this->assertSame(10, $totalAmount);
     }
 
-    /**
-     * @return void
-     */
     public function testWhenDiscountableItemWhenQuantityIsMissingShouldUseOneByDefault(): void
     {
         $distributor = $this->createDistributor();
@@ -483,9 +447,6 @@ class DistributorTest extends Unit
         $this->assertSame(50, $totalAmount);
     }
 
-    /**
-     * @return void
-     */
     public function testDistributeWithRoundingErrorShouldMoveCentToNextItem(): void
     {
         $distributor = $this->createDistributor();
@@ -544,11 +505,6 @@ class DistributorTest extends Unit
         return $discountableObjects;
     }
 
-    /**
-     * @param int $discountAmount
-     *
-     * @return \Generated\Shared\Transfer\DiscountTransfer
-     */
     protected function createDiscountTransfer(int $discountAmount): DiscountTransfer
     {
         $discountTransfer = new DiscountTransfer();
@@ -557,9 +513,6 @@ class DistributorTest extends Unit
         return $discountTransfer;
     }
 
-    /**
-     * @return \Spryker\Zed\Discount\Business\Distributor\Distributor
-     */
     protected function createDistributor(): Distributor
     {
         return new Distributor(
@@ -568,9 +521,6 @@ class DistributorTest extends Unit
         );
     }
 
-    /**
-     * @return \Spryker\Zed\Discount\Business\Distributor\DiscountableItem\DiscountableItemTransformerInterface
-     */
     protected function createDiscountableItemTransformer(): DiscountableItemTransformerInterface
     {
         return new DiscountableItemTransformer(

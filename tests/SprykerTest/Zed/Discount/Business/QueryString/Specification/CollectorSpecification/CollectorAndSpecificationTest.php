@@ -28,9 +28,6 @@ use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecificati
  */
 class CollectorAndSpecificationTest extends Unit
 {
-    /**
-     * @return void
-     */
     public function testCollectShouldReturnRecordsOnlyExistingInBoth(): void
     {
         $leftMock = $this->createCollectorSpecificationMock();
@@ -56,12 +53,6 @@ class CollectorAndSpecificationTest extends Unit
         $this->assertCount(1, $collected);
     }
 
-    /**
-     * @param \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface $leftMock
-     * @param \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface $rightMock
-     *
-     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorAndSpecification
-     */
     protected function createCollectorAndSpecification(
         CollectorSpecificationInterface $leftMock,
         CollectorSpecificationInterface $rightMock

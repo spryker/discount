@@ -42,10 +42,6 @@ class DiscountOrderSaver implements DiscountOrderSaverInterface
      */
     protected $voucherCode;
 
-    /**
-     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainer
-     * @param \Spryker\Zed\Discount\Business\Voucher\VoucherCodeInterface $voucherCode
-     */
     public function __construct(
         DiscountQueryContainerInterface $discountQueryContainer,
         VoucherCodeInterface $voucherCode
@@ -132,9 +128,6 @@ class DiscountOrderSaver implements DiscountOrderSaverInterface
         return $salesDiscountEntity;
     }
 
-    /**
-     * @return void
-     */
     protected function saveVoucherCodes(): void
     {
         if ($this->discountsWithVoucherUsed === []) {
@@ -277,9 +270,6 @@ class DiscountOrderSaver implements DiscountOrderSaverInterface
         $this->commit();
     }
 
-    /**
-     * @return \Propel\Runtime\Collection\Collection
-     */
     protected function getSalesDiscountEntityCollection(): Collection
     {
         return $this->discountQueryContainer

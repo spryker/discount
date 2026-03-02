@@ -38,9 +38,6 @@ class DiscountCommunicationTester extends Actor
 {
     use _generated\DiscountCommunicationTesterActions;
 
-    /**
-     * @return void
-     */
     public function registerStoreRelationToggleFormTypePlugin(): void
     {
         $this->setDependency(DiscountDependencyProvider::PLUGIN_STORE_RELATION_FORM_TYPE, function () {
@@ -48,9 +45,6 @@ class DiscountCommunicationTester extends Actor
         });
     }
 
-    /**
-     * @return void
-     */
     public function registerMoneyCollectionFormTypePlugin(): void
     {
         $moneyCollectionTypeMock = Stub::makeEmpty(FormTypeInterface::class, [
@@ -60,9 +54,6 @@ class DiscountCommunicationTester extends Actor
         $this->setDependency(DiscountDependencyProvider::PLUGIN_MONEY_COLLECTION_FORM_TYPE, $moneyCollectionTypeMock);
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
-     */
     public function haveDiscountConfiguratorTransfer(): DiscountConfiguratorTransfer
     {
         $discountConfigurator = (new DiscountConfiguratorBuilder())
@@ -95,42 +86,22 @@ class DiscountCommunicationTester extends Actor
         return $codes;
     }
 
-    /**
-     * @param array $seedData
-     *
-     * @return \Generated\Shared\Transfer\DiscountTableCriteriaTransfer
-     */
     public function createDiscountTableCriteriaTransfer(array $seedData = []): DiscountTableCriteriaTransfer
     {
         return (new DiscountTableCriteriaTransfer())
             ->fromArray($seedData, true);
     }
 
-    /**
-     * @param int $idDiscountVoucherPool
-     *
-     * @return int
-     */
     public function getDiscountVoucherEntitiesCountByIdDiscountVoucherPool(int $idDiscountVoucherPool): int
     {
         return $this->getDiscountVoucherQuery()->filterByFkDiscountVoucherPool($idDiscountVoucherPool)->count();
     }
 
-    /**
-     * @param int $idDiscountVoucherPool
-     *
-     * @return int
-     */
     public function getDiscountVoucherPoolEntitiesCountByIdDiscountVoucherPool(int $idDiscountVoucherPool): int
     {
         return $this->getDiscountVoucherPoolQuery()->filterByIdDiscountVoucherPool($idDiscountVoucherPool)->count();
     }
 
-    /**
-     * @param int $idDiscountVoucherPool
-     *
-     * @return void
-     */
     public function unsetFkDiscountVoucherPool(int $idDiscountVoucherPool): void
     {
         $this->getDiscountQuery()
@@ -138,25 +109,16 @@ class DiscountCommunicationTester extends Actor
             ->update(['FkDiscountVoucherPool' => null]);
     }
 
-    /**
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscountQuery
-     */
     protected function getDiscountQuery(): SpyDiscountQuery
     {
         return SpyDiscountQuery::create();
     }
 
-    /**
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery
-     */
     protected function getDiscountVoucherQuery(): SpyDiscountVoucherQuery
     {
         return SpyDiscountVoucherQuery::create();
     }
 
-    /**
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolQuery
-     */
     protected function getDiscountVoucherPoolQuery(): SpyDiscountVoucherPoolQuery
     {
         return SpyDiscountVoucherPoolQuery::create();

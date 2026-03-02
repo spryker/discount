@@ -11,10 +11,5 @@ use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 
 interface DiscountUpdaterInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
-     *
-     * @return void
-     */
     public function updateDiscount(DiscountConfiguratorTransfer $discountConfiguratorTransfer): void;
 }

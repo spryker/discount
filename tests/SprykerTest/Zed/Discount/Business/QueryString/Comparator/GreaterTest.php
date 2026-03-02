@@ -26,9 +26,6 @@ use Spryker\Zed\Discount\Business\QueryString\Comparator\Greater;
  */
 class GreaterTest extends Unit
 {
-    /**
-     * @return void
-     */
     public function testAcceptShouldReturnTrueWhenMoreExpressionProvided(): void
     {
         $more = $this->createMore();
@@ -41,9 +38,6 @@ class GreaterTest extends Unit
         $this->assertTrue($isAccepted);
     }
 
-    /**
-     * @return void
-     */
     public function testCompareWhenClauseValueIsBiggerThanProvidedShouldReturnTrue(): void
     {
         $more = $this->createMore();
@@ -56,9 +50,6 @@ class GreaterTest extends Unit
         $this->assertTrue($isMatching);
     }
 
-    /**
-     * @return void
-     */
     public function testCompareWhenClauseValueIsSmallerThanProvidedShouldReturnFalse(): void
     {
         $more = $this->createMore();
@@ -71,9 +62,6 @@ class GreaterTest extends Unit
         $this->assertFalse($isMatching);
     }
 
-    /**
-     * @return void
-     */
     public function testCompareWhenNonNumericValueUsedShouldThrowException(): void
     {
         $this->expectException(ComparatorException::class);
@@ -85,9 +73,6 @@ class GreaterTest extends Unit
         $more->compare($clauseTransfer, 'as');
     }
 
-    /**
-     * @return void
-     */
     public function testCompareShouldReturnFalseWhenEmptyValueIsProvided(): void
     {
         // Arrange
@@ -100,9 +85,6 @@ class GreaterTest extends Unit
         $this->assertFalse($isMatching);
     }
 
-    /**
-     * @return void
-     */
     public function testIsValueValidShouldReturnFalseWhenEmptyValueIsProvided(): void
     {
         // Act
@@ -112,9 +94,6 @@ class GreaterTest extends Unit
         $this->assertFalse($isValueValid);
     }
 
-    /**
-     * @return \Spryker\Zed\Discount\Business\QueryString\Comparator\Greater
-     */
     protected function createMore(): Greater
     {
         return new Greater();

@@ -79,11 +79,6 @@ class VoucherCartCode implements VoucherCartCodeInterface
         return $this->unsetNotAppliedVoucherCode($code, $quoteTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
     public function clearAllCodes(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         $quoteTransfer->setVoucherDiscounts(new ArrayObject());
@@ -113,12 +108,6 @@ class VoucherCartCode implements VoucherCartCodeInterface
         return null;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $code
-     *
-     * @return bool
-     */
     protected function hasCandidate(QuoteTransfer $quoteTransfer, string $code): bool
     {
         foreach ($quoteTransfer->getVoucherDiscounts() as $voucherDiscount) {
@@ -130,12 +119,6 @@ class VoucherCartCode implements VoucherCartCodeInterface
         return false;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $code
-     *
-     * @return \Generated\Shared\Transfer\MessageTransfer|null
-     */
     protected function getVoucherApplySuccessMessage(QuoteTransfer $quoteTransfer, string $code): ?MessageTransfer
     {
         if ($this->isVoucherFromPromotionDiscount($quoteTransfer, $code)) {
@@ -153,12 +136,6 @@ class VoucherCartCode implements VoucherCartCodeInterface
         return null;
     }
 
-    /**
-     * @param string $code
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
     protected function unsetNotAppliedVoucherCode(string $code, QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         $usedNotAppliedVoucherCodeResultList = array_filter(
@@ -173,12 +150,6 @@ class VoucherCartCode implements VoucherCartCodeInterface
         return $quoteTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $code
-     *
-     * @return bool
-     */
     protected function isVoucherFromPromotionDiscount(QuoteTransfer $quoteTransfer, string $code): bool
     {
         foreach ($quoteTransfer->getUsedNotAppliedVoucherCodes() as $codeUsed) {
@@ -190,12 +161,6 @@ class VoucherCartCode implements VoucherCartCodeInterface
         return false;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $code
-     *
-     * @return bool
-     */
     protected function isVoucherCodeApplied(QuoteTransfer $quoteTransfer, string $code): bool
     {
         foreach ($quoteTransfer->getVoucherDiscounts() as $discountTransfer) {
@@ -207,12 +172,6 @@ class VoucherCartCode implements VoucherCartCodeInterface
         return false;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $code
-     *
-     * @return \Generated\Shared\Transfer\MessageTransfer|null
-     */
     protected function getNonApplicableErrorMessage(QuoteTransfer $quoteTransfer, string $code): ?MessageTransfer
     {
         if ($this->isVoucherCodeApplyFailed($quoteTransfer, $code)) {
@@ -226,12 +185,6 @@ class VoucherCartCode implements VoucherCartCodeInterface
         return null;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $code
-     *
-     * @return bool
-     */
     protected function isVoucherCodeApplyFailed(QuoteTransfer $quoteTransfer, string $code): bool
     {
         foreach ($quoteTransfer->getUsedNotAppliedVoucherCodes() as $notAppliedVoucherCode) {

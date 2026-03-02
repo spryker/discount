@@ -28,9 +28,6 @@ use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecific
  */
 class DecisionRuleOrSpecificationTest extends Unit
 {
-    /**
-     * @return void
-     */
     public function testIsSatisfiedWhenAnyReturnTrueShouldEvaluateToTrue(): void
     {
         $leftSpecificationMock = $this->createDecisionRuleSpecificationMock();
@@ -50,9 +47,6 @@ class DecisionRuleOrSpecificationTest extends Unit
         $this->assertTrue($isSatisfied);
     }
 
-    /**
-     * @return void
-     */
     public function testIsSatisfiedWhenAllOfSpecificationReturnsFalseShouldEvaluateToFalse(): void
     {
         $leftSpecificationMock = $this->createDecisionRuleSpecificationMock();
@@ -72,12 +66,6 @@ class DecisionRuleOrSpecificationTest extends Unit
         $this->assertFalse($isSatisfied);
     }
 
-    /**
-     * @param \Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface $leftMock
-     * @param \Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface $rightMock
-     *
-     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleOrSpecification
-     */
     protected function createDecisionRuleOrSpecification(
         DecisionRuleSpecificationInterface $leftMock,
         DecisionRuleSpecificationInterface $rightMock

@@ -26,9 +26,6 @@ use SprykerTest\Zed\Discount\Business\BaseRuleTester;
  */
 class SubtotalDecisionRuleTest extends BaseRuleTester
 {
-    /**
-     * @return void
-     */
     public function testWhenSubTotalMatchesClauseShouldReturnTrue(): void
     {
         $comparatorMock = $this->createComparatorMock();
@@ -52,9 +49,6 @@ class SubtotalDecisionRuleTest extends BaseRuleTester
         $this->assertTrue($isSatisfied);
     }
 
-    /**
-     * @return void
-     */
     public function testWhenSubTotalsNotSetShouldReturnFalse(): void
     {
         $subtotalDecisionRule = $this->createSubtotalDecisionRule();
@@ -68,11 +62,6 @@ class SubtotalDecisionRuleTest extends BaseRuleTester
         $this->assertFalse($isSatisfied);
     }
 
-    /**
-     * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface|null $comparatorMock
-     *
-     * @return \Spryker\Zed\Discount\Business\DecisionRule\SubTotalDecisionRule
-     */
     protected function createSubtotalDecisionRule(?ComparatorOperatorsInterface $comparatorMock = null): SubTotalDecisionRule
     {
         if ($comparatorMock === null) {

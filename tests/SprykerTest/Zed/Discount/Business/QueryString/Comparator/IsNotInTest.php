@@ -34,9 +34,6 @@ class IsNotInTest extends Unit
      */
     protected const LIST_DELIMITER = ';';
 
-    /**
-     * @return void
-     */
     public function testAcceptShouldReturnTrueWhenIsNotInExpressionProvided(): void
     {
         $isNotIn = $this->createIsNotIn();
@@ -49,9 +46,6 @@ class IsNotInTest extends Unit
         $this->assertTrue($isAccepted);
     }
 
-    /**
-     * @return void
-     */
     public function testCompareWhenValueIsNotInClauseShouldReturnTrue(): void
     {
         $equal = $this->createIsNotIn();
@@ -65,9 +59,6 @@ class IsNotInTest extends Unit
         $this->assertTrue($isMatching);
     }
 
-    /**
-     * @return void
-     */
     public function testCompareWhenValueIsInClauseShouldReturnFalse(): void
     {
         $contains = $this->createIsNotIn();
@@ -81,9 +72,6 @@ class IsNotInTest extends Unit
         $this->assertFalse($isMatching);
     }
 
-    /**
-     * @return void
-     */
     public function testCompareWhenNonScalarValueUsedShouldThrowException(): void
     {
         $this->expectException(ComparatorException::class);
@@ -95,9 +83,6 @@ class IsNotInTest extends Unit
         $contains->compare($clauseTransfer, []);
     }
 
-    /**
-     * @return void
-     */
     public function testCompareShouldReturnTrueWhenNoOneOfProvidedValuesIsInClause(): void
     {
         // Arrange
@@ -111,9 +96,6 @@ class IsNotInTest extends Unit
         $this->assertTrue($isMatching);
     }
 
-    /**
-     * @return void
-     */
     public function testCompareShouldReturnTrueWhenEmptyValueIsProvided(): void
     {
         // Arrange
@@ -126,9 +108,6 @@ class IsNotInTest extends Unit
         $this->assertTrue($isMatching);
     }
 
-    /**
-     * @return void
-     */
     public function testIsValidValueShouldReturnTrueWhenEmptyValueIsProvided(): void
     {
         // Act
@@ -138,9 +117,6 @@ class IsNotInTest extends Unit
         $this->assertTrue($isMatching);
     }
 
-    /**
-     * @return void
-     */
     public function testCompareShouldReturnFalseWhenAtLeastOneOfProvidedValuesIsInClause(): void
     {
         // Arrange
@@ -154,9 +130,6 @@ class IsNotInTest extends Unit
         $this->assertFalse($isMatching);
     }
 
-    /**
-     * @return \Spryker\Zed\Discount\Business\QueryString\Comparator\IsNotIn
-     */
     protected function createIsNotIn(): IsNotIn
     {
         return new IsNotIn();

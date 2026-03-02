@@ -44,11 +44,6 @@ class DiscountForm extends AbstractType
         $this->executeFormTypeExpanderPlugins($builder, $options);
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
-     * @return void
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
@@ -136,9 +131,6 @@ class DiscountForm extends AbstractType
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getBlockPrefix(): string
     {
         return 'discount';

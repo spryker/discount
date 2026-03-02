@@ -20,19 +20,11 @@ class DiscountStoreCreator implements DiscountStoreCreatorInterface
      */
     protected $discountEntityManager;
 
-    /**
-     * @param \Spryker\Zed\Discount\Persistence\DiscountEntityManagerInterface $discountEntityManager
-     */
     public function __construct(DiscountEntityManagerInterface $discountEntityManager)
     {
         $this->discountEntityManager = $discountEntityManager;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
-     *
-     * @return void
-     */
     public function createDiscountStoreRelationships(DiscountConfiguratorTransfer $discountConfiguratorTransfer): void
     {
         if (!$discountConfiguratorTransfer->getDiscountGeneralOrFail()->getStoreRelation()) {
@@ -44,11 +36,6 @@ class DiscountStoreCreator implements DiscountStoreCreatorInterface
         });
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
-     *
-     * @return void
-     */
     protected function executeCreateDiscountStoreRelationshipsTransaction(DiscountConfiguratorTransfer $discountConfiguratorTransfer): void
     {
         $discountGeneralTransfer = $discountConfiguratorTransfer->getDiscountGeneralOrFail();

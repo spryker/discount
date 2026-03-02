@@ -26,9 +26,6 @@ use SprykerTest\Zed\Discount\Business\BaseRuleTester;
  */
 class TimeDecisionRuleTest extends BaseRuleTester
 {
-    /**
-     * @return void
-     */
     public function testDecisionRuleShouldReturnTrueIfGivenDateMatchesClause(): void
     {
         $dateTime = new DateTime();

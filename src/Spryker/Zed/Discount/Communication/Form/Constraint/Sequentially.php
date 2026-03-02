@@ -20,9 +20,6 @@ class Sequentially extends Composite
      */
     public $constraints = [];
 
-    /**
-     * @return string
-     */
     public function getDefaultOption(): string
     {
         return 'constraints';
@@ -36,9 +33,6 @@ class Sequentially extends Composite
         return ['constraints'];
     }
 
-    /**
-     * @return string
-     */
     protected function getCompositeOption(): string
     {
         return 'constraints';

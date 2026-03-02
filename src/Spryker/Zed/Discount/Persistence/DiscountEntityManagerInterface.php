@@ -14,39 +14,14 @@ use Generated\Shared\Transfer\DiscountTransfer;
 
 interface DiscountEntityManagerInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
-     *
-     * @return \Generated\Shared\Transfer\DiscountTransfer
-     */
     public function createDiscount(DiscountTransfer $discountTransfer): DiscountTransfer;
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
-     *
-     * @return \Generated\Shared\Transfer\DiscountTransfer
-     */
     public function updateDiscount(DiscountTransfer $discountTransfer): DiscountTransfer;
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountMoneyAmountTransfer $discountMoneyAmountTransfer
-     *
-     * @return \Generated\Shared\Transfer\DiscountMoneyAmountTransfer
-     */
     public function createDiscountAmount(DiscountMoneyAmountTransfer $discountMoneyAmountTransfer): DiscountMoneyAmountTransfer;
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountMoneyAmountTransfer $discountMoneyAmountTransfer
-     *
-     * @return void
-     */
     public function updateDiscountAmount(DiscountMoneyAmountTransfer $discountMoneyAmountTransfer): void;
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountGeneralTransfer $discountGeneralTransfer
-     *
-     * @return int
-     */
     public function createDiscountVoucherPool(DiscountGeneralTransfer $discountGeneralTransfer): int;
 
     /**
@@ -57,18 +32,8 @@ interface DiscountEntityManagerInterface
      */
     public function createDiscountStoreRelations(int $idDiscount, array $storeIds): void;
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountGeneralTransfer $discountGeneralTransfer
-     *
-     * @return int
-     */
     public function updateDiscountVoucherPool(DiscountGeneralTransfer $discountGeneralTransfer): int;
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountAmountCriteriaTransfer $discountAmountCriteriaTransfer
-     *
-     * @return void
-     */
     public function deleteDiscountAmounts(DiscountAmountCriteriaTransfer $discountAmountCriteriaTransfer): void;
 
     /**
@@ -93,17 +58,7 @@ interface DiscountEntityManagerInterface
      */
     public function deleteSalesDiscountCodesBySalesDiscountIds(array $salesDiscountIds): void;
 
-    /**
-     * @param int $idDiscountVoucherPool
-     *
-     * @return void
-     */
     public function deleteDiscountVouchersByIdDiscountVoucherPool(int $idDiscountVoucherPool): void;
 
-    /**
-     * @param int $idDiscountVoucherPool
-     *
-     * @return void
-     */
     public function deleteDiscountVoucherPoolByIdDiscountVoucherPool(int $idDiscountVoucherPool): void;
 }

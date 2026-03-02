@@ -25,9 +25,6 @@ use SprykerTest\Zed\Discount\Business\BaseRuleTester;
  */
 class SkuCollectorTest extends BaseRuleTester
 {
-    /**
-     * @return void
-     */
     public function testCollectWhenSkuMatchesShouldCollectMatchingItems(): void
     {
         $comparatorMock = $this->createComparatorMock();
@@ -49,11 +46,6 @@ class SkuCollectorTest extends BaseRuleTester
         $this->assertInstanceOf(DiscountableItemTransfer::class, $discountableItems[0]);
     }
 
-    /**
-     * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface|null $comparatorMock
-     *
-     * @return \Spryker\Zed\Discount\Business\Collector\SkuCollector
-     */
     protected function createItemSkuCollector(?ComparatorOperatorsInterface $comparatorMock = null): SkuCollector
     {
         if (!$comparatorMock) {

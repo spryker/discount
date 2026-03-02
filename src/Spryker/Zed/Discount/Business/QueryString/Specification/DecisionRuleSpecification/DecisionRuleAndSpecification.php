@@ -22,10 +22,6 @@ class DecisionRuleAndSpecification implements DecisionRuleSpecificationInterface
      */
     protected $right;
 
-    /**
-     * @param \Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface $left
-     * @param \Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface $right
-     */
     public function __construct(
         DecisionRuleSpecificationInterface $left,
         DecisionRuleSpecificationInterface $right

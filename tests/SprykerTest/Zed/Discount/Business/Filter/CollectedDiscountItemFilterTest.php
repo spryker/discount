@@ -59,9 +59,6 @@ class CollectedDiscountItemFilterTest extends Unit
      */
     protected DiscountBusinessTester $tester;
 
-    /**
-     * @return void
-     */
     public function testFilterAppliesDiscountWhenOriginalItemCalculatedDiscountAmountExceedItemUnitPrice(): void
     {
         // Arrange

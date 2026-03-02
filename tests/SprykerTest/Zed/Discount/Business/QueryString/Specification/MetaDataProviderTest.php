@@ -27,9 +27,6 @@ use Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface;
  */
 class MetaDataProviderTest extends Unit
 {
-    /**
-     * @return void
-     */
     public function testGetAvailableFieldsShouldReturnFieldProvidedByPlugins(): void
     {
         $fieldName = 'sample field';
@@ -47,9 +44,6 @@ class MetaDataProviderTest extends Unit
         $this->assertSame($fieldName, $availableFields[0]);
     }
 
-    /**
-     * @return void
-     */
     public function testIsFieldAvailableReturnsTrueIfFieldIsAvailable(): void
     {
         // Assign
@@ -69,9 +63,6 @@ class MetaDataProviderTest extends Unit
         $this->assertEquals($expectedResult, $actualResult);
     }
 
-    /**
-     * @return void
-     */
     public function testIsFieldAvailableReturnsFalseIfFieldIsNotAvailable(): void
     {
         // Assign
@@ -92,9 +83,6 @@ class MetaDataProviderTest extends Unit
         $this->assertEquals($expectedResult, $actualResult);
     }
 
-    /**
-     * @return void
-     */
     public function testGetAcceptedTypesByFieldNameShouldReturnAcceptedDateTypesForGivenPlugin(): void
     {
         $decisionRulePluginMock = $this->createDecisionRulePluginMock();
@@ -116,9 +104,6 @@ class MetaDataProviderTest extends Unit
         $this->assertSame(ComparatorOperators::TYPE_NUMBER, $acceptedDataTypes[0]);
     }
 
-    /**
-     * @return void
-     */
     public function testAvailableOperatorExpressionsShouldReturnAllOperatorExpressions(): void
     {
         $decisionRulePluginMock = $this->createDecisionRulePluginMock();
@@ -148,9 +133,6 @@ class MetaDataProviderTest extends Unit
         $this->assertSame($comparatorExpression, $comparatorExpressions[0]);
     }
 
-    /**
-     * @return void
-     */
     public function testGetLogicalComparatorsShouldReturnListOfOperatorsProvidedByComparator(): void
     {
         $logicalComparatorsMock = $this->createLogicalComparatorsMock();

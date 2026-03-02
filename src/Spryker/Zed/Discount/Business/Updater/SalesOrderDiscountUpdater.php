@@ -14,20 +14,10 @@ use Spryker\Zed\Discount\Business\Deleter\SalesDiscountDeleterInterface;
 
 class SalesOrderDiscountUpdater implements SalesOrderDiscountUpdaterInterface
 {
-    /**
-     * @param \Spryker\Zed\Discount\Business\Deleter\SalesDiscountDeleterInterface $salesDiscountDeleter
-     * @param \Spryker\Zed\Discount\Business\Checkout\DiscountOrderSaverInterface $discountOrderSaver
-     */
     public function __construct(protected SalesDiscountDeleterInterface $salesDiscountDeleter, protected DiscountOrderSaverInterface $discountOrderSaver)
     {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
-     *
-     * @return void
-     */
     public function replaceSalesOrderDiscountsByQuote(
         QuoteTransfer $quoteTransfer,
         SaveOrderTransfer $saveOrderTransfer

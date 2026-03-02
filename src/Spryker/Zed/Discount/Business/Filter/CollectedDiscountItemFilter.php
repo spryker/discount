@@ -56,11 +56,6 @@ class CollectedDiscountItemFilter implements CollectedDiscountItemFilterInterfac
         return $filteredCollectedDiscountTransfers;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CollectedDiscountTransfer $collectedDiscountTransfer
-     *
-     * @return \Generated\Shared\Transfer\CollectedDiscountTransfer
-     */
     protected function filterCollectedDiscountWithItems(CollectedDiscountTransfer $collectedDiscountTransfer): CollectedDiscountTransfer
     {
         $discountTransfer = $collectedDiscountTransfer->getDiscount();
@@ -167,11 +162,6 @@ class CollectedDiscountItemFilter implements CollectedDiscountItemFilterInterfac
         return $discountableItemProcessResult;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CollectedDiscountTransfer $collectedDiscountTransfer
-     *
-     * @return bool
-     */
     protected function isCollectedDiscountValid(CollectedDiscountTransfer $collectedDiscountTransfer): bool
     {
         if (!$collectedDiscountTransfer->getDiscountableItems()->count()) {

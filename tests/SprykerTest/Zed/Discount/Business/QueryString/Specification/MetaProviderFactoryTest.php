@@ -28,9 +28,6 @@ use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProvide
  */
 class MetaProviderFactoryTest extends Unit
 {
-    /**
-     * @return void
-     */
     public function testCreateMetaProviderByTypeForDecisionRuleShouldReturnMetaProviderForDecisionRule(): void
     {
         $discountBusinessFactoryMock = $this->createDiscountBusinessFactoryMock();
@@ -55,9 +52,6 @@ class MetaProviderFactoryTest extends Unit
         $this->assertInstanceOf(MetaDataProvider::class, $decisionRuleProvider);
     }
 
-    /**
-     * @return void
-     */
     public function testCreateMetaProviderByTypeForCollectorShouldReturnMetaProviderForCollector(): void
     {
         $discountBusinessFactoryMock = $this->createDiscountBusinessFactoryMock();
@@ -82,11 +76,6 @@ class MetaProviderFactoryTest extends Unit
         $this->assertInstanceOf(MetaDataProvider::class, $collectorProvider);
     }
 
-    /**
-     * @param \Spryker\Zed\Discount\Business\DiscountBusinessFactory|null $discountBusinessFactoryMock
-     *
-     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProviderFactory
-     */
     protected function createMetaProviderFactory(?DiscountBusinessFactory $discountBusinessFactoryMock = null): MetaProviderFactory
     {
         if ($discountBusinessFactoryMock === null) {

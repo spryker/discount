@@ -19,9 +19,6 @@ class ItemQuantityCollector extends BaseCollector implements CollectorInterface
      */
     protected $comparators;
 
-    /**
-     * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface $comparators
-     */
     public function __construct(ComparatorOperatorsInterface $comparators)
     {
         $this->comparators = $comparators;
@@ -50,12 +47,6 @@ class ItemQuantityCollector extends BaseCollector implements CollectorInterface
         return $discountableItems;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer $comparedItemTransfer
-     *
-     * @return int
-     */
     protected function calculateItemsQuantityByGroupKey(QuoteTransfer $quoteTransfer, ItemTransfer $comparedItemTransfer): int
     {
         $quantity = 0;

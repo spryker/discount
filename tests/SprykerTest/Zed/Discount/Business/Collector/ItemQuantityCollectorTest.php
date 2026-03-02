@@ -25,9 +25,6 @@ use SprykerTest\Zed\Discount\Business\BaseRuleTester;
  */
 class ItemQuantityCollectorTest extends BaseRuleTester
 {
-    /**
-     * @return void
-     */
     public function testItemQuantityCollectorShouldReturnAllItemsMatchingQuantity(): void
     {
         $comparatorMock = $this->createComparatorMock();
@@ -49,11 +46,6 @@ class ItemQuantityCollectorTest extends BaseRuleTester
         $this->assertInstanceOf(DiscountableItemTransfer::class, $discountableItems[0]);
     }
 
-    /**
-     * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface|null $comparatorMock
-     *
-     * @return \Spryker\Zed\Discount\Business\Collector\ItemQuantityCollector
-     */
     protected function createItemQuantityCollector(?ComparatorOperatorsInterface $comparatorMock = null): ItemQuantityCollector
     {
         if (!$comparatorMock) {

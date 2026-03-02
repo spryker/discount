@@ -122,11 +122,6 @@ class DiscountsTable extends AbstractTable
         $this->discountRepository = $discountRepository;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountTableCriteriaTransfer $discountTableCriteriaTransfer
-     *
-     * @return void
-     */
     public function applyCriteria(DiscountTableCriteriaTransfer $discountTableCriteriaTransfer): void
     {
         if ($discountTableCriteriaTransfer->getStatus() !== null) {
@@ -433,11 +428,6 @@ class DiscountsTable extends AbstractTable
         return $validFrom . ' UTC - ' . $validTo . ' UTC';
     }
 
-    /**
-     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
-     *
-     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
-     */
     protected function expandTableConfigurationWithPriorityColumn(TableConfiguration $config): TableConfiguration
     {
         $headers = $config->getHeader();

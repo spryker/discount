@@ -14,20 +14,10 @@ use Spryker\Zed\Discount\Persistence\DiscountRepositoryInterface;
 
 class SalesOrderDiscountCodeUpdater implements SalesOrderDiscountCodeUpdaterInterface
 {
-    /**
-     * @param \Spryker\Zed\Discount\Persistence\DiscountRepositoryInterface $discountRepository
-     * @param \Spryker\Zed\Discount\Business\Voucher\VoucherCodeInterface $voucherCode
-     */
     public function __construct(protected DiscountRepositoryInterface $discountRepository, protected VoucherCodeInterface $voucherCode)
     {
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
-     *
-     * @return void
-     */
     public function releaseSalesOrderDiscountCodesByQuote(
         QuoteTransfer $quoteTransfer,
         SaveOrderTransfer $saveOrderTransfer

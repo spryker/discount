@@ -31,11 +31,6 @@ interface VoucherCartCodeInterface
      */
     public function removeCode(QuoteTransfer $quoteTransfer, $code): QuoteTransfer;
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
     public function clearAllCodes(QuoteTransfer $quoteTransfer): QuoteTransfer;
 
     /**

@@ -28,11 +28,6 @@ class Calculator implements CalculatorInterface
         $this->discountCalculatorPlugins = $discountCalculatorPlugins;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\DiscountCalculationRequestTransfer $discountCalculationRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\DiscountCalculationResponseTransfer
-     */
     public function calculate(
         DiscountCalculationRequestTransfer $discountCalculationRequestTransfer
     ): DiscountCalculationResponseTransfer {

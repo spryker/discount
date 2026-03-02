@@ -70,11 +70,6 @@ class DiscountRepository extends AbstractRepository implements DiscountRepositor
             ->mapDiscountAmountEntitiesToMoneyValueTransfers($discountAmountEntities, []);
     }
 
-    /**
-     * @param int $idDiscount
-     *
-     * @return \Generated\Shared\Transfer\StoreRelationTransfer
-     */
     public function getDiscountStoreRelations(int $idDiscount): StoreRelationTransfer
     {
         $discountStoreEntities = $this->getFactory()
@@ -91,11 +86,6 @@ class DiscountRepository extends AbstractRepository implements DiscountRepositor
             );
     }
 
-    /**
-     * @param int $idDiscount
-     *
-     * @return bool
-     */
     public function discountExists(int $idDiscount): bool
     {
         return $this->getFactory()
@@ -104,11 +94,6 @@ class DiscountRepository extends AbstractRepository implements DiscountRepositor
             ->exists();
     }
 
-    /**
-     * @param int $idDiscount
-     *
-     * @return bool
-     */
     public function discountVoucherPoolExists(int $idDiscount): bool
     {
         return $this->getFactory()

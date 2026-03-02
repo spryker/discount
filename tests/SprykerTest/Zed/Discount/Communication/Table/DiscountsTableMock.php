@@ -12,9 +12,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DiscountsTableMock extends DiscountsTable
 {
-    /**
-     * @return \Symfony\Component\HttpFoundation\Request
-     */
     protected function getRequest(): Request
     {
         return new Request();

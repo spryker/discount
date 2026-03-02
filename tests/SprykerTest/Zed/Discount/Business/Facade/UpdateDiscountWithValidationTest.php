@@ -52,9 +52,6 @@ class UpdateDiscountWithValidationTest extends Unit
      */
     protected $tester;
 
-    /**
-     * @return void
-     */
     public function testWillUpdateExistingRecordWithNewData(): void
     {
         // Arrange
@@ -105,9 +102,6 @@ class UpdateDiscountWithValidationTest extends Unit
         $this->assertSame($discountConditionTransfer->getDecisionRuleQueryString(), $discountEntity->getDecisionRuleQueryString());
     }
 
-    /**
-     * @return void
-     */
     public function testUpdateDiscountShouldRemoveDiscountAmountWhenFixedDiscountTypeChangedToPercentageType(): void
     {
         // Arrange
@@ -136,9 +130,6 @@ class UpdateDiscountWithValidationTest extends Unit
         $this->assertCount(0, $discountEntity->getDiscountAmounts());
     }
 
-    /**
-     * @return void
-     */
     public function testUpdateDiscountShouldNotRemoveDiscountAmountWhenFixedDiscountTypeChangedToPluginWithCalculatorMoneyInputType(): void
     {
         // Arrange
@@ -166,9 +157,6 @@ class UpdateDiscountWithValidationTest extends Unit
         $this->assertCount(1, $discountEntity->getDiscountAmounts());
     }
 
-    /**
-     * @return void
-     */
     public function testUpdateDiscountShouldRemoveDiscountAmountWhenFixedDiscountTypeChangedToPluginThatWasntFoundInStack(): void
     {
         // Arrange
@@ -197,9 +185,6 @@ class UpdateDiscountWithValidationTest extends Unit
         $this->assertCount(0, $discountEntity->getDiscountAmounts());
     }
 
-    /**
-     * @return void
-     */
     public function testWillPersistsStoreRelation(): void
     {
         // Arrange
@@ -235,9 +220,6 @@ class UpdateDiscountWithValidationTest extends Unit
         $this->assertSame($expectedIdStores, $persistedStoreIds);
     }
 
-    /**
-     * @return void
-     */
     public function testWillValidateDatesFormat(): void
     {
         // Arrange
@@ -257,9 +239,6 @@ class UpdateDiscountWithValidationTest extends Unit
         $this->assertCount(4, $discountConfiguratorResponseTransfer->getMessages());
     }
 
-    /**
-     * @return void
-     */
     public function testWillValidateDatePeriod(): void
     {
         // Arrange
@@ -283,9 +262,6 @@ class UpdateDiscountWithValidationTest extends Unit
         $this->assertSame('The discount cannot end before the starting date.', $messageTransfer->getValue());
     }
 
-    /**
-     * @return void
-     */
     public function testWillValidateIfDiscountExists(): void
     {
         // Arrange
