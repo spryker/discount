@@ -17,7 +17,7 @@ class DiscountListPage
     /**
      * @var string
      */
-    public const SELECTOR_DATA_TABLE = '.dataTables_wrapper';
+    public const SELECTOR_DATA_TABLE = '.dt-container';
 
     /**
      * @var string

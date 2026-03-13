@@ -3,37 +3,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
+:root {
+    --ins-card-border-width: 1px;
+}
+
 .query-builder-container {
     min-height: 120px;
     background: url('/assets/img/cms-loader.gif') center center;
     width: 100%;
     background-repeat: no-repeat;
-
-    .group-conditions {
-        .btn-primary {
-            background-color: #f3f3f4;
-            color: #999;
-            border-color: #e5e6e7;
-        }
-
-        .active {
-            background-color: #1ab394;
-            color: #fff;
-        }
-    }
-}
-
-.query-builder-info {
-    margin-top: 15px;
-
-    .ibox-title {
-        background-color: #d9edf7 !important;
-    }
-
-    table {
-        margin-top: 15px;
-        background: #fff;
-    }
 }
 
 .query-builder {
@@ -44,11 +22,13 @@
         margin: 4px 0;
         border-radius: 1px;
         padding: 5px;
-        border: 1px solid #e5e6e7;
+        border: 1px solid currentColor;
     }
 
     .rule-container {
-        background: rgba(200, 200, 200, 0.1);
+        background: var(--ins-secondary-bg);
+        border: var(--ins-card-border-width) solid var(--ins-border-color);
+        border-radius: var(--ins-card-border-radius);
     }
 
     .rule-container .rule-filter-container,
@@ -62,13 +42,18 @@
     }
 
     .rules-group-container {
-        padding: 10px;
-        padding-bottom: 6px;
-        background: #fff;
+        padding: var(--ins-card-spacer-y) var(--ins-card-spacer-x);
+        background: var(--ins-secondary-bg);
+        border: var(--ins-card-border-width) solid var(--ins-border-color);
+        border-radius: var(--ins-card-border-radius);
     }
 
     .rules-group-header {
         margin-bottom: 10px;
+
+        label {
+            margin-bottom: 0;
+        }
     }
 
     .rules-group-header {
@@ -90,7 +75,7 @@
         margin: 0;
     }
     .rule-value-container {
-        border-left: 1px solid #ddd;
+        border-left: 1px solid var(--ins-border-color);
         padding-left: 5px;
 
         label {
@@ -132,7 +117,6 @@
             left: -10px;
             width: 10px;
             height: calc(50% + 4px);
-            border-color: #ccc;
             border-style: solid;
         }
 
@@ -191,9 +175,5 @@
     .rule-placeholder {
         border: 1px dashed #bbb;
         opacity: 0.7;
-    }
-
-    .select2-selection {
-        min-width: 210px;
     }
 }
