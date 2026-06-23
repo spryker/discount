@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesDiscount;
 use Orm\Zed\Sales\Persistence\SpySalesDiscountCode;
-use Propel\Runtime\Collection\Collection;
 use Spryker\Zed\Discount\Business\Voucher\VoucherCodeInterface;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 use Spryker\Zed\Propel\Persistence\BatchProcessor\ActiveRecordBatchProcessorTrait;
@@ -33,7 +32,7 @@ class DiscountOrderSaver implements DiscountOrderSaverInterface
     protected $voucherCodesUsed = [];
 
     /**
-     * @var array<int|string, \Generated\Shared\Transfer\CalculatedDiscountTransfer>
+     * @var array<int, array{entity: \Orm\Zed\Sales\Persistence\SpySalesDiscount, transfer: \Generated\Shared\Transfer\CalculatedDiscountTransfer}>
      */
     protected array $discountsWithVoucherUsed = [];
 
@@ -134,12 +133,8 @@ class DiscountOrderSaver implements DiscountOrderSaverInterface
             return;
         }
 
-        $salesDiscountEntityCollection = $this->getSalesDiscountEntityCollection();
-
-        foreach ($salesDiscountEntityCollection as $salesDiscountEntity) {
-            if (isset($this->discountsWithVoucherUsed[$salesDiscountEntity->getFkSalesOrderItem()])) {
-                $this->saveUsedCodes($this->discountsWithVoucherUsed[$salesDiscountEntity->getFkSalesOrderItem()], $salesDiscountEntity);
-            }
+        foreach ($this->discountsWithVoucherUsed as $pair) {
+            $this->saveUsedCodes($pair['transfer'], $pair['entity']);
         }
 
         $this->commit();
@@ -158,11 +153,15 @@ class DiscountOrderSaver implements DiscountOrderSaverInterface
         $calculatedDiscountTransfer->requireSumAmount();
 
         $salesDiscountEntity->setAmount($calculatedDiscountTransfer->getSumAmount());
-        $this->persistSalesDiscount($salesDiscountEntity);
 
         if ($this->haveVoucherCode($calculatedDiscountTransfer)) {
-            $this->discountsWithVoucherUsed[$salesDiscountEntity->getFkSalesOrderItem()] = $calculatedDiscountTransfer;
+            $salesDiscountEntity->save();
+            $this->discountsWithVoucherUsed[] = ['entity' => $salesDiscountEntity, 'transfer' => $calculatedDiscountTransfer];
+
+            return;
         }
+
+        $this->persistSalesDiscount($salesDiscountEntity);
     }
 
     /**
@@ -190,9 +189,7 @@ class DiscountOrderSaver implements DiscountOrderSaverInterface
      */
     private function haveVoucherCode(CalculatedDiscountTransfer $calculatedDiscountTransfer)
     {
-        $voucherCode = $calculatedDiscountTransfer->getVoucherCode();
-
-        return (bool)$voucherCode;
+        return (bool)$calculatedDiscountTransfer->getVoucherCode();
     }
 
     /**
@@ -268,13 +265,5 @@ class DiscountOrderSaver implements DiscountOrderSaverInterface
             }
         }
         $this->commit();
-    }
-
-    protected function getSalesDiscountEntityCollection(): Collection
-    {
-        return $this->discountQueryContainer
-            ->querySalesDiscount()
-            ->filterByFkSalesOrderItem_In(array_keys($this->discountsWithVoucherUsed))
-            ->find();
     }
 }

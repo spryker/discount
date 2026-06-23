@@ -116,17 +116,15 @@ class DiscountOrderSaverTest extends Unit
 
     public function testSaveDiscountMustSaveSalesDiscountCodesIfUsedCodesPresent(): void
     {
-        $discountSaver = $this->getDiscountOrderSaverMock(['persistSalesDiscount', 'persistSalesDiscountCode', 'getDiscountVoucherEntityByCode', 'getSalesDiscountEntityCollection']);
+        $discountSaver = $this->getDiscountOrderSaverMock(['persistSalesDiscountCode', 'getDiscountVoucherEntityByCode', 'getSalesDiscountEntity']);
         $discountSaver->expects($this->once())
-            ->method('persistSalesDiscount');
+            ->method('getSalesDiscountEntity')
+            ->willReturn($this->createSalesDiscountEntityMock());
         $discountSaver->expects($this->once())
             ->method('persistSalesDiscountCode');
         $discountSaver->expects($this->once())
             ->method('getDiscountVoucherEntityByCode')
             ->willReturnCallback([$this, 'getDiscountVoucherEntityByCode']);
-        $discountSaver->expects($this->once())
-            ->method('getSalesDiscountEntityCollection')
-            ->willReturnCallback([$this, 'getDiscountEntityCollectionByCode']);
 
         $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
         $calculatedDiscountTransfer->setVoucherCode(static::USED_CODE_1);
@@ -147,17 +145,15 @@ class DiscountOrderSaverTest extends Unit
 
     public function testSaveDiscountMustNotSaveSalesDiscountCodesIfUsedCodeCanNotBeFound(): void
     {
-        $discountSaver = $this->getDiscountOrderSaverMock(['persistSalesDiscount', 'persistSalesDiscountCode', 'getDiscountVoucherEntityByCode', 'getSalesDiscountEntityCollection']);
+        $discountSaver = $this->getDiscountOrderSaverMock(['persistSalesDiscountCode', 'getDiscountVoucherEntityByCode', 'getSalesDiscountEntity']);
         $discountSaver->expects($this->once())
-            ->method('persistSalesDiscount');
+            ->method('getSalesDiscountEntity')
+            ->willReturn($this->createSalesDiscountEntityMock());
         $discountSaver->expects($this->never())
             ->method('persistSalesDiscountCode');
         $discountSaver->expects($this->once())
             ->method('getDiscountVoucherEntityByCode')
             ->willReturn(false);
-        $discountSaver->expects($this->once())
-            ->method('getSalesDiscountEntityCollection')
-            ->willReturnCallback([$this, 'getDiscountEntityCollectionByCode']);
 
         $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
         $calculatedDiscountTransfer->setVoucherCode(static::USED_CODE_1);
@@ -174,6 +170,159 @@ class DiscountOrderSaverTest extends Unit
         $saverOrderTransfer->setOrderItems($quoteTransfer->getItems());
 
         $discountSaver->saveOrderDiscounts($quoteTransfer, $saverOrderTransfer);
+    }
+
+    /**
+     * @dataProvider multipleVoucherCountDataProvider
+     */
+    public function testSaveDiscountWithMultipleVoucherCodesCreatesDiscountCodeForEach(int $voucherCount): void
+    {
+        $salesDiscountEntityMocks = [];
+
+        for ($i = 0; $i < $voucherCount; $i++) {
+            $salesDiscountEntityMocks[] = $this->createSalesDiscountEntityMock();
+        }
+
+        $callIndex = 0;
+        $discountSaver = $this->getDiscountOrderSaverMock([
+            'persistSalesDiscountCode',
+            'getDiscountVoucherEntityByCode',
+            'getSalesDiscountEntity',
+        ]);
+        $discountSaver->expects($this->exactly($voucherCount))
+            ->method('getSalesDiscountEntity')
+            ->willReturnCallback(function () use ($salesDiscountEntityMocks, &$callIndex) {
+                return $salesDiscountEntityMocks[$callIndex++];
+            });
+        $discountSaver->expects($this->exactly($voucherCount))
+            ->method('persistSalesDiscountCode');
+        $discountSaver->expects($this->exactly($voucherCount))
+            ->method('getDiscountVoucherEntityByCode')
+            ->willReturnCallback([$this, 'getDiscountVoucherEntityByCode']);
+
+        $quoteTransfer = new QuoteTransfer();
+        $orderItemTransfer = new ItemTransfer();
+
+        for ($i = 0; $i < $voucherCount; $i++) {
+            $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
+            $calculatedDiscountTransfer->setVoucherCode(sprintf('voucher_code_%d', $i));
+            $calculatedDiscountTransfer->setSumAmount(static::DISCOUNT_AMOUNT);
+            $orderItemTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
+        }
+
+        $quoteTransfer->addItem($orderItemTransfer);
+
+        $saverOrderTransfer = new SaveOrderTransfer();
+        $saverOrderTransfer->setIdSalesOrder(static::ID_SALES_ORDER);
+        $saverOrderTransfer->setOrderItems($quoteTransfer->getItems());
+
+        $discountSaver->saveOrderDiscounts($quoteTransfer, $saverOrderTransfer);
+    }
+
+    /**
+     * @dataProvider multipleVoucherCountDataProvider
+     */
+    public function testSaveDiscountWithMultipleVouchersOnMultipleItemsCreatesCodeForEach(int $voucherCount): void
+    {
+        $itemCount = 2;
+        $totalVouchers = $voucherCount * $itemCount;
+
+        $salesDiscountEntityMocks = [];
+
+        for ($i = 0; $i < $totalVouchers; $i++) {
+            $salesDiscountEntityMocks[] = $this->createSalesDiscountEntityMock();
+        }
+
+        $callIndex = 0;
+        $discountSaver = $this->getDiscountOrderSaverMock([
+            'persistSalesDiscountCode',
+            'getDiscountVoucherEntityByCode',
+            'getSalesDiscountEntity',
+        ]);
+        $discountSaver->expects($this->exactly($totalVouchers))
+            ->method('getSalesDiscountEntity')
+            ->willReturnCallback(function () use ($salesDiscountEntityMocks, &$callIndex) {
+                return $salesDiscountEntityMocks[$callIndex++];
+            });
+        $discountSaver->expects($this->exactly($totalVouchers))
+            ->method('persistSalesDiscountCode');
+        $discountSaver->expects($this->exactly($totalVouchers))
+            ->method('getDiscountVoucherEntityByCode')
+            ->willReturnCallback([$this, 'getDiscountVoucherEntityByCode']);
+
+        $quoteTransfer = new QuoteTransfer();
+
+        for ($j = 0; $j < $itemCount; $j++) {
+            $orderItemTransfer = new ItemTransfer();
+
+            for ($i = 0; $i < $voucherCount; $i++) {
+                $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
+                $calculatedDiscountTransfer->setVoucherCode(sprintf('voucher_code_%d', $i));
+                $calculatedDiscountTransfer->setSumAmount(static::DISCOUNT_AMOUNT);
+                $orderItemTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
+            }
+
+            $quoteTransfer->addItem($orderItemTransfer);
+        }
+
+        $saverOrderTransfer = new SaveOrderTransfer();
+        $saverOrderTransfer->setIdSalesOrder(static::ID_SALES_ORDER);
+        $saverOrderTransfer->setOrderItems($quoteTransfer->getItems());
+
+        $discountSaver->saveOrderDiscounts($quoteTransfer, $saverOrderTransfer);
+    }
+
+    public function testSaveDiscountWithMixedVoucherAndNonVoucherDiscountSavesBoth(): void
+    {
+        $salesDiscountEntityMock = $this->createSalesDiscountEntityMock();
+
+        $discountSaver = $this->getDiscountOrderSaverMock([
+            'persistSalesDiscount',
+            'persistSalesDiscountCode',
+            'getDiscountVoucherEntityByCode',
+            'getSalesDiscountEntity',
+        ]);
+        $discountSaver->expects($this->exactly(2))
+            ->method('getSalesDiscountEntity')
+            ->willReturnOnConsecutiveCalls(new SpySalesDiscount(), $salesDiscountEntityMock);
+        $discountSaver->expects($this->once())
+            ->method('persistSalesDiscount');
+        $discountSaver->expects($this->once())
+            ->method('persistSalesDiscountCode');
+        $discountSaver->expects($this->once())
+            ->method('getDiscountVoucherEntityByCode')
+            ->willReturnCallback([$this, 'getDiscountVoucherEntityByCode']);
+
+        $quoteTransfer = new QuoteTransfer();
+        $orderItemTransfer = new ItemTransfer();
+
+        $nonVoucherDiscount = new CalculatedDiscountTransfer();
+        $nonVoucherDiscount->setSumAmount(static::DISCOUNT_AMOUNT);
+        $orderItemTransfer->addCalculatedDiscount($nonVoucherDiscount);
+
+        $voucherDiscount = new CalculatedDiscountTransfer();
+        $voucherDiscount->setVoucherCode(static::USED_CODE_1);
+        $voucherDiscount->setSumAmount(static::DISCOUNT_AMOUNT);
+        $orderItemTransfer->addCalculatedDiscount($voucherDiscount);
+
+        $quoteTransfer->addItem($orderItemTransfer);
+
+        $saverOrderTransfer = new SaveOrderTransfer();
+        $saverOrderTransfer->setIdSalesOrder(static::ID_SALES_ORDER);
+        $saverOrderTransfer->setOrderItems($quoteTransfer->getItems());
+
+        $discountSaver->saveOrderDiscounts($quoteTransfer, $saverOrderTransfer);
+    }
+
+    /**
+     * @return array<string, array<int>>
+     */
+    public function multipleVoucherCountDataProvider(): array
+    {
+        return [
+            '2 vouchers' => [2],
+            '3 vouchers' => [3],
+        ];
     }
 
     public function getDiscountVoucherEntityByCode(): SpyDiscountVoucher
@@ -227,6 +376,16 @@ class DiscountOrderSaverTest extends Unit
             ->getMock();
 
         return $discountSaverMock;
+    }
+
+    private function createSalesDiscountEntityMock(): SpySalesDiscount
+    {
+        $salesDiscountEntityMock = $this->getMockBuilder(SpySalesDiscount::class)
+            ->onlyMethods(['save'])
+            ->getMock();
+        $salesDiscountEntityMock->expects($this->once())->method('save');
+
+        return $salesDiscountEntityMock;
     }
 
     protected function getCurrentStore(): StoreTransfer
