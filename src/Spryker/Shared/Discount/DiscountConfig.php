@@ -12,11 +12,15 @@ use Spryker\Shared\Kernel\AbstractSharedConfig;
 class DiscountConfig extends AbstractSharedConfig
 {
     /**
+     * @api
+     *
      * @var string
      */
     public const PRICE_MODE_NET = 'NET_MODE';
 
     /**
+     * @api
+     *
      * @var string
      */
     public const PRICE_MODE_GROSS = 'GROSS_MODE';
