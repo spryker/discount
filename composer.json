@@ -33,15 +33,13 @@
         "spryker/application": "*",
         "spryker/checkout": "*",
         "spryker/code-sniffer": "*",
-        "spryker/config": "*",
         "spryker/container": "*",
         "spryker/event-dispatcher": "*",
         "spryker/form": "*",
         "spryker/oms": "*",
         "spryker/router": "*",
         "spryker/testify": "*",
-        "spryker/validator": "*",
-        "spryker/zed-navigation": "*"
+        "spryker/validator": "*"
     },
     "suggest": {
         "spryker/checkout": "If you want to use Checkout plugins."
@@ -49,8 +47,7 @@
     "autoload": {
         "psr-4": {
             "Spryker\\": "src/Spryker/",
-            "SprykerTest\\Shared\\Discount\\Helper\\": "tests/SprykerTest/Shared/Discount/_support/Helper/",
-            "SprykerTest\\Zed\\Discount\\PageObject\\": "tests/SprykerTest/Zed/Discount/_support/PageObject/"
+            "SprykerTest\\Shared\\Discount\\Helper\\": "tests/SprykerTest/Shared/Discount/_support/Helper/"
         }
     },
     "autoload-dev": {
