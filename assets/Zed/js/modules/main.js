@@ -21,6 +21,67 @@ function setDiscountAmountSymbol() {
     }
 }
 
+/**
+ * Legacy jQuery datetimepicker setup, including the manual min/max bookkeeping that keeps the
+ * two ends of the validity range consistent.
+ *
+ * @deprecated Superseded by `DateTimePickerType` and the Gui DateTimePicker, which handle range
+ *   linking declaratively. Kept only for installations running spryker/gui older than 5.4.0.
+ */
+function initLegacyValidityPickers($from, $to, fromFormat, toFormat) {
+    $from.datetimepicker({
+        format: fromFormat,
+        defaultTime: '00:00',
+        todayButton: false,
+        onShow: function () {
+            if (!$to.val()) {
+                return;
+            }
+
+            this.setOptions({
+                maxDate: $to.datetimepicker('getValue'),
+            });
+        },
+        onClose: function () {
+            if (!$to.val()) {
+                return;
+            }
+
+            var startDate = $from.datetimepicker('getValue');
+            var endDate = $to.datetimepicker('getValue');
+            if (startDate > endDate) {
+                $to.datetimepicker({ value: startDate });
+            }
+        },
+    });
+
+    $to.datetimepicker({
+        format: toFormat,
+        defaultTime: '00:00',
+        todayButton: false,
+        onShow: function () {
+            if (!$from.val()) {
+                return;
+            }
+
+            this.setOptions({
+                minDate: $from.datetimepicker('getValue'),
+            });
+        },
+        onClose: function () {
+            if (!$from.val()) {
+                return;
+            }
+
+            var startDate = $from.datetimepicker('getValue');
+            var endDate = $to.datetimepicker('getValue');
+            if (startDate > endDate) {
+                $from.datetimepicker({ value: endDate });
+            }
+        },
+    });
+}
+
 $(document).ready(function () {
     var sqlCalculationBuilder = SqlFactory(
         '#discount_discountCalculator_collector_query_string',
@@ -68,57 +129,12 @@ $(document).ready(function () {
     var inputFromFormat = $inputFrom.data('format') || defaultDateFormat;
     var inputToFormat = $inputTo.data('format') || defaultDateFormat;
 
-    $inputFrom.datetimepicker({
-        format: inputFromFormat,
-        defaultTime: '00:00',
-        todayButton: false,
-        onShow: function () {
-            if (!$inputTo.val()) {
-                return;
-            }
-
-            this.setOptions({
-                maxDate: $inputTo.datetimepicker('getValue'),
-            });
-        },
-        onClose: function () {
-            if (!$inputTo.val()) {
-                return;
-            }
-
-            var startDate = $inputFrom.datetimepicker('getValue');
-            var endDate = $inputTo.datetimepicker('getValue');
-            if (startDate > endDate) {
-                $inputTo.datetimepicker({ value: startDate });
-            }
-        },
-    });
-
-    $inputTo.datetimepicker({
-        format: inputToFormat,
-        defaultTime: '00:00',
-        todayButton: false,
-        onShow: function () {
-            if (!$inputFrom.val()) {
-                return;
-            }
-
-            this.setOptions({
-                minDate: $inputFrom.datetimepicker('getValue'),
-            });
-        },
-        onClose: function () {
-            if (!$inputFrom.val()) {
-                return;
-            }
-
-            var startDate = $inputFrom.datetimepicker('getValue');
-            var endDate = $inputTo.datetimepicker('getValue');
-            if (startDate > endDate) {
-                $inputFrom.datetimepicker({ value: endDate });
-            }
-        },
-    });
+    // From spryker/gui 5.4.0 on, these fields are built with `DateTimePickerType`, which marks them
+    // with `data-spryker-picker` and lets the Gui DateTimePicker initialize and range-link them.
+    // Older Gui versions have no such type, so the legacy picker below is set up instead.
+    if (!$inputFrom.is('[data-spryker-picker]')) {
+        initLegacyValidityPickers($inputFrom, $inputTo, inputFromFormat, inputToFormat);
+    }
 
     $('#discount_discountCalculator_collectorStrategyType input').each(function (index, element) {
         $('#collector-type-' + $(element).val()).hide();

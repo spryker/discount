@@ -10,6 +10,7 @@ namespace Spryker\Zed\Discount\Communication\Form;
 use DateTime;
 use Generated\Shared\Transfer\DiscountTableCriteriaTransfer;
 use Spryker\Zed\Discount\Communication\Form\DataProvider\TableFilterFormDataProvider;
+use Spryker\Zed\Gui\Communication\Form\Type\DateTimePickerType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\DataTransformerInterface;
@@ -97,6 +98,21 @@ class TableFilterForm extends AbstractType
      * @var string
      */
     protected const DATE_TIME_FORMAT = 'Y-m-d\TH:i';
+
+    /**
+     * @var string
+     */
+    protected const RANGE_ROLE_START = 'start';
+
+    /**
+     * @var string
+     */
+    protected const RANGE_ROLE_END = 'end';
+
+    /**
+     * @var string
+     */
+    protected const RANGE_GROUP_VALIDITY = 'discount-validity';
 
     public function getBlockPrefix(): string
     {
@@ -217,12 +233,11 @@ class TableFilterForm extends AbstractType
      */
     protected function addValidFromField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_VALID_FROM, DateTimeType::class, [
-            'label' => static::LABEL_VALID_FROM,
-            'widget' => 'single_text',
-            'required' => false,
-            'html5' => true,
-        ]);
+        $builder->add(
+            static::FIELD_VALID_FROM,
+            $this->getDateTimeFieldType(),
+            $this->getDateTimeFieldOptions(static::LABEL_VALID_FROM, static::RANGE_ROLE_START),
+        );
 
         $builder->get(static::FIELD_VALID_FROM)
             ->addModelTransformer($this->createDateTimeTransformer());
@@ -237,17 +252,57 @@ class TableFilterForm extends AbstractType
      */
     protected function addValidToField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_VALID_TO, DateTimeType::class, [
-            'label' => static::LABEL_VALID_TO,
-            'widget' => 'single_text',
-            'required' => false,
-            'html5' => true,
-        ]);
+        $builder->add(
+            static::FIELD_VALID_TO,
+            $this->getDateTimeFieldType(),
+            $this->getDateTimeFieldOptions(static::LABEL_VALID_TO, static::RANGE_ROLE_END),
+        );
 
         $builder->get(static::FIELD_VALID_TO)
             ->addModelTransformer($this->createDateTimeTransformer());
 
         return $this;
+    }
+
+    protected function getDateTimeFieldType(): string
+    {
+        if ($this->isGuiDateTimePickerTypeAvailable()) {
+            return DateTimePickerType::class;
+        }
+
+        return DateTimeType::class;
+    }
+
+    /**
+     * @param string $label
+     * @param string $rangeRole
+     *
+     * @return array<string, mixed>
+     */
+    protected function getDateTimeFieldOptions(string $label, string $rangeRole): array
+    {
+        $options = [
+            'label' => $label,
+            'required' => false,
+        ];
+
+        // The picker keeps both ends of the range consistent, which the native control cannot do.
+        if ($this->isGuiDateTimePickerTypeAvailable()) {
+            return $options + [
+                'range_group' => static::RANGE_GROUP_VALIDITY,
+                'range_role' => $rangeRole,
+            ];
+        }
+
+        return $options + [
+            'widget' => 'single_text',
+            'html5' => true,
+        ];
+    }
+
+    protected function isGuiDateTimePickerTypeAvailable(): bool
+    {
+        return class_exists(DateTimePickerType::class);
     }
 
     /**

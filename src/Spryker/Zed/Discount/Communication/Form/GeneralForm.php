@@ -10,6 +10,7 @@ namespace Spryker\Zed\Discount\Communication\Form;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Communication\Form\Constraint\Sequentially;
 use Spryker\Zed\Discount\Communication\Form\Constraint\UniqueDiscountName;
+use Spryker\Zed\Gui\Communication\Form\Type\DateTimePickerType;
 use Spryker\Zed\Gui\Communication\Form\Type\FormattedNumberType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -102,6 +103,26 @@ class GeneralForm extends AbstractType
      * @var string
      */
     protected const FORMAT_DATE_TIME = 'dd.MM.yyyy HH:mm';
+
+    /**
+     * @var string
+     */
+    protected const RANGE_ROLE_START = 'start';
+
+    /**
+     * @var string
+     */
+    protected const RANGE_ROLE_END = 'end';
+
+    /**
+     * @var string
+     */
+    protected const RANGE_GROUP_VALIDITY = 'discount-general-validity';
+
+    /**
+     * @var string
+     */
+    protected const LEGACY_DATE_TIME_FIELD_CLASS = 'datetimepicker safe-datetime';
 
     /**
      * @var string
@@ -265,22 +286,17 @@ class GeneralForm extends AbstractType
      */
     protected function addValidFromField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_VALID_FROM, DateTimeType::class, [
-            'widget' => 'single_text',
+        $builder->add(static::FIELD_VALID_FROM, $this->getDateTimeFieldType(), [
             'label' => 'Valid From (Time in UTC)',
-            'html5' => false,
             'format' => static::FORMAT_DATE_TIME,
             'input' => 'string',
             'required' => true,
-            'attr' => [
-                'class' => 'datetimepicker safe-datetime',
-            ],
             'constraints' => [
                 new NotBlank(),
                 new DateTime(),
                 new LessThan($this->getConfig()->getMaxAllowedDatetime()),
             ],
-        ]);
+        ] + $this->getDateTimeFieldOptions(static::RANGE_ROLE_START));
 
         return $this;
     }
@@ -292,16 +308,11 @@ class GeneralForm extends AbstractType
      */
     protected function addValidToField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_VALID_TO, DateTimeType::class, [
-            'widget' => 'single_text',
+        $builder->add(static::FIELD_VALID_TO, $this->getDateTimeFieldType(), [
             'label' => 'Valid To (Time in UTC)',
-            'html5' => false,
             'format' => static::FORMAT_DATE_TIME,
             'input' => 'string',
             'required' => true,
-            'attr' => [
-                'class' => 'datetimepicker safe-datetime',
-            ],
             'constraints' => [
                 new NotBlank(),
                 new DateTime(),
@@ -310,9 +321,46 @@ class GeneralForm extends AbstractType
                 ]),
                 new LessThan($this->getConfig()->getMaxAllowedDatetime()),
             ],
-        ]);
+        ] + $this->getDateTimeFieldOptions(static::RANGE_ROLE_END));
 
         return $this;
+    }
+
+    protected function getDateTimeFieldType(): string
+    {
+        if ($this->isGuiDateTimePickerTypeAvailable()) {
+            return DateTimePickerType::class;
+        }
+
+        return DateTimeType::class;
+    }
+
+    /**
+     * @param string $rangeRole
+     *
+     * @return array<string, mixed>
+     */
+    protected function getDateTimeFieldOptions(string $rangeRole): array
+    {
+        if ($this->isGuiDateTimePickerTypeAvailable()) {
+            return [
+                'range_group' => static::RANGE_GROUP_VALIDITY,
+                'range_role' => $rangeRole,
+            ];
+        }
+
+        return [
+            'widget' => 'single_text',
+            'html5' => false,
+            'attr' => [
+                'class' => static::LEGACY_DATE_TIME_FIELD_CLASS,
+            ],
+        ];
+    }
+
+    protected function isGuiDateTimePickerTypeAvailable(): bool
+    {
+        return class_exists(DateTimePickerType::class);
     }
 
     /**
