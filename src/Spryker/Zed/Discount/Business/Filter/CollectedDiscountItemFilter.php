@@ -15,25 +15,16 @@ use Generated\Shared\Transfer\DiscountTransfer;
 
 class CollectedDiscountItemFilter implements CollectedDiscountItemFilterInterface
 {
-    /**
-     * @var int
-     */
-    protected const DEFAULT_DISCOUNT_AMOUNT = 0;
+    protected const int DEFAULT_DISCOUNT_AMOUNT = 0;
+
+    protected const string IS_DISCOUNT_APPLICABLE = 'IS_DISCOUNT_APPLICABLE';
+
+    protected const string DISCOUNT_AMOUNT_TO_REDUCE = 'DISCOUNT_AMOUNT_TO_REDUCE';
 
     /**
-     * @var string
+     * @var array<string, int>
      */
-    protected const IS_DISCOUNT_APPLICABLE = 'IS_DISCOUNT_APPLICABLE';
-
-    /**
-     * @var string
-     */
-    protected const DISCOUNT_AMOUNT_TO_REDUCE = 'DISCOUNT_AMOUNT_TO_REDUCE';
-
-    /**
-     * @var array<int, int>
-     */
-    protected $remainingUnitPricesByItemIds;
+    protected $remainingUnitPricesByGroupKeys;
 
     /**
      * @param array<\Generated\Shared\Transfer\CollectedDiscountTransfer> $collectedDiscountTransfers
@@ -42,7 +33,7 @@ class CollectedDiscountItemFilter implements CollectedDiscountItemFilterInterfac
      */
     public function filter(array $collectedDiscountTransfers): array
     {
-        $this->remainingUnitPricesByItemIds = [];
+        $this->remainingUnitPricesByGroupKeys = [];
         $filteredCollectedDiscountTransfers = [];
 
         foreach ($collectedDiscountTransfers as $collectedDiscountTransfer) {
@@ -85,9 +76,6 @@ class CollectedDiscountItemFilter implements CollectedDiscountItemFilterInterfac
     }
 
     /**
-     * @param \Generated\Shared\Transfer\DiscountableItemTransfer $discountableItemTransfer
-     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
-     *
      * @return array<string, mixed>
      */
     protected function processDiscountableItem(DiscountableItemTransfer $discountableItemTransfer, DiscountTransfer $discountTransfer): array
@@ -102,20 +90,24 @@ class CollectedDiscountItemFilter implements CollectedDiscountItemFilterInterfac
             return $discountableItemProcessResult;
         }
 
-        $originalItemId = $originalItemTransfer->getId();
-        if (!$originalItemId) {
+        if (!$originalItemTransfer->getId()) {
             return $discountableItemProcessResult;
         }
 
-        if (!isset($this->remainingUnitPricesByItemIds[$originalItemId])) {
-            $this->remainingUnitPricesByItemIds[$originalItemId] = $discountableItemTransfer->getUnitPrice() * $discountableItemTransfer->getQuantity();
+        $originalItemGroupKey = $originalItemTransfer->getGroupKey();
+        if (!$originalItemGroupKey) {
+            return $discountableItemProcessResult;
+        }
+
+        if (!isset($this->remainingUnitPricesByGroupKeys[$originalItemGroupKey])) {
+            $this->remainingUnitPricesByGroupKeys[$originalItemGroupKey] = $discountableItemTransfer->getUnitPrice() * $discountableItemTransfer->getQuantity();
         }
 
         foreach ($discountableItemTransfer->getOriginalItemCalculatedDiscounts() as $originalItemCalculatedDiscountTransfer) {
             $discountableItemProcessResult = $this->processDiscountableItemCalculatedDiscount(
                 $originalItemCalculatedDiscountTransfer,
                 $discountTransfer,
-                $originalItemId,
+                $originalItemGroupKey,
                 $discountableItemProcessResult,
             );
         }
@@ -124,9 +116,6 @@ class CollectedDiscountItemFilter implements CollectedDiscountItemFilterInterfac
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CalculatedDiscountTransfer $originalItemCalculatedDiscountTransfer
-     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
-     * @param int $originalItemId
      * @param array<string, mixed> $discountableItemProcessResult
      *
      * @return array<string, mixed>
@@ -134,7 +123,7 @@ class CollectedDiscountItemFilter implements CollectedDiscountItemFilterInterfac
     protected function processDiscountableItemCalculatedDiscount(
         CalculatedDiscountTransfer $originalItemCalculatedDiscountTransfer,
         DiscountTransfer $discountTransfer,
-        int $originalItemId,
+        string $originalItemGroupKey,
         array $discountableItemProcessResult
     ): array {
         if ($originalItemCalculatedDiscountTransfer->getIdDiscount() !== $discountTransfer->getIdDiscount()) {
@@ -143,21 +132,21 @@ class CollectedDiscountItemFilter implements CollectedDiscountItemFilterInterfac
 
         $discountAmount = $originalItemCalculatedDiscountTransfer->getUnitAmount();
 
-        if (!$this->remainingUnitPricesByItemIds[$originalItemId]) {
+        if (!$this->remainingUnitPricesByGroupKeys[$originalItemGroupKey]) {
             $discountableItemProcessResult[static::IS_DISCOUNT_APPLICABLE] = false;
             $discountableItemProcessResult[static::DISCOUNT_AMOUNT_TO_REDUCE] += $discountAmount;
 
             return $discountableItemProcessResult;
         }
 
-        if ($discountAmount <= $this->remainingUnitPricesByItemIds[$originalItemId]) {
-            $this->remainingUnitPricesByItemIds[$originalItemId] -= $discountAmount;
+        if ($discountAmount <= $this->remainingUnitPricesByGroupKeys[$originalItemGroupKey]) {
+            $this->remainingUnitPricesByGroupKeys[$originalItemGroupKey] -= $discountAmount;
 
             return $discountableItemProcessResult;
         }
 
-        $discountableItemProcessResult[static::DISCOUNT_AMOUNT_TO_REDUCE] += $discountAmount - $this->remainingUnitPricesByItemIds[$originalItemId];
-        $this->remainingUnitPricesByItemIds[$originalItemId] = static::DEFAULT_DISCOUNT_AMOUNT;
+        $discountableItemProcessResult[static::DISCOUNT_AMOUNT_TO_REDUCE] += $discountAmount - $this->remainingUnitPricesByGroupKeys[$originalItemGroupKey];
+        $this->remainingUnitPricesByGroupKeys[$originalItemGroupKey] = static::DEFAULT_DISCOUNT_AMOUNT;
 
         return $discountableItemProcessResult;
     }
