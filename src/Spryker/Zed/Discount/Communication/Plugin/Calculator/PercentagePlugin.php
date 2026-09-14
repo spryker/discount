@@ -91,10 +91,10 @@ class PercentagePlugin extends AbstractPlugin implements DiscountCalculatorPlugi
     public function getAmountValidators()
     {
         return [
-            new Type([
-                'type' => 'numeric',
-                'groups' => DiscountConstants::CALCULATOR_DEFAULT_INPUT_TYPE,
-            ]),
+            new Type(
+                type: 'numeric',
+                groups: [DiscountConstants::CALCULATOR_DEFAULT_INPUT_TYPE],
+            ),
             new Range([
                 'min' => 1,
                 'max' => 100,

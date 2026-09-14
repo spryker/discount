@@ -102,10 +102,10 @@ class FixedPlugin extends AbstractPlugin implements DiscountCalculatorPluginInte
     public function getAmountValidators()
     {
         return [
-            new Type([
-                'type' => 'numeric',
-                'groups' => DiscountConstants::CALCULATOR_DEFAULT_INPUT_TYPE,
-            ]),
+            new Type(
+                type: 'numeric',
+                groups: [DiscountConstants::CALCULATOR_DEFAULT_INPUT_TYPE],
+            ),
         ];
     }
 

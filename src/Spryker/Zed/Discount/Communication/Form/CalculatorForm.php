@@ -348,6 +348,9 @@ class CalculatorForm extends AbstractType
         return 'discount_calculator';
     }
 
+    /**
+     * @return class-string<\Symfony\Component\Form\FormTypeInterface>
+     */
     protected function getMoneyValueCollectionType(): string
     {
         if ($this->getConfig()->isMoneyCollectionFormTypePluginEnabled()) {

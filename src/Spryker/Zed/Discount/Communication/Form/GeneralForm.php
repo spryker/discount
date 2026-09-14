@@ -326,6 +326,9 @@ class GeneralForm extends AbstractType
         return $this;
     }
 
+    /**
+     * @phpstan-return class-string<\Symfony\Component\Form\FormTypeInterface>
+     */
     protected function getDateTimeFieldType(): string
     {
         if ($this->isGuiDateTimePickerTypeAvailable()) {

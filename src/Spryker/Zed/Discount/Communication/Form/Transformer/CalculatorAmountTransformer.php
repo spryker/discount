@@ -30,7 +30,7 @@ class CalculatorAmountTransformer implements DataTransformerInterface
      *
      * @return \Generated\Shared\Transfer\DiscountCalculatorTransfer|null
      */
-    public function transform($value)
+    public function transform($value): mixed
     {
         if (!$this->isValueSet($value)) {
             return null;
@@ -48,7 +48,7 @@ class CalculatorAmountTransformer implements DataTransformerInterface
      *
      * @return \Generated\Shared\Transfer\DiscountCalculatorTransfer|null
      */
-    public function reverseTransform($value)
+    public function reverseTransform($value): mixed
     {
         if (!$this->isValueSet($value)) {
             return null;
