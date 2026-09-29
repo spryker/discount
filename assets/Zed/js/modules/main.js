@@ -8,6 +8,7 @@
 var SqlFactory = require('./libs/sql-factory');
 
 require('jquery-datetimepicker');
+require('jquery-datetimepicker/build/jquery.datetimepicker.min.css');
 require('../../sass/main.scss');
 
 function setDiscountAmountSymbol() {

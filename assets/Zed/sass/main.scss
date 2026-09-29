@@ -3,12 +3,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-@import '~jquery-datetimepicker/build/jquery.datetimepicker.min.css';
-@import './query-builder.scss';
+@use './query-builder';
 
 .load-cart-rules {
     height: 32px;
     line-height: 32px;
+
     .ajax-loader {
         background: url('/bundles/images/ajax-loader.gif') top left no-repeat;
         width: 32px;
@@ -20,6 +20,7 @@
     > div {
         padding-top: 10px;
     }
+
     > div > .well > .form-group > label.control-label {
         display: none;
     }
@@ -31,6 +32,7 @@
 
 .form-inline.option-chain label {
     padding-right: 10px;
+
     > input {
         margin-right: 5px;
     }
@@ -59,7 +61,7 @@ table.dataTable.gui-table-data {
 .inline-checkbox {
     display: block;
 
-    &:after {
+    &::after {
         clear: right;
     }
 

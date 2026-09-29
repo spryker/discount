@@ -54,9 +54,7 @@
         label {
             margin-bottom: 0;
         }
-    }
 
-    .rules-group-header {
         .group-conditions {
             .btn.readonly:not(.active),
             input[name$='_cond'] {
@@ -74,6 +72,7 @@
         padding: 0;
         margin: 0;
     }
+
     .rule-value-container {
         border-left: 1px solid var(--ins-border-color);
         padding-left: 5px;
@@ -149,7 +148,7 @@
     }
 
     p.filter-description {
-        margin: 5px 0 0 0;
+        margin: 5px 0 0;
         background: #d9edf7;
         border: 1px solid #bce8f1;
         color: #31708f;
