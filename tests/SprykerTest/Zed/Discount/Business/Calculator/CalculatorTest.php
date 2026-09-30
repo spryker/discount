@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Zed\Discount\Business\Calculator;
 
+use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CollectedDiscountTransfer;
 use Generated\Shared\Transfer\DiscountableItemTransfer;
@@ -489,6 +490,135 @@ class CalculatorTest extends Unit
 
         $this->assertSame($calculatedDiscountTranser->getDiscount()->getAmount(), $discountTransfer->getAmount());
         $this->assertNotEmpty($collectedDiscounts);
+    }
+
+    public function testAppliedMessageIsNotAddedAgainWhenAlreadyAppliedDiscountAmountChanges(): void
+    {
+        // Arrange
+        $discountTransfer = $this->createDiscountTransfer(100)->setIdDiscount(1);
+        $quoteTransfer = $this->createQuoteTransfer();
+        $quoteTransfer->setCartRuleDiscounts(new ArrayObject([
+            $this->createDiscountTransfer(50)->setIdDiscount(1),
+        ]));
+
+        $discountableItems = $this->createDiscountableItemsFromQuoteTransfer($quoteTransfer);
+
+        $specificationBuilderMock = $this->createSpecificationBuilderMock();
+        $collectorSpecificationMock = $this->collectorSpecificationMock();
+        $collectorSpecificationMock->expects($this->once())
+            ->method('collect')
+            ->willReturn($discountableItems);
+
+        $specificationBuilderMock->expects($this->once())
+            ->method('buildFromQueryString')
+            ->willReturn($collectorSpecificationMock);
+
+        $messengerFacadeMock = $this->createMessengerFacadeBridgeMock();
+        $messengerFacadeMock->expects($this->never())->method('addSuccessMessage');
+
+        $calculator = $this->createCalculator($specificationBuilderMock, $messengerFacadeMock);
+
+        // Act & Assert
+        $calculator->calculate([$discountTransfer], $quoteTransfer);
+    }
+
+    public function testAppliedMessageIsNotAddedWhenDiscountAmountIsZero(): void
+    {
+        // Arrange
+        $discountTransfer = $this->createDiscountTransfer(0)->setIdDiscount(1);
+        $quoteTransfer = $this->createQuoteTransfer();
+
+        $discountableItems = $this->createDiscountableItemsFromQuoteTransfer($quoteTransfer);
+
+        $specificationBuilderMock = $this->createSpecificationBuilderMock();
+        $collectorSpecificationMock = $this->collectorSpecificationMock();
+        $collectorSpecificationMock->expects($this->once())
+            ->method('collect')
+            ->willReturn($discountableItems);
+
+        $specificationBuilderMock->expects($this->once())
+            ->method('buildFromQueryString')
+            ->willReturn($collectorSpecificationMock);
+
+        $messengerFacadeMock = $this->createMessengerFacadeBridgeMock();
+        $messengerFacadeMock->expects($this->never())->method('addSuccessMessage');
+
+        $calculator = $this->createCalculator($specificationBuilderMock, $messengerFacadeMock);
+
+        // Act
+        $collectedDiscounts = $calculator->calculate([$discountTransfer], $quoteTransfer);
+
+        // Assert
+        $this->assertSame([], $collectedDiscounts);
+    }
+
+    /**
+     * Multicurrency edge case: a discount with no value configured for the customer's previously
+     * selected currency computes to 0 and gets recorded as already-applied at that amount. Once a
+     * currency with a real value is selected, the amount changes but the discount id is unchanged.
+     */
+    public function testAppliedMessageIsNotAddedAgainWhenPreviouslyZeroAmountDiscountBecomesNonZero(): void
+    {
+        // Arrange
+        $discountTransfer = $this->createDiscountTransfer(100)->setIdDiscount(1);
+        $quoteTransfer = $this->createQuoteTransfer();
+        $quoteTransfer->setCartRuleDiscounts(new ArrayObject([
+            $this->createDiscountTransfer(0)->setIdDiscount(1),
+        ]));
+
+        $discountableItems = $this->createDiscountableItemsFromQuoteTransfer($quoteTransfer);
+
+        $specificationBuilderMock = $this->createSpecificationBuilderMock();
+        $collectorSpecificationMock = $this->collectorSpecificationMock();
+        $collectorSpecificationMock->expects($this->once())
+            ->method('collect')
+            ->willReturn($discountableItems);
+
+        $specificationBuilderMock->expects($this->once())
+            ->method('buildFromQueryString')
+            ->willReturn($collectorSpecificationMock);
+
+        $messengerFacadeMock = $this->createMessengerFacadeBridgeMock();
+        $messengerFacadeMock->expects($this->never())->method('addSuccessMessage');
+
+        $calculator = $this->createCalculator($specificationBuilderMock, $messengerFacadeMock);
+
+        // Act & Assert
+        $calculator->calculate([$discountTransfer], $quoteTransfer);
+    }
+
+    /**
+     * Currency-switch edge case: the same already-applied discount id recomputes to a different
+     * non-zero amount (e.g. its converted value in the newly selected currency).
+     */
+    public function testAppliedMessageIsNotAddedAgainWhenDiscountAmountChangesAfterCurrencySwitch(): void
+    {
+        // Arrange
+        $discountTransfer = $this->createDiscountTransfer(120)->setIdDiscount(1);
+        $quoteTransfer = $this->createQuoteTransfer();
+        $quoteTransfer->setCartRuleDiscounts(new ArrayObject([
+            $this->createDiscountTransfer(100)->setIdDiscount(1),
+        ]));
+
+        $discountableItems = $this->createDiscountableItemsFromQuoteTransfer($quoteTransfer);
+
+        $specificationBuilderMock = $this->createSpecificationBuilderMock();
+        $collectorSpecificationMock = $this->collectorSpecificationMock();
+        $collectorSpecificationMock->expects($this->once())
+            ->method('collect')
+            ->willReturn($discountableItems);
+
+        $specificationBuilderMock->expects($this->once())
+            ->method('buildFromQueryString')
+            ->willReturn($collectorSpecificationMock);
+
+        $messengerFacadeMock = $this->createMessengerFacadeBridgeMock();
+        $messengerFacadeMock->expects($this->never())->method('addSuccessMessage');
+
+        $calculator = $this->createCalculator($specificationBuilderMock, $messengerFacadeMock);
+
+        // Act & Assert
+        $calculator->calculate([$discountTransfer], $quoteTransfer);
     }
 
     protected function createQuoteTransfer(): QuoteTransfer

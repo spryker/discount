@@ -342,10 +342,7 @@ class Calculator implements CalculatorInterface
             $this->getDiscountIds($oldVoucherDiscountTransferCollection),
         );
         foreach ($collectedDiscountTransferCollection as $collectedDiscountTransfer) {
-            if (
-                !in_array($collectedDiscountTransfer->getDiscount()->getIdDiscount(), $discountIds)
-                || $this->isDiscountAmountBeenChanged($collectedDiscountTransfer->getDiscount(), $oldCartRuleDiscountTransferCollection, $oldVoucherDiscountTransferCollection)
-            ) {
+            if (!in_array($collectedDiscountTransfer->getDiscount()->getIdDiscount(), $discountIds)) {
                 $this->setSuccessfulDiscountAddMessage($collectedDiscountTransfer->getDiscount());
             }
         }
@@ -367,32 +364,5 @@ class Calculator implements CalculatorInterface
         }
 
         return $discountIds;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\DiscountTransfer> $oldCartRuleDiscountTransferCollection
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\DiscountTransfer> $oldVoucherDiscountTransferCollection
-     *
-     * @return bool
-     */
-    protected function isDiscountAmountBeenChanged(
-        DiscountTransfer $discountTransfer,
-        ArrayObject $oldCartRuleDiscountTransferCollection,
-        ArrayObject $oldVoucherDiscountTransferCollection
-    ): bool {
-        foreach ($oldCartRuleDiscountTransferCollection as $oldDiscountTransfer) {
-            if ($oldDiscountTransfer->getAmount() !== $discountTransfer->getAmount() && $oldDiscountTransfer->getIdDiscount() === $discountTransfer->getIdDiscount()) {
-                return true;
-            }
-        }
-
-        foreach ($oldVoucherDiscountTransferCollection as $oldDiscountTransfer) {
-            if ($oldDiscountTransfer->getAmount() !== $discountTransfer->getAmount() && $oldDiscountTransfer->getIdDiscount() === $discountTransfer->getIdDiscount()) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }
