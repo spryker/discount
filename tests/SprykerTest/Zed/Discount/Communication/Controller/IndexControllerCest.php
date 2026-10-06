@@ -35,7 +35,7 @@ class IndexControllerCest
         $i->registerMoneyCollectionFormTypePlugin();
 
         $i->amOnPage('/discount/index/list');
-        $i->click('Create new Discount');
+        $i->click('a[href="/discount/index/create"]');
         $i->seeResponseCodeIs(200);
         $i->canSeeCurrentUrlEquals('/discount/index/create');
     }
@@ -46,7 +46,7 @@ class IndexControllerCest
         $i->registerMoneyCollectionFormTypePlugin();
 
         $i->amOnPage('/discount/index/list');
-        $i->click('Create new Discount');
+        $i->click('a[href="/discount/index/create"]');
         $i->seeResponseCodeIs(200);
         $i->canSeeCurrentUrlEquals('/discount/index/create');
         $i->amOnPage('#tab-content-discount');
