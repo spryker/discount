@@ -1,0 +1,210 @@
+resource:
+    name: DiscountOptions
+    shortName: discount-options
+    description: Configuration options for building discount forms (calculation methods, rule fields and operators, stores, value ranges)
+
+    provider: Spryker\Glue\Discount\Api\Backend\Provider\DiscountOptionsBackendProvider
+
+    security: "is_granted('ROLE_BACK_OFFICE_USER')"
+    paginationEnabled: false
+
+    operations:
+        - type: Get
+          uriTemplate: '/discount-options'
+          description: 'Retrieve the values the discount configuration is built from: discount types, calculation methods, item-selection strategies, rule fields with their operators and fixed values, stores with their currencies, and the allowed value ranges.'
+          openapiContext:
+              summary: 'Retrieve discount configuration options'
+              responses:
+                  200: { description: 'The options.' }
+                  401: { description: 'Missing or invalid access token.' }
+                  403: { description: 'The user has no permission for discounts.' }
+
+    properties:
+        uuid:
+            type: string
+            identifier: true
+            writable: false
+            readable: false
+            required: false
+            description: 'Synthetic identifier; never serialized.'
+            openapiContext: { example: 'discount-options' }
+        discountTypes:
+            writable: false
+            type: array
+            description: 'Allowed values for discountType.'
+            items: { type: string }
+            openapiContext: { example: ['cart_rule', 'voucher'] }
+        calculatorTypes:
+            writable: false
+            type: array
+            description: 'Available calculation methods for calculatorType. key is the value to send (e.g. percentage, fixed), label is the translated name to show. inputType tells which discount property carries the value: calculator-default-input-type uses percentage, calculator-money-input-type uses fixedAmounts.'
+            openapiContext:
+                {
+                    example:
+                        [
+                            { key: 'percentage', label: 'Percentage', inputType: 'calculator-default-input-type' },
+                            { key: 'fixed', label: 'Fixed amount', inputType: 'calculator-money-input-type' },
+                        ],
+                }
+            items:
+                type: object
+                objectName: DiscountCalculatorTypeOption
+                properties:
+                    key: { type: string, openapiContext: { example: 'percentage' } }
+                    label: { type: string, openapiContext: { example: 'Percentage' } }
+                    inputType: { type: string, openapiContext: { example: 'calculator-default-input-type' } }
+        collectorStrategyTypes:
+            writable: false
+            type: array
+            description: 'Available item-selection strategies for collectorStrategyType, with display labels.'
+            openapiContext:
+                {
+                    example:
+                        [
+                            { key: 'query-string', label: 'Query String' },
+                            { key: 'promotion', label: 'Discount promotion to product' },
+                        ],
+                }
+            items:
+                type: object
+                objectName: CollectorStrategyOption
+                properties:
+                    key: { type: string, openapiContext: { example: 'promotion' } }
+                    label: { type: string, openapiContext: { example: 'Discount promotion to product' } }
+        priority:
+            writable: false
+            type: object
+            objectName: IntegerRange
+            description: 'Allowed range for priority.'
+            openapiContext: { example: { min: 1, max: 9999 } }
+            properties:
+                min: { type: integer, openapiContext: { example: 1 } }
+                max: { type: integer, openapiContext: { example: 9999 } }
+        voucherCodesQuantity:
+            writable: false
+            type: object
+            objectName: IntegerRange
+            description: 'Allowed range for quantity when generating voucher codes.'
+            openapiContext: { example: { min: 1, max: 14000 } }
+            properties:
+                min: { type: integer, openapiContext: { example: 1 } }
+                max: { type: integer, openapiContext: { example: 14000 } }
+        voucherCodeLength:
+            writable: false
+            type: object
+            objectName: IntegerRange
+            description: 'Allowed range for codeLength when generating voucher codes.'
+            openapiContext: { example: { min: 3, max: 10 } }
+            properties:
+                min: { type: integer, openapiContext: { example: 3 } }
+                max: { type: integer, openapiContext: { example: 10 } }
+        stores:
+            writable: false
+            type: array
+            description: 'Stores a discount can be assigned to, each with the currencies it supports (for fixedAmounts).'
+            openapiContext:
+                {
+                    example:
+                        [{ name: 'DE', currencyIsoCodes: ['EUR', 'CHF'] }, { name: 'AT', currencyIsoCodes: ['EUR'] }],
+                }
+            items:
+                type: object
+                objectName: StoreOption
+                properties:
+                    name: { type: string, openapiContext: { example: 'DE' } }
+                    currencyIsoCodes:
+                        { type: array, items: { type: string }, openapiContext: { example: ['EUR', 'CHF'] } }
+        decisionRuleFields:
+            writable: false
+            type: array
+            description: 'Fields usable in decisionRule rules, with their allowed operators, accepted value types and, where the field has a fixed set of values, those values.'
+            openapiContext:
+                {
+                    example:
+                        [
+                            {
+                                field: 'sub-total',
+                                operators: ['=', '!=', '<', '<=', '>', '>='],
+                                acceptedTypes: ['number'],
+                                valueOptions: [],
+                            },
+                            {
+                                field: 'price-mode',
+                                operators: ['=', '!='],
+                                acceptedTypes: ['string'],
+                                valueOptions:
+                                    [
+                                        { value: 'GROSS_MODE', label: 'GROSS_MODE' },
+                                        { value: 'NET_MODE', label: 'NET_MODE' },
+                                    ],
+                            },
+                        ],
+                }
+            items:
+                type: object
+                objectName: DiscountRuleFieldOption
+                properties:
+                    field: { type: string, openapiContext: { example: 'sub-total' } }
+                    operators:
+                        {
+                            type: array,
+                            items: { type: string },
+                            openapiContext: { example: ['=', '!=', '<', '<=', '>', '>='] },
+                        }
+                    acceptedTypes: { type: array, items: { type: string }, openapiContext: { example: ['number'] } }
+                    valueOptions:
+                        type: array
+                        description: 'Fixed values for the field; empty when any value is allowed.'
+                        openapiContext: { example: [{ value: 'GROSS_MODE', label: 'GROSS_MODE' }] }
+                        items:
+                            type: object
+                            objectName: ValueOption
+                            properties:
+                                value: { type: string, openapiContext: { example: 'GROSS_MODE' } }
+                                label: { type: string, openapiContext: { example: 'GROSS_MODE' } }
+        collectorFields:
+            writable: false
+            type: array
+            description: 'Fields usable in collector rules (same structure as decisionRuleFields).'
+            openapiContext:
+                {
+                    example:
+                        [
+                            {
+                                field: 'sku',
+                                operators: ['=', '!=', 'contains', 'does not contain', 'is in', 'is not in'],
+                                acceptedTypes: ['string', 'list'],
+                                valueOptions: [],
+                            },
+                        ],
+                }
+            items:
+                type: object
+                objectName: DiscountRuleFieldOption
+                properties:
+                    field: { type: string, openapiContext: { example: 'sku' } }
+                    operators:
+                        {
+                            type: array,
+                            items: { type: string },
+                            openapiContext:
+                                { example: ['=', '!=', 'contains', 'does not contain', 'is in', 'is not in'] },
+                        }
+                    acceptedTypes:
+                        { type: array, items: { type: string }, openapiContext: { example: ['string', 'list'] } }
+                    valueOptions:
+                        type: array
+                        description: 'Fixed values for the field; empty when any value is allowed.'
+                        openapiContext: { example: [] }
+                        items:
+                            type: object
+                            objectName: ValueOption
+                            properties:
+                                value: { type: string, openapiContext: { example: 'GROSS_MODE' } }
+                                label: { type: string, openapiContext: { example: 'GROSS_MODE' } }
+        logicalOperators:
+            writable: false
+            type: array
+            description: 'Allowed values for condition in rule groups.'
+            items: { type: string }
+            openapiContext: { example: ['and', 'or'] }

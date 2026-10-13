@@ -15,6 +15,7 @@ use Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery;
 use Orm\Zed\Sales\Persistence\SpySalesDiscountCodeQuery;
 use Orm\Zed\Sales\Persistence\SpySalesDiscountQuery;
 use Spryker\Zed\Discount\Persistence\Propel\Mapper\DiscountMapper;
+use Spryker\Zed\Discount\Persistence\Propel\QueryBuilder\DiscountVoucherQueryBuilder;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -73,6 +74,11 @@ class DiscountPersistenceFactory extends AbstractPersistenceFactory
     public function createSalesDiscountCodeQuery(): SpySalesDiscountCodeQuery
     {
         return SpySalesDiscountCodeQuery::create();
+    }
+
+    public function createDiscountVoucherQueryBuilder(): DiscountVoucherQueryBuilder
+    {
+        return new DiscountVoucherQueryBuilder();
     }
 
     public function createDiscountMapper(): DiscountMapper

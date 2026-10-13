@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\DiscountAmountCriteriaTransfer;
 use Generated\Shared\Transfer\DiscountGeneralTransfer;
 use Generated\Shared\Transfer\DiscountMoneyAmountTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
+use Generated\Shared\Transfer\DiscountVoucherCollectionDeleteCriteriaTransfer;
 
 interface DiscountEntityManagerInterface
 {
@@ -61,4 +62,11 @@ interface DiscountEntityManagerInterface
     public function deleteDiscountVouchersByIdDiscountVoucherPool(int $idDiscountVoucherPool): void;
 
     public function deleteDiscountVoucherPoolByIdDiscountVoucherPool(int $idDiscountVoucherPool): void;
+
+    /**
+     * @return int Number of deleted voucher codes.
+     */
+    public function deleteDiscountVoucherCollection(
+        DiscountVoucherCollectionDeleteCriteriaTransfer $discountVoucherCollectionDeleteCriteriaTransfer
+    ): int;
 }

@@ -10,9 +10,20 @@ namespace Spryker\Zed\Discount\Business;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\CollectedDiscountTransfer;
+use Generated\Shared\Transfer\DiscountCalculatorTransfer;
+use Generated\Shared\Transfer\DiscountConfigurationOptionsTransfer;
+use Generated\Shared\Transfer\DiscountConfiguratorCollectionTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorResponseTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
+use Generated\Shared\Transfer\DiscountCriteriaTransfer;
+use Generated\Shared\Transfer\DiscountRuleGroupResponseTransfer;
+use Generated\Shared\Transfer\DiscountRuleGroupTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
+use Generated\Shared\Transfer\DiscountVoucherCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\DiscountVoucherCollectionResponseTransfer;
+use Generated\Shared\Transfer\DiscountVoucherCollectionTransfer;
+use Generated\Shared\Transfer\DiscountVoucherCriteriaTransfer;
+use Generated\Shared\Transfer\DiscountVoucherResponseTransfer;
 use Generated\Shared\Transfer\DiscountVoucherTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
@@ -866,5 +877,132 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
         $this->getFactory()
             ->createSalesOrderDiscountCodeUpdater()
             ->releaseSalesOrderDiscountCodesByQuote($quoteTransfer, $saveOrderTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     */
+    public function getDiscountConfigurationOptions(): DiscountConfigurationOptionsTransfer
+    {
+        return $this->getFactory()
+            ->createDiscountConfigurationOptionsReader()
+            ->getDiscountConfigurationOptions();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     */
+    public function getDiscountConfiguratorCollection(DiscountCriteriaTransfer $discountCriteriaTransfer): DiscountConfiguratorCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createDiscountReader()
+            ->getDiscountConfiguratorCollection($discountCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     */
+    public function buildDiscountRuleGroupFromQueryString(string $type, string $queryString): DiscountRuleGroupResponseTransfer
+    {
+        return $this->getFactory()
+            ->createDiscountRuleGroupBuilder()
+            ->buildDiscountRuleGroupFromQueryString($type, $queryString);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     */
+    public function buildQueryStringFromDiscountRuleGroup(
+        string $type,
+        DiscountRuleGroupTransfer $discountRuleGroupTransfer
+    ): DiscountRuleGroupResponseTransfer {
+        return $this->getFactory()
+            ->createDiscountQueryStringBuilder()
+            ->buildQueryStringFromDiscountRuleGroup($type, $discountRuleGroupTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     */
+    public function validateDiscountConfigurator(
+        DiscountConfiguratorTransfer $discountConfiguratorTransfer
+    ): DiscountConfiguratorResponseTransfer {
+        return $this->getFactory()
+            ->createDiscountConfiguratorValidator()
+            ->validate($discountConfiguratorTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     */
+    public function validateDiscountConfiguratorRules(
+        DiscountConfiguratorTransfer $discountConfiguratorTransfer
+    ): DiscountConfiguratorResponseTransfer {
+        return $this->getFactory()
+            ->createDiscountConfiguratorRulesValidator()
+            ->validate($discountConfiguratorTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     */
+    public function transformDiscountCalculatorAmountForPersistence(
+        DiscountCalculatorTransfer $discountCalculatorTransfer
+    ): DiscountCalculatorTransfer {
+        return $this->getFactory()
+            ->createDiscountAmountTransformer()
+            ->transformAmountForPersistence($discountCalculatorTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     */
+    public function getDiscountVoucherCollection(
+        DiscountVoucherCriteriaTransfer $discountVoucherCriteriaTransfer
+    ): DiscountVoucherCollectionTransfer {
+        return $this->getFactory()
+            ->createDiscountVoucherReader()
+            ->getDiscountVoucherCollection($discountVoucherCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     */
+    public function deleteDiscountVoucherCollection(
+        DiscountVoucherCollectionDeleteCriteriaTransfer $discountVoucherCollectionDeleteCriteriaTransfer
+    ): DiscountVoucherCollectionResponseTransfer {
+        return $this->getFactory()
+            ->createDiscountVoucherDeleter()
+            ->deleteDiscountVoucherCollection($discountVoucherCollectionDeleteCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     */
+    public function validateDiscountVoucher(DiscountVoucherTransfer $discountVoucherTransfer): DiscountVoucherResponseTransfer
+    {
+        return $this->getFactory()
+            ->createDiscountVoucherValidator()
+            ->validateDiscountVoucher($discountVoucherTransfer);
     }
 }

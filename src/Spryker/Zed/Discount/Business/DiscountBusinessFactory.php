@@ -9,6 +9,8 @@ namespace Spryker\Zed\Discount\Business;
 
 use Spryker\Zed\Discount\Business\Calculator\CollectorStrategyResolver;
 use Spryker\Zed\Discount\Business\Calculator\Discount;
+use Spryker\Zed\Discount\Business\Calculator\DiscountAmountTransformer;
+use Spryker\Zed\Discount\Business\Calculator\DiscountAmountTransformerInterface;
 use Spryker\Zed\Discount\Business\Calculator\FilteredCalculator;
 use Spryker\Zed\Discount\Business\Calculator\Type\FixedType;
 use Spryker\Zed\Discount\Business\Calculator\Type\PercentageType;
@@ -46,6 +48,8 @@ use Spryker\Zed\Discount\Business\DecisionRule\PriceModeDecisionRule;
 use Spryker\Zed\Discount\Business\DecisionRule\SubTotalDecisionRule;
 use Spryker\Zed\Discount\Business\DecisionRule\TimeDecisionRule;
 use Spryker\Zed\Discount\Business\DecisionRule\TotalQuantityDecisionRule;
+use Spryker\Zed\Discount\Business\Deleter\DiscountVoucherDeleter;
+use Spryker\Zed\Discount\Business\Deleter\DiscountVoucherDeleterInterface;
 use Spryker\Zed\Discount\Business\Deleter\DiscountVoucherPoolDeleter;
 use Spryker\Zed\Discount\Business\Deleter\DiscountVoucherPoolDeleterInterface;
 use Spryker\Zed\Discount\Business\Deleter\SalesDiscountDeleter;
@@ -68,6 +72,10 @@ use Spryker\Zed\Discount\Business\Persistence\DiscountStoreRelationReader;
 use Spryker\Zed\Discount\Business\Persistence\DiscountStoreRelationWriter;
 use Spryker\Zed\Discount\Business\QueryString\ClauseValidator;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
+use Spryker\Zed\Discount\Business\QueryString\Converter\DiscountQueryStringBuilder;
+use Spryker\Zed\Discount\Business\QueryString\Converter\DiscountQueryStringBuilderInterface;
+use Spryker\Zed\Discount\Business\QueryString\Converter\DiscountRuleGroupBuilder;
+use Spryker\Zed\Discount\Business\QueryString\Converter\DiscountRuleGroupBuilderInterface;
 use Spryker\Zed\Discount\Business\QueryString\Converter\MoneyValueConverter;
 use Spryker\Zed\Discount\Business\QueryString\LogicalComparators;
 use Spryker\Zed\Discount\Business\QueryString\OperatorProvider;
@@ -80,6 +88,12 @@ use Spryker\Zed\Discount\Business\QueryString\Validator;
 use Spryker\Zed\Discount\Business\QuoteChangeObserver\QuoteChangeObserver;
 use Spryker\Zed\Discount\Business\QuoteChangeObserver\QuoteChangeObserverInterface;
 use Spryker\Zed\Discount\Business\QuoteDiscountValidator\QuoteDiscountMaxUsageValidator;
+use Spryker\Zed\Discount\Business\Reader\DiscountConfigurationOptionsReader;
+use Spryker\Zed\Discount\Business\Reader\DiscountConfigurationOptionsReaderInterface;
+use Spryker\Zed\Discount\Business\Reader\DiscountReader;
+use Spryker\Zed\Discount\Business\Reader\DiscountReaderInterface;
+use Spryker\Zed\Discount\Business\Reader\DiscountVoucherReader;
+use Spryker\Zed\Discount\Business\Reader\DiscountVoucherReaderInterface;
 use Spryker\Zed\Discount\Business\Sorter\CollectedDiscountSorter;
 use Spryker\Zed\Discount\Business\Sorter\CollectedDiscountSorterInterface;
 use Spryker\Zed\Discount\Business\Updater\DiscountAmountUpdater;
@@ -98,10 +112,22 @@ use Spryker\Zed\Discount\Business\Updater\SalesOrderDiscountUpdater;
 use Spryker\Zed\Discount\Business\Updater\SalesOrderDiscountUpdaterInterface;
 use Spryker\Zed\Discount\Business\Validator\ConstraintProvider\DiscountConfiguratorConstraintProviderInterface;
 use Spryker\Zed\Discount\Business\Validator\ConstraintProvider\DiscountConfiguratorPeriodConstraintProvider;
+use Spryker\Zed\Discount\Business\Validator\DiscountConfiguratorAggregateValidatorInterface;
 use Spryker\Zed\Discount\Business\Validator\DiscountConfiguratorDiscountExistsValidator;
 use Spryker\Zed\Discount\Business\Validator\DiscountConfiguratorPeriodValidator;
+use Spryker\Zed\Discount\Business\Validator\DiscountConfiguratorValidator;
 use Spryker\Zed\Discount\Business\Validator\DiscountConfiguratorValidatorComposite;
 use Spryker\Zed\Discount\Business\Validator\DiscountConfiguratorValidatorInterface;
+use Spryker\Zed\Discount\Business\Validator\DiscountVoucherValidator;
+use Spryker\Zed\Discount\Business\Validator\DiscountVoucherValidatorInterface;
+use Spryker\Zed\Discount\Business\Validator\Rule\DiscountConfigurator\CalculatorPluginDiscountConfiguratorValidatorRule;
+use Spryker\Zed\Discount\Business\Validator\Rule\DiscountConfigurator\DiscountConfiguratorValidatorRuleInterface;
+use Spryker\Zed\Discount\Business\Validator\Rule\DiscountConfigurator\MoneyAmountCurrencyDiscountConfiguratorValidatorRule;
+use Spryker\Zed\Discount\Business\Validator\Rule\DiscountConfigurator\QueryStringDiscountConfiguratorValidatorRule;
+use Spryker\Zed\Discount\Business\Validator\Rule\DiscountConfigurator\StoreRelationDiscountConfiguratorValidatorRule;
+use Spryker\Zed\Discount\Business\Validator\Rule\DiscountConfigurator\UniqueDisplayNameDiscountConfiguratorValidatorRule;
+use Spryker\Zed\Discount\Business\Validator\Rule\DiscountVoucher\DiscountTypeDiscountVoucherValidatorRule;
+use Spryker\Zed\Discount\Business\Validator\Rule\DiscountVoucher\DiscountVoucherValidatorRuleInterface;
 use Spryker\Zed\Discount\Business\Voucher\VoucherCode;
 use Spryker\Zed\Discount\Business\Voucher\VoucherEngine;
 use Spryker\Zed\Discount\Business\Voucher\VoucherValidator;
@@ -908,5 +934,177 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     public function getDiscountVoucherApplyCheckerStrategyPlugins(): array
     {
         return $this->getProvidedDependency(DiscountDependencyProvider::PLUGINS_DISCOUNT_VOUCHER_APPLY_CHECKER_STRATEGY);
+    }
+
+    public function createDiscountConfigurationOptionsReader(): DiscountConfigurationOptionsReaderInterface
+    {
+        return new DiscountConfigurationOptionsReader(
+            $this->getConfig(),
+            $this->createQueryStringMetaDataProviderFactory(),
+            $this->getStoreFacade(),
+            $this->getTranslatorFacade(),
+            $this->getCalculatorPlugins(),
+            $this->getDiscountConfigurationOptionsExpanderPlugins(),
+        );
+    }
+
+    public function createDiscountReader(): DiscountReaderInterface
+    {
+        return new DiscountReader(
+            $this->getRepository(),
+            $this->createDiscountAmountTransformer(),
+            $this->getConfig(),
+            $this->getDiscountConfiguratorCollectionExpanderPlugins(),
+        );
+    }
+
+    public function createDiscountAmountTransformer(): DiscountAmountTransformerInterface
+    {
+        return new DiscountAmountTransformer($this->getCalculatorPlugins());
+    }
+
+    public function createDiscountRuleGroupBuilder(): DiscountRuleGroupBuilderInterface
+    {
+        return new DiscountRuleGroupBuilder(
+            $this->createTokenizer(),
+            $this->createQueryStringMetaDataProviderFactory(),
+            $this->createComparatorOperators(),
+        );
+    }
+
+    public function createDiscountQueryStringBuilder(): DiscountQueryStringBuilderInterface
+    {
+        return new DiscountQueryStringBuilder($this->createQueryStringValidator());
+    }
+
+    public function createDiscountConfiguratorValidator(): DiscountConfiguratorAggregateValidatorInterface
+    {
+        return new DiscountConfiguratorValidator(
+            $this->createDiscountConfiguratorPeriodValidator(),
+            $this->createDiscountConfiguratorDiscountExistsValidator(),
+            $this->createDiscountConfiguratorValidatorRules(),
+            $this->getDiscountConfiguratorValidatorRulePlugins(),
+        );
+    }
+
+    public function createDiscountConfiguratorRulesValidator(): DiscountConfiguratorAggregateValidatorInterface
+    {
+        return new DiscountConfiguratorValidator(
+            $this->createDiscountConfiguratorPeriodValidator(),
+            $this->createDiscountConfiguratorDiscountExistsValidator(),
+            $this->createDiscountConfiguratorValidatorRules(),
+            [],
+        );
+    }
+
+    /**
+     * @return list<\Spryker\Zed\Discount\Business\Validator\Rule\DiscountConfigurator\DiscountConfiguratorValidatorRuleInterface>
+     */
+    public function createDiscountConfiguratorValidatorRules(): array
+    {
+        return [
+            $this->createUniqueDisplayNameDiscountConfiguratorValidatorRule(),
+            $this->createCalculatorPluginDiscountConfiguratorValidatorRule(),
+            $this->createMoneyAmountCurrencyDiscountConfiguratorValidatorRule(),
+            $this->createStoreRelationDiscountConfiguratorValidatorRule(),
+            $this->createQueryStringDiscountConfiguratorValidatorRule(),
+        ];
+    }
+
+    public function createUniqueDisplayNameDiscountConfiguratorValidatorRule(): DiscountConfiguratorValidatorRuleInterface
+    {
+        return new UniqueDisplayNameDiscountConfiguratorValidatorRule($this->getRepository());
+    }
+
+    public function createCalculatorPluginDiscountConfiguratorValidatorRule(): DiscountConfiguratorValidatorRuleInterface
+    {
+        return new CalculatorPluginDiscountConfiguratorValidatorRule($this->getCalculatorPlugins());
+    }
+
+    public function createMoneyAmountCurrencyDiscountConfiguratorValidatorRule(): DiscountConfiguratorValidatorRuleInterface
+    {
+        return new MoneyAmountCurrencyDiscountConfiguratorValidatorRule(
+            $this->getCalculatorPlugins(),
+            $this->getStoreFacade(),
+            $this->getCurrencyFacade(),
+        );
+    }
+
+    public function createStoreRelationDiscountConfiguratorValidatorRule(): DiscountConfiguratorValidatorRuleInterface
+    {
+        return new StoreRelationDiscountConfiguratorValidatorRule($this->getStoreFacade());
+    }
+
+    public function createQueryStringDiscountConfiguratorValidatorRule(): DiscountConfiguratorValidatorRuleInterface
+    {
+        return new QueryStringDiscountConfiguratorValidatorRule($this->createQueryStringValidator());
+    }
+
+    public function createDiscountVoucherReader(): DiscountVoucherReaderInterface
+    {
+        return new DiscountVoucherReader($this->getRepository());
+    }
+
+    public function createDiscountVoucherDeleter(): DiscountVoucherDeleterInterface
+    {
+        return new DiscountVoucherDeleter(
+            $this->getRepository(),
+            $this->getEntityManager(),
+        );
+    }
+
+    public function createDiscountVoucherValidator(): DiscountVoucherValidatorInterface
+    {
+        return new DiscountVoucherValidator(
+            $this->createDiscountVoucherValidatorRules(),
+            $this->getDiscountVoucherValidatorRulePlugins(),
+        );
+    }
+
+    /**
+     * @return list<\Spryker\Zed\Discount\Business\Validator\Rule\DiscountVoucher\DiscountVoucherValidatorRuleInterface>
+     */
+    public function createDiscountVoucherValidatorRules(): array
+    {
+        return [
+            $this->createDiscountTypeDiscountVoucherValidatorRule(),
+        ];
+    }
+
+    public function createDiscountTypeDiscountVoucherValidatorRule(): DiscountVoucherValidatorRuleInterface
+    {
+        return new DiscountTypeDiscountVoucherValidatorRule($this->getRepository());
+    }
+
+    /**
+     * @return array<\Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountConfigurationOptionsExpanderPluginInterface>
+     */
+    public function getDiscountConfigurationOptionsExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(DiscountDependencyProvider::PLUGINS_DISCOUNT_CONFIGURATION_OPTIONS_EXPANDER);
+    }
+
+    /**
+     * @return array<\Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountConfiguratorCollectionExpanderPluginInterface>
+     */
+    public function getDiscountConfiguratorCollectionExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(DiscountDependencyProvider::PLUGINS_DISCOUNT_CONFIGURATOR_COLLECTION_EXPANDER);
+    }
+
+    /**
+     * @return array<\Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountConfiguratorValidatorRulePluginInterface>
+     */
+    public function getDiscountConfiguratorValidatorRulePlugins(): array
+    {
+        return $this->getProvidedDependency(DiscountDependencyProvider::PLUGINS_DISCOUNT_CONFIGURATOR_VALIDATOR_RULE);
+    }
+
+    /**
+     * @return array<\Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountVoucherValidatorRulePluginInterface>
+     */
+    public function getDiscountVoucherValidatorRulePlugins(): array
+    {
+        return $this->getProvidedDependency(DiscountDependencyProvider::PLUGINS_DISCOUNT_VOUCHER_VALIDATOR_RULE);
     }
 }

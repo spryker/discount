@@ -1,0 +1,140 @@
+resource:
+    name: DiscountVoucherCodes
+    shortName: discount-voucher-codes
+    description: Voucher codes of a voucher discount
+
+    provider: Spryker\Glue\Discount\Api\Backend\Provider\DiscountVoucherCodesBackendProvider
+    processor: Spryker\Glue\Discount\Api\Backend\Processor\DiscountVoucherCodesBackendProcessor
+
+    security: "is_granted('ROLE_BACK_OFFICE_USER')"
+
+    paginationEnabled: true
+    paginationItemsPerPage: 10
+    paginationClientItemsPerPage: true
+    paginationMaximumItemsPerPage: 100
+
+    operations:
+        - type: GetCollection
+          uriTemplate: '/discounts/{discountUuid}/voucher-codes'
+          uriVariables:
+              discountUuid: { identifiers: [discountUuid] }
+          description: >
+              Lists the voucher codes of a discount with their usage data, filtered by the query parameters below.
+              Sorting: sort=<field> ascending or sort=-<field> descending; fields: code, numberOfUses, maxNumberOfUses, createdAt, voucherBatch. Default: createdAt descending.
+              Pagination: page[limit] (1-100, default 10), page[offset].
+              Collection metadata is reported as top-level `meta.pagination` with `links.first/last/prev/next`.
+          openapiContext:
+              summary: 'List voucher codes of a discount'
+              parameters:
+                  - name: 'filter[discount-voucher-codes.code]'
+                    in: query
+                    required: false
+                    description: 'Return only voucher codes containing this value, case-insensitive.'
+                    schema:
+                        type: string
+                    example: 'SALE'
+                  - name: 'filter[discount-voucher-codes.voucherBatch]'
+                    in: query
+                    required: false
+                    description: 'Return only voucher codes generated in this batch. 0 matches the codes created one by one.'
+                    schema:
+                        type: integer
+                    example: 3
+              responses:
+                  200: { description: 'Page of voucher codes.' }
+                  400: { description: 'Unsupported sort field (code 5740).' }
+                  401: { description: 'Missing or invalid access token.' }
+                  403: { description: 'The user has no permission for discounts.' }
+                  404: { description: 'Discount not found (code 5700).' }
+                  422:
+                      {
+                          description: 'Invalid filter, sort or pagination parameter (code 901), for example a voucherBatch filter that is not an integer.',
+                      }
+        - type: Post
+          name: deleteDiscountVoucherCodes
+          uriTemplate: '/discounts/{discountUuid}/voucher-codes/delete'
+          uriVariables:
+              discountUuid: { identifiers: [discountUuid] }
+          deserialize: true
+          read: false
+          output: false
+          status: 204
+          description: >-
+              Deletes voucher codes of the discount permanently. The body carries EITHER `codes` (non-empty list of at most 100 codes)
+              OR `all: true`, exactly one of the two. The code list is all-or-nothing: if any code does not belong to the discount,
+              nothing is deleted and every offending code is listed in the errors. `all: true` deletes every code of the discount
+              and is idempotent.
+          openapiContext:
+              summary: 'Delete voucher codes of a discount'
+              responses:
+                  204: { description: 'The listed codes, or all codes, are deleted.' }
+                  400:
+                      {
+                          description: 'The body must carry either a non-empty codes list or all: true, exactly one of the two (code 5722).',
+                      }
+                  401: { description: 'Missing or invalid access token.' }
+                  403: { description: 'The user has no permission for discounts.' }
+                  404:
+                      {
+                          description: 'Discount not found (code 5700), or a listed code does not belong to this discount (code 5720, one error per code); nothing deleted.',
+                      }
+                  422: { description: 'More than 100 codes were listed, or a list entry is not a string (code 901).' }
+
+    properties:
+        discountUuid:
+            type: string
+            identifier: true
+            writable: false
+            required: true
+            description: 'Identifier of the discount the code belongs to.'
+            openapiContext: { example: '3f9c1c1e-7d2b-4e0e-9a3d-1b2c3d4e5f60' }
+        code:
+            type: string
+            identifier: true
+            writable: false
+            required: true
+            description: 'The voucher code.'
+            openapiContext: { example: 'SALE-7GH2KQ' }
+        maxNumberOfUses:
+            type: integer
+            writable: false
+            description: 'How many times the code can be redeemed in total. 0 = unlimited.'
+            openapiContext: { example: 1 }
+        numberOfUses:
+            type: integer
+            writable: false
+            description: 'How many times the code has been redeemed so far. 0 for a code that has never been redeemed.'
+            openapiContext: { example: 0 }
+        isActive:
+            type: bool
+            writable: false
+            nullable: true
+            description: 'Whether the code can be redeemed. Codes are generated active; the flag is set to false only by a data import, there is no action that toggles it.'
+            openapiContext: { example: true }
+        voucherBatch:
+            type: integer
+            writable: false
+            nullable: true
+            description: 'Number of the generation batch the code was created in; 0 for codes created one by one.'
+            openapiContext: { example: 3 }
+        createdAt:
+            type: string
+            writable: false
+            nullable: true
+            description: 'Creation time, UTC, Y-m-d H:i:s.'
+            openapiContext: { example: '2026-03-01 10:15:00' }
+        codes:
+            type: array
+            writable: true
+            readable: false
+            nullable: true
+            description: 'Codes to delete. Send this list or all: true, not both.'
+            items: { type: string }
+            openapiContext: { example: ['SALE-7GH2KQ', 'SALE-M4XP9A'] }
+        all:
+            type: bool
+            writable: true
+            readable: false
+            nullable: true
+            description: 'Set to true to delete every voucher code of the discount instead of listing codes.'
+            openapiContext: { example: false }

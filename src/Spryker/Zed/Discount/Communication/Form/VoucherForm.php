@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Discount\Communication\Form;
 
 use Generated\Shared\Transfer\DiscountVoucherTransfer;
+use Spryker\Zed\Discount\Communication\Form\Constraint\DiscountVoucherValid;
 use Spryker\Zed\Discount\Communication\Form\Constraint\Sequentially;
 use Spryker\Zed\Gui\Communication\Form\Type\FormattedNumberType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
@@ -79,6 +80,8 @@ class VoucherForm extends AbstractType
      */
     protected const PARAM_QUANTITY_MESSAGE_MAX = '%max%';
 
+    protected const string OPTION_CONSTRAINTS = 'constraints';
+
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array<string, string> $options
@@ -102,6 +105,12 @@ class VoucherForm extends AbstractType
         $resolver->setDefaults([
             'data_class' => DiscountVoucherTransfer::class,
             static::OPTION_LOCALE => null,
+            static::OPTION_CONSTRAINTS => [
+                new DiscountVoucherValid([
+                    DiscountVoucherValid::OPTION_DISCOUNT_FACADE => $this->getFacade(),
+                    DiscountVoucherValid::OPTION_TRANSLATOR_FACADE => $this->getFactory()->getTranslatorFacade(),
+                ]),
+            ],
         ]);
     }
 

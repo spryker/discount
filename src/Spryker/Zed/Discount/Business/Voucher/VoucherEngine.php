@@ -24,6 +24,11 @@ class VoucherEngine implements VoucherEngineInterface
     protected $remainingCodesToGenerate = 0;
 
     /**
+     * @var array<int, string>
+     */
+    protected array $generatedCodes = [];
+
+    /**
      * @var \Spryker\Zed\Discount\DiscountConfig
      */
     protected $discountConfig;
@@ -62,6 +67,7 @@ class VoucherEngine implements VoucherEngineInterface
      */
     public function createVoucherCodes(DiscountVoucherTransfer $discountVoucherTransfer)
     {
+        $this->generatedCodes = [];
         $nextVoucherBatchValue = $this->getNextBatchValueForVouchers($discountVoucherTransfer);
         $discountVoucherTransfer->setVoucherBatch($nextVoucherBatchValue);
 
@@ -126,6 +132,7 @@ class VoucherEngine implements VoucherEngineInterface
         if ($codeCollisions === 0) {
             $messageCreateInfoTransfer->setType(DiscountConstants::MESSAGE_TYPE_SUCCESS);
             $messageCreateInfoTransfer->setMessage('Voucher codes successfully generated.');
+            $messageCreateInfoTransfer->setCodes($this->generatedCodes);
 
             return $messageCreateInfoTransfer;
         }
@@ -174,6 +181,7 @@ class VoucherEngine implements VoucherEngineInterface
             $discountVoucherTransfer->setCode($code);
 
             $this->createVoucherCode($discountVoucherTransfer);
+            $this->generatedCodes[] = $code;
         }
 
         return $codeCollisions;

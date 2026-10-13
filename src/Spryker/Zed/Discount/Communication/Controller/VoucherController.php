@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Discount\Communication\Controller;
 
+use Generated\Shared\Transfer\DiscountVoucherCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\DiscountVoucherConditionsTransfer;
+use Generated\Shared\Transfer\DiscountVoucherCriteriaTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Discount\Communication\Table\DiscountsTable;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
@@ -53,6 +56,8 @@ class VoucherController extends AbstractController
      */
     protected const URL_DISCOUNT_VIEW_PAGE = '/discount/index/view';
 
+    protected const string URL_DISCOUNT_LIST_PAGE = '/discount/index/list';
+
     /**
      * @var string
      */
@@ -66,11 +71,14 @@ class VoucherController extends AbstractController
     public function deleteDiscountVouchersAction(Request $request)
     {
         $idDiscount = $this->castId($request->query->get(static::URL_PARAM_ID_DISCOUNT));
-        $idPool = $this->castId($request->query->get(static::URL_PARAM_ID_POOL));
 
-        $affectedRows = $this->getQueryContainer()
-            ->queryVouchersByIdVoucherPool($idPool)
-            ->delete();
+        $discountVoucherCollectionResponseTransfer = $this->getFacade()->deleteDiscountVoucherCollection(
+            (new DiscountVoucherCollectionDeleteCriteriaTransfer())->setDiscountVoucherConditions(
+                (new DiscountVoucherConditionsTransfer())->setDiscountIds([$idDiscount]),
+            ),
+        );
+
+        $affectedRows = (int)$discountVoucherCollectionResponseTransfer->getDeletedCount();
 
         if ($affectedRows > 0) {
             $this->addSuccessMessage(
@@ -105,21 +113,38 @@ class VoucherController extends AbstractController
         }
 
         $idVoucher = $this->castId($request->query->get(static::URL_PARAM_ID_VOUCHER));
+        $idDiscount = $this->findIdDiscount($request, $idVoucher);
 
-        $voucherEntity = $this->getQueryContainer()
-            ->queryVoucherByIdVoucher($idVoucher);
-
-        $affectedRows = $voucherEntity->delete();
-
-        if ($affectedRows > 0) {
+        if ($idDiscount !== null && $this->deleteVoucherCode($idDiscount, $idVoucher)) {
             $this->addSuccessMessage('Voucher code successfully deleted.');
         } else {
             $this->addErrorMessage('Voucher code could not be deleted.');
         }
 
         return new RedirectResponse(
-            $this->createVoucherCodeDeleteRedirectUrl($request),
+            $this->createVoucherCodeDeleteRedirectUrl($request, $idDiscount),
         );
+    }
+
+    protected function findIdDiscount(Request $request, int $idVoucher): ?int
+    {
+        $idDiscount = $request->query->get(static::URL_PARAM_ID_DISCOUNT);
+
+        if (is_numeric($idDiscount) && (int)$idDiscount !== 0) {
+            return (int)$idDiscount;
+        }
+
+        $discountVoucherCollectionTransfer = $this->getFacade()->getDiscountVoucherCollection(
+            (new DiscountVoucherCriteriaTransfer())->setDiscountVoucherConditions(
+                (new DiscountVoucherConditionsTransfer())->setDiscountVoucherIds([$idVoucher]),
+            ),
+        );
+
+        foreach ($discountVoucherCollectionTransfer->getDiscountVouchers() as $discountVoucherTransfer) {
+            return $discountVoucherTransfer->getIdDiscount();
+        }
+
+        return null;
     }
 
     /**
@@ -201,12 +226,12 @@ class VoucherController extends AbstractController
         return $redirectUrl;
     }
 
-    protected function createVoucherCodeDeleteRedirectUrl(Request $request): string
+    protected function createVoucherCodeDeleteRedirectUrl(Request $request, ?int $idDiscount = null): string
     {
         $referrerUrl = $request->headers->get(static::REQUEST_HEADER_REFERER);
 
         if (!$referrerUrl) {
-            return $this->createViewDiscountRedirectUrl($this->castId($request->get(static::URL_PARAM_ID_DISCOUNT)));
+            return $idDiscount === null ? static::URL_DISCOUNT_LIST_PAGE : $this->createViewDiscountRedirectUrl($idDiscount);
         }
 
         if (strpos($referrerUrl, static::URL_DISCOUNT_EDIT_PAGE) !== false) {
@@ -214,5 +239,46 @@ class VoucherController extends AbstractController
         }
 
         return $referrerUrl;
+    }
+
+    protected function deleteVoucherCode(int $idDiscount, int $idVoucher): bool
+    {
+        $codes = $this->getVoucherCodes($idDiscount, [$idVoucher]);
+
+        if ($codes === []) {
+            return false;
+        }
+
+        return (bool)$this->getFacade()->deleteDiscountVoucherCollection(
+            (new DiscountVoucherCollectionDeleteCriteriaTransfer())->setDiscountVoucherConditions(
+                (new DiscountVoucherConditionsTransfer())
+                    ->setDiscountIds([$idDiscount])
+                    ->setCodes($codes),
+            ),
+        )->getIsSuccessful();
+    }
+
+    /**
+     * @param array<int, int> $discountVoucherIds
+     *
+     * @return array<int, string>
+     */
+    protected function getVoucherCodes(int $idDiscount, array $discountVoucherIds = []): array
+    {
+        $discountVoucherConditionsTransfer = (new DiscountVoucherConditionsTransfer())
+            ->setDiscountIds([$idDiscount])
+            ->setDiscountVoucherIds($discountVoucherIds);
+
+        $discountVoucherCollectionTransfer = $this->getFacade()->getDiscountVoucherCollection(
+            (new DiscountVoucherCriteriaTransfer())->setDiscountVoucherConditions($discountVoucherConditionsTransfer),
+        );
+
+        $codes = [];
+
+        foreach ($discountVoucherCollectionTransfer->getDiscountVouchers() as $discountVoucherTransfer) {
+            $codes[] = (string)$discountVoucherTransfer->getCode();
+        }
+
+        return $codes;
     }
 }

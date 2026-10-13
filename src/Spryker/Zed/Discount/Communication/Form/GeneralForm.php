@@ -9,7 +9,6 @@ namespace Spryker\Zed\Discount\Communication\Form;
 
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Communication\Form\Constraint\Sequentially;
-use Spryker\Zed\Discount\Communication\Form\Constraint\UniqueDiscountName;
 use Spryker\Zed\Gui\Communication\Form\Type\DateTimePickerType;
 use Spryker\Zed\Gui\Communication\Form\Type\FormattedNumberType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
@@ -226,9 +225,6 @@ class GeneralForm extends AbstractType
             'label' => 'Name',
             'constraints' => [
                 new NotBlank(),
-                new UniqueDiscountName([
-                    UniqueDiscountName::OPTION_DISCOUNT_QUERY_CONTAINER => $this->getQueryContainer(),
-                ]),
             ],
         ]);
 

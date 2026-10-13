@@ -9,7 +9,6 @@ namespace Spryker\Zed\Discount\Communication\Form;
 
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProviderFactory;
-use Spryker\Zed\Discount\Communication\Form\Constraint\QueryString;
 use Spryker\Zed\Discount\DiscountConfig;
 use Spryker\Zed\Gui\Communication\Form\Type\FormattedNumberType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
@@ -77,12 +76,6 @@ class ConditionsForm extends AbstractType
 
         $builder->add(static::FIELD_DECISION_RULE_QUERY_STRING, TextareaType::class, [
             'label' => $label,
-            'constraints' => [
-                new QueryString([
-                    QueryString::OPTION_DISCOUNT_FACADE => $this->getFacade(),
-                    QueryString::OPTION_QUERY_STRING_TYPE => MetaProviderFactory::TYPE_DECISION_RULE,
-                ]),
-            ],
             'row_attr' => [
                 'data-qa' => 'decision-rule',
             ],

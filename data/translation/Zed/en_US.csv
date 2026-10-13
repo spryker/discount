@@ -113,3 +113,11 @@ Store,Store
 "Valid from","Valid from"
 "Valid to","Valid to"
 "Cart rule","Cart rule"
+"Calculator type ""%key%"" is not available.","Calculator type ""%key%"" is not available."
+"Invalid fixed amount. At least one amount is required and each currency must belong to one of the selected stores.","Invalid fixed amount. At least one amount is required and each currency must belong to one of the selected stores."
+"Invalid rule: %message%","Invalid rule: %message%"
+"Store with name ""%name%"" does not exist.","Store with name ""%name%"" does not exist."
+"Voucher codes can only be generated for a voucher discount.","Voucher codes can only be generated for a voucher discount."
+"Voucher code was not found for this discount.","Voucher code was not found for this discount."
+PLUGIN_CALCULATOR_PERCENTAGE,Percentage
+PLUGIN_CALCULATOR_FIXED,"Fixed amount"

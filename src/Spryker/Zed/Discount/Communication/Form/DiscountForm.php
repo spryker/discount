@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\DiscountCalculatorTransfer;
 use Generated\Shared\Transfer\DiscountConditionTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountGeneralTransfer;
+use Spryker\Zed\Discount\Communication\Form\Constraint\DiscountConfiguratorValid;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -28,6 +29,8 @@ class DiscountForm extends AbstractType
      * @var string
      */
     public const OPTION_LOCALE = 'locale';
+
+    protected const string OPTION_CONSTRAINTS = 'constraints';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -50,6 +53,12 @@ class DiscountForm extends AbstractType
 
         $resolver->setDefaults([
             static::OPTION_LOCALE => null,
+            static::OPTION_CONSTRAINTS => [
+                new DiscountConfiguratorValid([
+                    DiscountConfiguratorValid::OPTION_DISCOUNT_FACADE => $this->getFacade(),
+                    DiscountConfiguratorValid::OPTION_TRANSLATOR_FACADE => $this->getFactory()->getTranslatorFacade(),
+                ]),
+            ],
         ]);
     }
 

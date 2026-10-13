@@ -1,0 +1,32 @@
+resource:
+    name: DiscountVoucherCodesExport
+    shortName: discount-voucher-codes-export
+    description: CSV download of all voucher codes of a discount
+
+    provider: Spryker\Glue\Discount\Api\Backend\Provider\DiscountVoucherCodesExportBackendProvider
+
+    security: "is_granted('ROLE_BACK_OFFICE_USER')"
+    paginationEnabled: false
+
+    operations:
+        - type: Get
+          name: exportDiscountVoucherCodes
+          uriTemplate: '/discounts/{uuid}/voucher-codes/export'
+          uriVariables:
+              uuid: { identifiers: [uuid] }
+          description: 'Downloads all voucher codes of the discount as a CSV file (columns: code, maxNumberOfUses, numberOfUses, isActive). The URL is provided on the discount as links.voucherCodesExport.'
+          openapiContext:
+              responses:
+                  200:
+                      { description: 'CSV file, Content-Type text/csv, Content-Disposition attachment (vouchers.csv).' }
+                  401: { description: 'Missing or invalid access token.' }
+                  403: { description: 'The user has no permission for discounts.' }
+                  404: { description: 'Discount not found (code 5700).' }
+
+    properties:
+        uuid:
+            type: string
+            identifier: true
+            writable: false
+            description: 'Identifier of the discount.'
+            openapiContext: { example: '3f9c1c1e-7d2b-4e0e-9a3d-1b2c3d4e5f60' }

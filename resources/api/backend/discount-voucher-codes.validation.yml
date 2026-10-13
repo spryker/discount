@@ -1,0 +1,9 @@
+post:
+    codes:
+        - Optional:
+              constraints:
+                  - Type: { type: array }
+                  - Count: { max: 100 }
+                  - All: { constraints: [{ Type: { type: string } }] }
+    all:
+        - Optional: { constraints: [{ Type: { type: bool } }] }

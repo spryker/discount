@@ -4,6 +4,9 @@
     </div>
 
     <div style="display:none;" id="calculator-money-input-type" class="discount-calculation-input-type">
+        <div class="{% if discountForm.discountCalculator.moneyValueCollection.vars.errors|length > 0 %}has-error{% endif %}">
+            {{ form_errors(discountForm.discountCalculator.moneyValueCollection) }}
+        </div>
         {{ form_money_collection(discountForm.discountCalculator.moneyValueCollection) }}
         <h4>{{ 'If you need to create different values for the same currency in different stores - please create different discounts per store.' | trans }}</h4>
     </div>

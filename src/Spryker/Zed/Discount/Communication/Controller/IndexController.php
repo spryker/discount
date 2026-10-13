@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Discount\Communication\Controller;
 
+use Generated\Shared\Transfer\DiscountConfiguratorResponseTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\VoucherCreateInfoTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
@@ -70,19 +71,24 @@ class IndexController extends AbstractController
         if ($discountForm->isSubmitted() && $discountForm->isValid()) {
             $discountConfiguratorResponseTransfer = $this->getFacade()
                 ->createDiscount($discountForm->getData());
-            $idDiscount = $discountConfiguratorResponseTransfer->getDiscountConfiguratorOrFail()
-                ->getDiscountGeneralOrFail()
-                ->getIdDiscountOrFail();
 
-            /** @var \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer */
-            $discountConfiguratorTransfer = $discountForm->getData();
-            $discountType = $discountConfiguratorTransfer->getDiscountGeneral()->getDiscountType();
+            if ($discountConfiguratorResponseTransfer->getIsSuccessfulOrFail()) {
+                $idDiscount = $discountConfiguratorResponseTransfer->getDiscountConfiguratorOrFail()
+                    ->getDiscountGeneralOrFail()
+                    ->getIdDiscountOrFail();
 
-            $this->addSuccessMessage('Discount successfully created, but not activated.');
+                /** @var \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer */
+                $discountConfiguratorTransfer = $discountForm->getData();
+                $discountType = $discountConfiguratorTransfer->getDiscountGeneral()->getDiscountType();
 
-            return new RedirectResponse(
-                $this->createEditRedirectUrl($idDiscount, $discountType),
-            );
+                $this->addSuccessMessage('Discount successfully created, but not activated.');
+
+                return new RedirectResponse(
+                    $this->createEditRedirectUrl($idDiscount, $discountType),
+                );
+            }
+
+            $this->addDiscountConfiguratorResponseErrorMessages($discountConfiguratorResponseTransfer);
         }
 
         $discountFormTabs = $this
@@ -416,7 +422,11 @@ class IndexController extends AbstractController
                 $discountConfiguratorResponseTransfer = $this->getFacade()->updateDiscountWithValidation($discountForm->getData());
                 if ($discountConfiguratorResponseTransfer->getIsSuccessfulOrFail()) {
                     $this->addSuccessMessage('Discount successfully updated.');
+
+                    return true;
                 }
+
+                $this->addDiscountConfiguratorResponseErrorMessages($discountConfiguratorResponseTransfer);
 
                 return true;
             }
@@ -425,5 +435,17 @@ class IndexController extends AbstractController
         }
 
         return false;
+    }
+
+    protected function addDiscountConfiguratorResponseErrorMessages(
+        DiscountConfiguratorResponseTransfer $discountConfiguratorResponseTransfer
+    ): void {
+        foreach ($discountConfiguratorResponseTransfer->getMessages() as $messageTransfer) {
+            $this->addErrorMessage((string)$messageTransfer->getValue(), $messageTransfer->getParameters());
+        }
+
+        foreach ($discountConfiguratorResponseTransfer->getErrors() as $errorTransfer) {
+            $this->addErrorMessage((string)$errorTransfer->getMessage(), $errorTransfer->getParameters());
+        }
     }
 }

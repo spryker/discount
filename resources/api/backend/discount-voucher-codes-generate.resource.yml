@@ -1,0 +1,81 @@
+resource:
+    name: DiscountVoucherCodesGenerate
+    shortName: discount-voucher-codes-generate
+    description: Generation of voucher codes for a voucher discount
+
+    processor: Spryker\Glue\Discount\Api\Backend\Processor\DiscountVoucherCodesGenerateBackendProcessor
+
+    security: "is_granted('ROLE_BACK_OFFICE_USER')"
+    paginationEnabled: false
+
+    operations:
+        - type: Post
+          uriTemplate: '/discounts/{discountUuid}/voucher-codes/generate'
+          uriVariables:
+              discountUuid: { identifiers: [discountUuid] }
+          validationGroups: ['Default', 'discount-voucher-codes-generate:create']
+          description: 'Generates the requested number of voucher codes for the discount and adds them to its voucher pool as one batch.'
+          openapiContext:
+              summary: 'Generate voucher codes for a discount'
+              responses:
+                  201: { description: 'Codes generated; the response carries the batch number and the codes.' }
+                  401: { description: 'Missing or invalid access token.' }
+                  403: { description: 'The user has no permission for discounts.' }
+                  404: { description: 'Discount not found (code 5700).' }
+                  422:
+                      {
+                          description: 'Validation failed. Request structure and static rules (quantity range, codeLength range, codeLength or customCode required, maxNumberOfUses not negative): code 901. Business rules: 5721 discount is not a voucher discount, 5726 no free codes available for the given length.',
+                      }
+
+    properties:
+        discountUuid:
+            type: string
+            identifier: true
+            writable: false
+            required: true
+            description: 'Identifier of the discount the codes are generated for.'
+            openapiContext: { example: '3f9c1c1e-7d2b-4e0e-9a3d-1b2c3d4e5f60' }
+        quantity:
+            type: integer
+            writable: true
+            readable: false
+            required: true
+            description: 'Number of codes to generate. Allowed range from GET /discount-options voucherCodesQuantity (default range 1-14000).'
+            openapiContext: { example: 100 }
+        codeLength:
+            type: integer
+            writable: true
+            readable: false
+            description: 'Length of the random part of each code. Allowed range from GET /discount-options voucherCodeLength (default range 3-10). Required when customCode is not given.'
+            openapiContext: { example: 8 }
+        customCode:
+            type: string
+            writable: true
+            readable: false
+            description: 'Template for the codes. "[code]" is replaced by the random part; without the placeholder the random part is appended. At most 245 characters, so the code fits the 255 character column with the random part. Required when codeLength is not given.'
+            openapiContext: { example: 'SALE-[code]' }
+        maxNumberOfUses:
+            type: integer
+            writable: true
+            readable: false
+            description: 'How many times each generated code can be redeemed. 0 = unlimited. Default: 0.'
+            openapiContext: { example: 1 }
+        voucherBatch:
+            type: integer
+            writable: false
+            nullable: true
+            description: 'Number assigned to this batch; use it as the voucherBatch filter of GET /discounts/{discountUuid}/voucher-codes.'
+            openapiContext: { example: 3 }
+        generatedCount:
+            type: integer
+            writable: false
+            nullable: true
+            description: 'Number of codes actually generated.'
+            openapiContext: { example: 100 }
+        codes:
+            type: array
+            writable: false
+            nullable: true
+            description: 'The generated voucher codes, in the order they were created.'
+            items: { type: string }
+            openapiContext: { example: ['SALE-7GH2KQ', 'SALE-M4XP9A'] }

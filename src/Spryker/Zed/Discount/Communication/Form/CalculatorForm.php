@@ -12,7 +12,6 @@ use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Business\Exception\CalculatorException;
 use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProviderFactory;
-use Spryker\Zed\Discount\Communication\Form\Constraint\QueryString;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginWithAmountInputTypeInterface;
 use Spryker\Zed\Gui\Communication\Form\Type\FormattedNumberType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
@@ -276,14 +275,6 @@ class CalculatorForm extends AbstractType
 
         $builder->add(static::FIELD_COLLECTOR_QUERY_STRING, TextareaType::class, [
             'label' => $label,
-            'constraints' => [
-                new NotBlank(['groups' => DiscountConstants::DISCOUNT_COLLECTOR_STRATEGY_QUERY_STRING]),
-                new QueryString([
-                    QueryString::OPTION_DISCOUNT_FACADE => $this->getFacade(),
-                    QueryString::OPTION_QUERY_STRING_TYPE => MetaProviderFactory::TYPE_COLLECTOR,
-                    'groups' => DiscountConstants::DISCOUNT_COLLECTOR_STRATEGY_QUERY_STRING,
-                ]),
-            ],
             'attr' => [
                 'data-label' => $label . ' *',
                 'data-url' => Url::generate(

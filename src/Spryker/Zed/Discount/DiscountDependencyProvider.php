@@ -172,6 +172,14 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
      */
     public const PLUGINS_DISCOUNT_VOUCHER_APPLY_CHECKER_STRATEGY = 'PLUGINS_DISCOUNT_VOUCHER_APPLY_CHECKER_STRATEGY';
 
+    public const string PLUGINS_DISCOUNT_CONFIGURATION_OPTIONS_EXPANDER = 'PLUGINS_DISCOUNT_CONFIGURATION_OPTIONS_EXPANDER';
+
+    public const string PLUGINS_DISCOUNT_CONFIGURATOR_COLLECTION_EXPANDER = 'PLUGINS_DISCOUNT_CONFIGURATOR_COLLECTION_EXPANDER';
+
+    public const string PLUGINS_DISCOUNT_CONFIGURATOR_VALIDATOR_RULE = 'PLUGINS_DISCOUNT_CONFIGURATOR_VALIDATOR_RULE';
+
+    public const string PLUGINS_DISCOUNT_VOUCHER_VALIDATOR_RULE = 'PLUGINS_DISCOUNT_VOUCHER_VALIDATOR_RULE';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -197,6 +205,10 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addValidationAdapter($container);
         $container = $this->addTranslatorFacade($container);
         $container = $this->addDiscountVoucherApplyCheckerStrategyPlugins($container);
+        $container = $this->addDiscountConfigurationOptionsExpanderPlugins($container);
+        $container = $this->addDiscountConfiguratorCollectionExpanderPlugins($container);
+        $container = $this->addDiscountConfiguratorValidatorRulePlugins($container);
+        $container = $this->addDiscountVoucherValidatorRulePlugins($container);
 
         return $container;
     }
@@ -711,5 +723,73 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
                 FormTypeInterface::class,
             ),
         );
+    }
+
+    protected function addDiscountConfigurationOptionsExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_DISCOUNT_CONFIGURATION_OPTIONS_EXPANDER, function () {
+            return $this->getDiscountConfigurationOptionsExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountConfigurationOptionsExpanderPluginInterface>
+     */
+    protected function getDiscountConfigurationOptionsExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    protected function addDiscountConfiguratorCollectionExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_DISCOUNT_CONFIGURATOR_COLLECTION_EXPANDER, function () {
+            return $this->getDiscountConfiguratorCollectionExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountConfiguratorCollectionExpanderPluginInterface>
+     */
+    protected function getDiscountConfiguratorCollectionExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    protected function addDiscountConfiguratorValidatorRulePlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_DISCOUNT_CONFIGURATOR_VALIDATOR_RULE, function () {
+            return $this->getDiscountConfiguratorValidatorRulePlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountConfiguratorValidatorRulePluginInterface>
+     */
+    protected function getDiscountConfiguratorValidatorRulePlugins(): array
+    {
+        return [];
+    }
+
+    protected function addDiscountVoucherValidatorRulePlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_DISCOUNT_VOUCHER_VALIDATOR_RULE, function () {
+            return $this->getDiscountVoucherValidatorRulePlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountVoucherValidatorRulePluginInterface>
+     */
+    protected function getDiscountVoucherValidatorRulePlugins(): array
+    {
+        return [];
     }
 }

@@ -11,11 +11,14 @@ use Generated\Shared\Transfer\DiscountAmountCriteriaTransfer;
 use Generated\Shared\Transfer\DiscountGeneralTransfer;
 use Generated\Shared\Transfer\DiscountMoneyAmountTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
+use Generated\Shared\Transfer\DiscountVoucherCollectionDeleteCriteriaTransfer;
+use Orm\Zed\Discount\Persistence\Map\SpyDiscountTableMap;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Orm\Zed\Discount\Persistence\SpyDiscountAmount;
 use Orm\Zed\Discount\Persistence\SpyDiscountAmountQuery;
 use Orm\Zed\Discount\Persistence\SpyDiscountStore;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -181,6 +184,37 @@ class DiscountEntityManager extends AbstractEntityManager implements DiscountEnt
         $this->getFactory()
             ->createDiscountVoucherPoolQuery()
             ->filterByIdDiscountVoucherPool($idDiscountVoucherPool)
+            ->delete();
+    }
+
+    public function deleteDiscountVoucherCollection(
+        DiscountVoucherCollectionDeleteCriteriaTransfer $discountVoucherCollectionDeleteCriteriaTransfer
+    ): int {
+        $discountVoucherConditionsTransfer = $discountVoucherCollectionDeleteCriteriaTransfer->getDiscountVoucherConditions();
+
+        if ($discountVoucherConditionsTransfer === null || $discountVoucherConditionsTransfer->getDiscountIds() === []) {
+            return 0;
+        }
+
+        $voucherPoolIds = $this->getFactory()
+            ->createDiscountQuery()
+            ->filterByIdDiscount_In($discountVoucherConditionsTransfer->getDiscountIds())
+            ->filterByFkDiscountVoucherPool(null, Criteria::ISNOTNULL)
+            ->select([SpyDiscountTableMap::COL_FK_DISCOUNT_VOUCHER_POOL])
+            ->find()
+            ->getData();
+
+        if ($voucherPoolIds === []) {
+            return 0;
+        }
+
+        $discountVoucherQuery = $this->getFactory()
+            ->createDiscountVoucherQuery()
+            ->filterByFkDiscountVoucherPool_In(array_map('intval', $voucherPoolIds));
+
+        return $this->getFactory()
+            ->createDiscountVoucherQueryBuilder()
+            ->applyDiscountVoucherConditions($discountVoucherQuery, $discountVoucherConditionsTransfer)
             ->delete();
     }
 

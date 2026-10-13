@@ -7,6 +7,10 @@
 
 namespace Spryker\Zed\Discount\Persistence;
 
+use Generated\Shared\Transfer\DiscountConfiguratorCollectionTransfer;
+use Generated\Shared\Transfer\DiscountCriteriaTransfer;
+use Generated\Shared\Transfer\DiscountVoucherCollectionTransfer;
+use Generated\Shared\Transfer\DiscountVoucherCriteriaTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 
 interface DiscountRepositoryInterface
@@ -57,4 +61,26 @@ interface DiscountRepositoryInterface
         array $salesExpenseIds = [],
         array $salesOrderItemIds = []
     ): array;
+
+    public function getDiscountConfiguratorCollection(DiscountCriteriaTransfer $discountCriteriaTransfer): DiscountConfiguratorCollectionTransfer;
+
+    public function getDiscountVoucherCollection(
+        DiscountVoucherCriteriaTransfer $discountVoucherCriteriaTransfer
+    ): DiscountVoucherCollectionTransfer;
+
+    /**
+     * @param array<int> $discountIds
+     *
+     * @return array<int, \Generated\Shared\Transfer\StoreRelationTransfer>
+     */
+    public function getDiscountStoreRelationsByDiscountIds(array $discountIds): array;
+
+    /**
+     * @param array<int> $discountIds
+     *
+     * @return array<int, array<int, \Generated\Shared\Transfer\MoneyValueTransfer>>
+     */
+    public function getDiscountAmountsByDiscountIds(array $discountIds): array;
+
+    public function findIdDiscountByDisplayName(string $displayName): ?int;
 }

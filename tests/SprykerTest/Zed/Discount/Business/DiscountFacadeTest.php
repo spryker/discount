@@ -46,6 +46,12 @@ use SprykerTest\Zed\Discount\DiscountRuleWithValueOptionsPlugin;
  */
 class DiscountFacadeTest extends Unit
 {
+    protected const string KEY_DISCOUNT_GENERAL = 'discount_general';
+
+    protected const string KEY_UUID = 'uuid';
+
+    protected const string KEY_CREATED_AT = 'created_at';
+
     /**
      * @var string
      */
@@ -639,6 +645,15 @@ class DiscountFacadeTest extends Unit
         $hydratedConfiguratorArray = $hydratedDiscountConfiguratorTransfer->toArray();
 
         $discountEntity = SpyDiscountQuery::create()->findOneByIdDiscount($idDiscount);
+
+        foreach ([static::KEY_UUID, static::KEY_CREATED_AT] as $persistenceGeneratedKey) {
+            $this->assertNotNull($hydratedConfiguratorArray[static::KEY_DISCOUNT_GENERAL][$persistenceGeneratedKey]);
+
+            unset(
+                $originalConfiguratorArray[static::KEY_DISCOUNT_GENERAL][$persistenceGeneratedKey],
+                $hydratedConfiguratorArray[static::KEY_DISCOUNT_GENERAL][$persistenceGeneratedKey],
+            );
+        }
 
         $this->assertEquals($originalConfiguratorArray, $hydratedConfiguratorArray);
         $this->assertTrue($discountEntity->getIsActive());

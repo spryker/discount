@@ -10,7 +10,7 @@
         "spryker/cart-extension": "^1.0.0 || ^2.0.0 || ^4.0.0",
         "spryker/checkout-extension": "^1.5.0",
         "spryker/currency": "^3.1.0 || ^4.0.0",
-        "spryker/discount-extension": "^1.3.0",
+        "spryker/discount-extension": "^1.4.0",
         "spryker/gui": "^3.61.0 || ^4.0.0 || ^5.8.0",
         "spryker/kernel": "^3.76.0",
         "spryker/locale": "^3.0.0 || ^4.0.0",
@@ -27,9 +27,11 @@
         "spryker/transfer": "^3.27.0",
         "spryker/translator": "^1.1.0",
         "spryker/twig": "^3.16.0",
-        "spryker/util-text": "^1.1.0"
+        "spryker/util-text": "^1.1.0",
+        "spryker/uuid-behavior": "^1.0.0"
     },
     "require-dev": {
+        "spryker/api-platform": "*",
         "spryker/application": "*",
         "spryker/checkout": "*",
         "spryker/code-sniffer": "*",
@@ -42,6 +44,7 @@
         "spryker/validator": "*"
     },
     "suggest": {
+        "spryker/api-platform": "Required to expose the discount Backend API resources; without it the resource schemas are never discovered.",
         "spryker/checkout": "If you want to use Checkout plugins."
     },
     "autoload": {
@@ -71,5 +74,8 @@
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true
         }
+    },
+    "conflict": {
+        "spryker/api-platform": "<1.51.0"
     }
 }

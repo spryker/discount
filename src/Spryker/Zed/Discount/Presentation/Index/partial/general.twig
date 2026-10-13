@@ -1,5 +1,9 @@
 {{ form_start(discountForm, {attr: {'id' : 'discount-form'}}) }}
 
+<div class="{% if discountForm.vars.errors|length > 0 %}has-error{% endif %}">
+    {{ form_errors(discountForm) }}
+</div>
+
 <h3>{{ 'Fill in the general discount information' | trans }}</h3>
 <hr />
 

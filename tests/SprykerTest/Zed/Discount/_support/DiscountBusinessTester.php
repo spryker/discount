@@ -17,6 +17,8 @@ use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountGeneralTransfer;
 use Generated\Shared\Transfer\DiscountMoneyAmountTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
+use Generated\Shared\Transfer\DiscountVoucherConditionsTransfer;
+use Generated\Shared\Transfer\DiscountVoucherCriteriaTransfer;
 use Generated\Shared\Transfer\DiscountVoucherTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -24,6 +26,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\Discount\Persistence\Map\SpyDiscountTableMap;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
 use Orm\Zed\Discount\Persistence\SpyDiscountStoreQuery;
@@ -32,6 +35,8 @@ use Orm\Zed\Sales\Persistence\SpySalesDiscount;
 use Orm\Zed\Sales\Persistence\SpySalesDiscountCodeQuery;
 use Orm\Zed\Sales\Persistence\SpySalesDiscountQuery;
 use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Map\TableMap;
+use Propel\Runtime\Propel;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 use Spryker\Zed\Discount\Persistence\DiscountRepository;
@@ -90,6 +95,10 @@ class DiscountBusinessTester extends Actor
      * @var string
      */
     protected const FIELD_NAME_NAME = 'name';
+
+    protected const int GENERATED_VOUCHER_CODE_LENGTH = 6;
+
+    protected const int VOUCHER_MAX_NUMBER_OF_USES = 1;
 
     public function createQuoteTransferWithoutVoucherDiscount(): QuoteTransfer
     {
@@ -289,6 +298,118 @@ class DiscountBusinessTester extends Actor
     public function ensureSalesDiscountCodeTableIsEmpty(): void
     {
         $this->ensureDatabaseTableIsEmpty($this->getSalesDiscountCodeQuery());
+    }
+
+    /**
+     * @param array<string, mixed> $discountGeneralOverride
+     * @param array<int, string> $storeNames
+     * @param array<string, mixed> $discountCalculatorOverride
+     */
+    public function haveDiscountForCollection(
+        array $discountGeneralOverride = [],
+        array $storeNames = [],
+        array $discountCalculatorOverride = []
+    ): DiscountGeneralTransfer {
+        $idStores = [];
+
+        foreach ($storeNames as $storeName) {
+            $idStores[] = $this->haveStore([StoreTransfer::NAME => $storeName])->getIdStoreOrFail();
+        }
+
+        $discountConfiguratorTransfer = $this->createDiscountConfiguratorTransfer($idStores);
+        $discountGeneralTransfer = $discountConfiguratorTransfer->getDiscountGeneralOrFail();
+        $discountGeneralTransfer->fromArray($discountGeneralOverride, true);
+        $discountConfiguratorTransfer->getDiscountCalculatorOrFail()->fromArray($discountCalculatorOverride, true);
+
+        $idDiscount = $this->getFacade()->saveDiscount($discountConfiguratorTransfer);
+
+        return $discountGeneralTransfer
+            ->setIdDiscount($idDiscount)
+            ->setUuid($this->findDiscountUuid($idDiscount));
+    }
+
+    /**
+     * @param array<string, mixed> $discountGeneralOverride
+     */
+    public function haveVoucherDiscountWithGeneratedCodes(
+        string $customCode,
+        int $quantity = 1,
+        array $discountGeneralOverride = []
+    ): DiscountGeneralTransfer {
+        $discountGeneralTransfer = $this->haveDiscountForCollection(
+            $discountGeneralOverride + [DiscountGeneralTransfer::DISCOUNT_TYPE => DiscountConstants::TYPE_VOUCHER],
+        );
+
+        $this->getFacade()->saveVoucherCodes(
+            (new DiscountVoucherTransfer())
+                ->setIdDiscount($discountGeneralTransfer->getIdDiscountOrFail())
+                ->setQuantity($quantity)
+                ->setCustomCode($customCode)
+                ->setRandomGeneratedCodeLength(static::GENERATED_VOUCHER_CODE_LENGTH)
+                ->setMaxNumberOfUses(static::VOUCHER_MAX_NUMBER_OF_USES),
+        );
+
+        return $discountGeneralTransfer;
+    }
+
+    /**
+     * Clears the uuid with plain SQL, because the uuid behavior would regenerate it on an ORM save.
+     */
+    public function removeDiscountUuid(int $idDiscount): void
+    {
+        $statement = Propel::getConnection(SpyDiscountTableMap::DATABASE_NAME)->prepare(
+            sprintf(
+                'UPDATE %s SET %s = NULL WHERE %s = :idDiscount',
+                SpyDiscountTableMap::TABLE_NAME,
+                SpyDiscountTableMap::translateFieldName(SpyDiscountTableMap::COL_UUID, TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME),
+                SpyDiscountTableMap::translateFieldName(SpyDiscountTableMap::COL_ID_DISCOUNT, TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME),
+            ),
+        );
+        $statement->execute(['idDiscount' => $idDiscount]);
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    public function getDiscountVoucherCodesByIdDiscount(int $idDiscount): array
+    {
+        $codes = [];
+
+        $discountVoucherCollectionTransfer = $this->getFacade()->getDiscountVoucherCollection(
+            (new DiscountVoucherCriteriaTransfer())->setDiscountVoucherConditions(
+                (new DiscountVoucherConditionsTransfer())->addIdDiscount($idDiscount),
+            ),
+        );
+
+        foreach ($discountVoucherCollectionTransfer->getDiscountVouchers() as $discountVoucherTransfer) {
+            $codes[] = $discountVoucherTransfer->getCodeOrFail();
+        }
+
+        sort($codes);
+
+        return $codes;
+    }
+
+    public function haveDiscountAmountForCurrency(int $idDiscount, string $currencyIsoCode, int $grossAmount): void
+    {
+        $currencyTransfer = $this->haveCurrencyTransfer([CurrencyTransfer::CODE => $currencyIsoCode]);
+
+        $this->haveDiscountAmount([
+            DiscountMoneyAmountTransfer::FK_CURRENCY => $currencyTransfer->getIdCurrency(),
+            DiscountMoneyAmountTransfer::FK_DISCOUNT => $idDiscount,
+            DiscountMoneyAmountTransfer::GROSS_AMOUNT => $grossAmount,
+        ]);
+    }
+
+    public function findDiscountUuid(int $idDiscount): ?string
+    {
+        $discountEntity = $this->findDiscountEntityById($idDiscount);
+
+        if ($discountEntity === null || !method_exists($discountEntity, 'getUuid')) {
+            return null;
+        }
+
+        return $discountEntity->getUuid();
     }
 
     protected function getDiscountQuery(): SpyDiscountQuery

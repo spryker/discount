@@ -1,0 +1,23 @@
+post:
+    quantity:
+        - NotNull: ~
+        - Type: { type: integer }
+        - Spryker\Glue\Discount\Api\Backend\Validator\Constraint\DiscountConfiguredRange:
+              { range: voucherCodesQuantity }
+    codeLength:
+        - When:
+              expression: "this.customCode === null || this.customCode === ''"
+              constraints:
+                  - NotNull: { message: 'Either codeLength or customCode is required.' }
+        - Type: { type: integer }
+        - Spryker\Glue\Discount\Api\Backend\Validator\Constraint\DiscountConfiguredRange: { range: voucherCodeLength }
+    customCode:
+        - When:
+              expression: 'this.codeLength === null'
+              constraints:
+                  - NotBlank: { message: 'Either codeLength or customCode is required.' }
+        - Type: { type: string }
+        - Length: { max: 245 }
+    maxNumberOfUses:
+        - Type: { type: integer }
+        - GreaterThanOrEqual: { value: 0 }

@@ -1,0 +1,23 @@
+object:
+    name: Pagination
+    properties:
+        numFound:
+            type: integer
+            description: 'Total number of items found.'
+            openapiContext:
+                example: 42
+        currentPage:
+            type: integer
+            description: 'Current page number.'
+            openapiContext:
+                example: 1
+        maxPage:
+            type: integer
+            description: 'Total number of pages.'
+            openapiContext:
+                example: 5
+        currentItemsPerPage:
+            type: integer
+            description: 'Number of items per page.'
+            openapiContext:
+                example: 10

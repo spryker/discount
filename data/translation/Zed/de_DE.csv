@@ -113,3 +113,11 @@ Store,Store
 "Valid from","Gültig von"
 "Valid to","Gültig bis"
 "Cart rule",Warenkorbregel
+"Calculator type ""%key%"" is not available.","Der Kalkulator-Typ ""%key%"" ist nicht verfügbar."
+"Invalid fixed amount. At least one amount is required and each currency must belong to one of the selected stores.","Ungültiger Festbetrag. Mindestens ein Betrag ist erforderlich und jede Währung muss zu einem der ausgewählten Stores gehören."
+"Invalid rule: %message%","Ungültige Regel: %message%"
+"Store with name ""%name%"" does not exist.","Store mit dem Namen ""%name%"" existiert nicht."
+"Voucher codes can only be generated for a voucher discount.","Gutscheincodes können nur für einen Gutschein-Rabatt generiert werden."
+"Voucher code was not found for this discount.","Gutscheincode wurde für diesen Rabatt nicht gefunden."
+PLUGIN_CALCULATOR_PERCENTAGE,Prozent
+PLUGIN_CALCULATOR_FIXED,"Fester Betrag"

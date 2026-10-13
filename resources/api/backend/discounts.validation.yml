@@ -1,0 +1,173 @@
+post:
+    displayName:
+        - NotBlank: ~
+        - Type: { type: string }
+        - Length: { max: 255 }
+    description:
+        - Type: { type: string }
+        - Length: { max: 1024 }
+    discountType:
+        - NotBlank: ~
+        - Choice: { choices: ['cart_rule', 'voucher'] }
+    isActive:
+        - Type: { type: bool }
+    isExclusive:
+        - NotNull: ~
+        - Type: { type: bool }
+    validFrom:
+        - NotBlank: ~
+        - DateTime: { format: 'Y-m-d H:i:s' }
+        - LessThan: { value: '2038-01-19 03:14:07' }
+    validTo:
+        - NotBlank: ~
+        - DateTime: { format: 'Y-m-d H:i:s' }
+        - GreaterThan: { propertyPath: 'validFrom', message: 'The discount cannot end before the starting date.' }
+        - LessThan: { value: '2038-01-19 03:14:07' }
+    priority:
+        - Spryker\Glue\Discount\Api\Backend\Validator\Constraint\DiscountConfiguredRange: { range: priority }
+    stores:
+        - Type: { type: array }
+        - All: { constraints: [{ Type: { type: string } }, { Length: { max: 255 } }] }
+    calculatorType:
+        - NotBlank: ~
+        - Type: { type: string }
+        - Length: { max: 255 }
+    percentage:
+        - When:
+              expression: "this.calculatorType == 'percentage'"
+              constraints:
+                  - NotBlank: ~
+                  - Type: { type: numeric }
+                  - Range: { min: 1, max: 100 }
+    fixedAmounts:
+        - Type: { type: array }
+        - All:
+              constraints:
+                  - Collection:
+                        allowExtraFields: false
+                        allowMissingFields: true
+                        fields:
+                            currencyIsoCode: [{ Type: { type: string } }, { Length: { max: 5 } }]
+                            netAmount: [{ Type: { type: integer } }, { GreaterThanOrEqual: { value: 0 } }]
+                            grossAmount: [{ Type: { type: integer } }, { GreaterThanOrEqual: { value: 0 } }]
+    collectorStrategyType:
+        - Type: { type: string }
+        - Length: { max: 255 }
+    collector:
+        - Collection:
+              allowExtraFields: false
+              allowMissingFields: true
+              fields:
+                  condition: [{ Choice: { choices: ['and', 'or'] } }]
+                  rules: [{ Type: { type: array } }]
+                  groups: [{ Type: { type: array } }]
+    decisionRule:
+        - Collection:
+              allowExtraFields: false
+              allowMissingFields: true
+              fields:
+                  condition: [{ Choice: { choices: ['and', 'or'] } }]
+                  rules: [{ Type: { type: array } }]
+                  groups: [{ Type: { type: array } }]
+    minimumItemQuantity:
+        - NotNull: ~
+        - GreaterThanOrEqual: { value: 1 }
+# PATCH (partial update): identical constraints, each property optional; presence is not required.
+patch:
+    displayName:
+        - Optional: { constraints: [{ NotBlank: ~ }, { Type: { type: string } }, { Length: { max: 255 } }] }
+    description:
+        - Optional: { constraints: [{ Type: { type: string } }, { Length: { max: 1024 } }] }
+    discountType:
+        - Optional: { constraints: [{ Choice: { choices: ['cart_rule', 'voucher'] } }] }
+    isActive:
+        - Optional: { constraints: [{ Type: { type: bool } }] }
+    isExclusive:
+        - Optional: { constraints: [{ Type: { type: bool } }] }
+    validFrom:
+        - Optional:
+              { constraints: [{ DateTime: { format: 'Y-m-d H:i:s' } }, { LessThan: { value: '2038-01-19 03:14:07' } }] }
+    validTo:
+        - Optional:
+              { constraints: [{ DateTime: { format: 'Y-m-d H:i:s' } }, { LessThan: { value: '2038-01-19 03:14:07' } }] }
+    priority:
+        - Optional:
+              {
+                  constraints:
+                      [
+                          {
+                              Spryker\Glue\Discount\Api\Backend\Validator\Constraint\DiscountConfiguredRange:
+                                  { range: priority },
+                          },
+                      ],
+              }
+    stores:
+        - Optional:
+              {
+                  constraints:
+                      [
+                          { Type: { type: array } },
+                          { All: { constraints: [{ Type: { type: string } }, { Length: { max: 255 } }] } },
+                      ],
+              }
+    calculatorType:
+        - Optional: { constraints: [{ Type: { type: string } }, { Length: { max: 255 } }] }
+    percentage:
+        - Optional: { constraints: [{ Type: { type: numeric } }, { Range: { min: 1, max: 100 } }] }
+    fixedAmounts:
+        - Optional:
+              constraints:
+                  - Type: { type: array }
+                  - All:
+                        constraints:
+                            - Collection:
+                                  allowExtraFields: false
+                                  allowMissingFields: true
+                                  fields:
+                                      currencyIsoCode: [{ Type: { type: string } }, { Length: { max: 5 } }]
+                                      netAmount: [{ Type: { type: integer } }, { GreaterThanOrEqual: { value: 0 } }]
+                                      grossAmount: [{ Type: { type: integer } }, { GreaterThanOrEqual: { value: 0 } }]
+    collectorStrategyType:
+        - Optional: { constraints: [{ Type: { type: string } }, { Length: { max: 255 } }] }
+    collector:
+        - Optional:
+              {
+                  constraints:
+                      [
+                          {
+                              Collection:
+                                  {
+                                      allowExtraFields: false,
+                                      allowMissingFields: true,
+                                      fields:
+                                          {
+                                              condition: [{ Choice: { choices: ['and', 'or'] } }],
+                                              rules: [{ Type: { type: array } }],
+                                              groups: [{ Type: { type: array } }],
+                                          },
+                                  },
+                          },
+                      ],
+              }
+    decisionRule:
+        - Optional:
+              {
+                  constraints:
+                      [
+                          {
+                              Collection:
+                                  {
+                                      allowExtraFields: false,
+                                      allowMissingFields: true,
+                                      fields:
+                                          {
+                                              condition: [{ Choice: { choices: ['and', 'or'] } }],
+                                              rules: [{ Type: { type: array } }],
+                                              groups: [{ Type: { type: array } }],
+                                          },
+                                  },
+                          },
+                      ],
+              }
+    minimumItemQuantity:
+        - Optional: { constraints: [{ GreaterThanOrEqual: { value: 1 } }] }

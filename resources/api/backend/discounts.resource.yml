@@ -1,0 +1,499 @@
+resource:
+    name: Discounts
+    shortName: discounts
+    description: Back Office discount management (cart rules and voucher discounts)
+
+    provider: Spryker\Glue\Discount\Api\Backend\Provider\DiscountsBackendProvider
+    processor: Spryker\Glue\Discount\Api\Backend\Processor\DiscountsBackendProcessor
+
+    security: "is_granted('ROLE_BACK_OFFICE_USER')"
+
+    links:
+        - name: voucherCodesExport
+          route: exportDiscountVoucherCodes
+          parameters: { uuid: uuid }
+          condition: { property: discountType, equals: voucher }
+          operations: [Get]
+          description: 'CSV download of all voucher codes of this discount. Present on voucher discounts only.'
+
+    paginationEnabled: true
+    paginationItemsPerPage: 10
+    paginationClientItemsPerPage: true
+    paginationMaximumItemsPerPage: 100
+
+    operations:
+        - type: GetCollection
+          description: >
+              Lists discounts, filtered by the query parameters below.
+              Sorting: sort=<field> ascending or sort=-<field> descending; fields: displayName, isActive, isExclusive, priority, createdAt. Default: -createdAt (newest first).
+              Pagination: page[limit] (1-100, default 10) and page[offset].
+              Collection metadata is reported as top-level `meta.pagination` with `links.first/last/prev/next`.
+          openapiContext:
+              summary: 'List discounts'
+              parameters:
+                  - name: 'filter[discounts.displayName]'
+                    in: query
+                    required: false
+                    description: 'Return only discounts whose display name contains this value, case-insensitive.'
+                    schema:
+                        type: string
+                    example: 'spring'
+                  - name: 'filter[discounts.isActive]'
+                    in: query
+                    required: false
+                    description: 'Return only active or only inactive discounts.'
+                    schema:
+                        type: boolean
+                    example: true
+                  - name: 'filter[discounts.discountType]'
+                    in: query
+                    required: false
+                    description: 'Return only discounts of this type.'
+                    schema:
+                        type: string
+                        enum: ['cart_rule', 'voucher']
+                    example: 'voucher'
+                  - name: 'filter[discounts.store]'
+                    in: query
+                    required: false
+                    description: 'Return only discounts available in the store with this name. An unknown name matches nothing and returns an empty collection.'
+                    schema:
+                        type: string
+                    example: 'DE'
+                  - name: 'filter[discounts.validFrom]'
+                    in: query
+                    required: false
+                    description: 'Return only discounts valid from this moment or later, UTC, format Y-m-d H:i:s.'
+                    schema:
+                        type: string
+                    example: '2026-01-01 00:00:00'
+                  - name: 'filter[discounts.validTo]'
+                    in: query
+                    required: false
+                    description: 'Return only discounts valid until this moment or earlier, UTC, format Y-m-d H:i:s.'
+                    schema:
+                        type: string
+                    example: '2026-12-31 23:59:59'
+              responses:
+                  200: { description: 'Page of discounts, with pagination links.' }
+                  400: { description: 'Unsupported sort field (code 5740).' }
+                  401: { description: 'Missing or invalid access token.' }
+                  403: { description: 'The user has no permission for discounts.' }
+                  422:
+                      {
+                          description: 'Invalid filter or pagination parameter (code 901), for example a validFrom/validTo filter that is not a Y-m-d H:i:s date or an isActive filter that is not a boolean.',
+                      }
+        - type: Get
+          uriTemplate: '/discounts/{uuid}'
+          description: 'Returns one discount.'
+          openapiContext:
+              summary: 'Retrieve a discount'
+              responses:
+                  200: { description: 'The discount.' }
+                  401: { description: 'Missing or invalid access token.' }
+                  403: { description: 'The user has no permission for discounts.' }
+                  404: { description: 'Discount not found (code 5700).' }
+        - type: Post
+          validationGroups: ['Default', 'discounts:create']
+          description: 'Creates a discount.'
+          openapiContext:
+              summary: 'Create a discount'
+              responses:
+                  201: { description: 'The created discount.' }
+                  401: { description: 'Missing or invalid access token.' }
+                  403: { description: 'The user has no permission for discounts.' }
+                  422:
+                      {
+                          description: 'Validation failed. Request structure and static rules (discount type, percentage or fixed amounts per calculation method, minimum item quantity, priority range): code 901. Business rules: 5701 display name not unique, 5703 unknown calculator plugin, 5705 money amount invalid, 5706 rule invalid, 5710 unknown store, 5799 other business validation failure, for example an invalid validity period.',
+                      }
+        - type: Patch
+          uriTemplate: '/discounts/{uuid}'
+          validationGroups: ['Default', 'discounts:update']
+          denormalizationContext:
+              deep_object_to_populate: false
+          description: 'Updates the given properties of a discount. A property that is omitted keeps its stored value; null clears a nullable property, as does its empty form: "" for description, [] for stores and fixedAmounts, { "rules": [] } for decisionRule. Changing discountType from voucher to cart_rule detaches the existing voucher codes; changing it to voucher creates an empty voucher pool.'
+          openapiContext:
+              summary: 'Update a discount'
+              responses:
+                  200: { description: 'The updated discount.' }
+                  401: { description: 'Missing or invalid access token.' }
+                  403: { description: 'The user has no permission for discounts.' }
+                  404: { description: 'Discount not found (code 5700).' }
+                  422: { description: 'Validation failed (codes as for POST).' }
+    properties:
+        uuid:
+            type: string
+            identifier: true
+            writable: false
+            required: true
+            description: 'Unique identifier of the discount.'
+            openapiContext: { example: '3f9c1c1e-7d2b-4e0e-9a3d-1b2c3d4e5f60' }
+        displayName:
+            type: string
+            writable: true
+            required: true
+            description: 'Unique display name. At most 255 characters.'
+            openapiContext: { example: '10% off' }
+        description:
+            type: string
+            writable: true
+            nullable: true
+            description: 'Free-text description. Default: empty. At most 1024 characters. On PATCH: omitting the property keeps the stored text, null or "" clears it.'
+            openapiContext: { example: 'Spring campaign, all categories' }
+        discountType:
+            type: string
+            writable: true
+            required: true
+            description: 'cart_rule (applied automatically when the conditions match) or voucher (requires a voucher code).'
+            openapiContext: { example: 'voucher' }
+        isActive:
+            type: bool
+            writable: true
+            description: 'Whether the discount is applied. Default: false, so a new discount is inactive until it is activated by setting isActive to true.'
+            openapiContext: { example: false }
+        isExclusive:
+            type: bool
+            writable: true
+            required: true
+            description: 'Exclusive discounts are not combined with other discounts. Default: false.'
+            openapiContext: { example: false }
+        validFrom:
+            type: string
+            writable: true
+            required: true
+            nullable: true
+            description: 'Start of validity, UTC, format Y-m-d H:i:s. The discount is not applied before this moment.'
+            openapiContext: { example: '2026-01-01 00:00:00' }
+        validTo:
+            type: string
+            writable: true
+            required: true
+            nullable: true
+            description: 'End of validity, UTC, format Y-m-d H:i:s. Must be after validFrom. The discount is not applied after this moment.'
+            openapiContext: { example: '2026-12-31 23:59:59' }
+        calculatorType:
+            type: string
+            writable: true
+            required: true
+            description: 'Calculation method: one of the keys returned by GET /discount-options in calculatorTypes[].key (e.g. percentage, fixed); calculatorTypes[].label carries the name to show. Its inputType tells whether percentage or fixedAmounts is used.'
+            openapiContext: { example: 'percentage' }
+        percentage:
+            type: number
+            writable: true
+            nullable: true
+            description: 'Percentage of the discount, 1-100 (10 = 10%). Used by calculation methods with inputType calculator-default-input-type; ignored otherwise.'
+            openapiContext: { example: 10 }
+        fixedAmounts:
+            type: array
+            writable: true
+            nullable: true
+            description: 'Fixed amounts per currency, in cents. Used by calculators with inputType calculator-money-input-type; ignored otherwise. Whether netAmount or grossAmount is applied depends on the price mode of the cart. On PATCH: omitting the property keeps the stored amounts, null or [] clears them, a list replaces them.'
+            openapiContext:
+                {
+                    example:
+                        [
+                            { currencyIsoCode: 'EUR', netAmount: 500, grossAmount: 595 },
+                            { currencyIsoCode: 'CHF', netAmount: 460, grossAmount: 500 },
+                        ],
+                }
+            items:
+                type: object
+                objectName: MoneyAmount
+                properties:
+                    currencyIsoCode:
+                        {
+                            type: string,
+                            description: 'ISO 4217 currency code of one of the selected stores.',
+                            openapiContext: { example: 'EUR' },
+                        }
+                    netAmount:
+                        {
+                            type: integer,
+                            description: 'Net amount in cents, applied to carts in net price mode.',
+                            openapiContext: { example: 500 },
+                        }
+                    grossAmount:
+                        {
+                            type: integer,
+                            description: 'Gross amount in cents, applied to carts in gross price mode.',
+                            openapiContext: { example: 595 },
+                        }
+        collectorStrategyType:
+            type: string
+            writable: true
+            nullable: true
+            description: 'How the discounted items are selected: one of the keys returned by GET /discount-options in collectorStrategyTypes[].key. Default: query-string (items selected by the collector rules). Other strategies bring their own configuration object (e.g. promotion).'
+            openapiContext: { example: 'query-string' }
+        collector:
+            type: object
+            objectName: DiscountRuleGroup
+            writable: true
+            required: true
+            nullable: true
+            description: 'Which cart items the discount applies to. Required when collectorStrategyType is query-string, ignored otherwise. Rule group: condition (and|or) combining rules[] and nested groups[]. Each rule: field and operator from GET /discount-options collectorFields, value as string ("*" = any; lists separated by ";"). On PATCH: omitting collector keeps the stored rule group, null clears it; a sent object replaces it as a whole, nested groups[] included.'
+            openapiContext:
+                {
+                    example:
+                        {
+                            condition: 'and',
+                            rules: [{ field: 'category', operator: 'is in', value: 'shoes;sneakers' }],
+                            groups:
+                                [
+                                    {
+                                        condition: 'or',
+                                        rules:
+                                            [
+                                                { field: 'sku', operator: '=', value: '001' },
+                                                { field: 'sku', operator: '=', value: '002' },
+                                            ],
+                                    },
+                                ],
+                        },
+                }
+            properties:
+                condition: { type: string, description: 'and | or', openapiContext: { example: 'and' } }
+                rules:
+                    type: array
+                    openapiContext: { example: [{ field: 'sku', operator: '=', value: '*' }] }
+                    items:
+                        type: object
+                        objectName: DiscountRule
+                        properties:
+                            field: { type: string, openapiContext: { example: 'sku' } }
+                            attribute:
+                                {
+                                    type: string,
+                                    description: 'Only for attribute-based fields (field.attribute).',
+                                    openapiContext: { example: 'color' },
+                                }
+                            operator: { type: string, openapiContext: { example: '=' } }
+                            value:
+                                {
+                                    type: string,
+                                    description: 'Value to compare with. Quotes ('' and ") are not allowed in a field, attribute or value.',
+                                    openapiContext: { example: '*' },
+                                }
+                groups:
+                    type: array
+                    nullable: true
+                    description: "Nested rule groups, combined with the parent by the parent's condition. A nested group must contain at least one rule or group. A group sent without groups[] has no nested groups, so repeat them on PATCH."
+                    openapiContext:
+                        {
+                            example:
+                                [
+                                    {
+                                        condition: 'or',
+                                        rules:
+                                            [
+                                                { field: 'currency', operator: '=', value: 'EUR' },
+                                                { field: 'currency', operator: '=', value: 'CHF' },
+                                            ],
+                                    },
+                                ],
+                        }
+                    items:
+                        type: object
+                        objectName: DiscountRuleGroupLevel2
+                        properties:
+                            condition: { type: string, description: 'and | or', openapiContext: { example: 'or' } }
+                            rules:
+                                type: array
+                                openapiContext: { example: [{ field: 'currency', operator: '=', value: 'EUR' }] }
+                                items:
+                                    type: object
+                                    objectName: DiscountRule
+                                    properties:
+                                        field: { type: string, openapiContext: { example: 'currency' } }
+                                        attribute: { type: string, openapiContext: { example: 'color' } }
+                                        operator: { type: string, openapiContext: { example: '=' } }
+                                        value: { type: string, openapiContext: { example: 'EUR' } }
+                            groups:
+                                type: array
+                                description: 'Deepest allowed level; contains rules only.'
+                                openapiContext:
+                                    {
+                                        example:
+                                            [
+                                                {
+                                                    condition: 'and',
+                                                    rules: [{ field: 'day-of-week', operator: 'is in', value: '6;7' }],
+                                                },
+                                            ],
+                                    }
+                                items:
+                                    type: object
+                                    objectName: DiscountRuleGroupLevel3
+                                    properties:
+                                        condition:
+                                            {
+                                                type: string,
+                                                description: 'and | or',
+                                                openapiContext: { example: 'and' },
+                                            }
+                                        rules:
+                                            type: array
+                                            openapiContext:
+                                                { example: [{ field: 'day-of-week', operator: 'is in', value: '6;7' }] }
+                                            items:
+                                                type: object
+                                                objectName: DiscountRule
+                                                properties:
+                                                    field: { type: string, openapiContext: { example: 'day-of-week' } }
+                                                    attribute: { type: string, openapiContext: { example: 'color' } }
+                                                    operator: { type: string, openapiContext: { example: 'is in' } }
+                                                    value: { type: string, openapiContext: { example: '6;7' } }
+        decisionRule:
+            type: object
+            objectName: DiscountRuleGroup
+            writable: true
+            required: true
+            nullable: true
+            description: 'When the discount applies (cart conditions). Same rule-group structure as collector; fields and operators from GET /discount-options decisionRuleFields. A root group without rules and groups means "no conditions": the discount applies to every cart. On PATCH: omitting decisionRule keeps the stored rule group; a sent object replaces it as a whole, nested groups[] included; null or { "rules": [] } clears it so the discount applies to every cart.'
+            openapiContext:
+                {
+                    example:
+                        {
+                            condition: 'and',
+                            rules: [{ field: 'sub-total', operator: '>=', value: '500' }],
+                            groups:
+                                [
+                                    {
+                                        condition: 'or',
+                                        rules:
+                                            [
+                                                { field: 'currency', operator: '=', value: 'EUR' },
+                                                { field: 'currency', operator: '=', value: 'CHF' },
+                                            ],
+                                    },
+                                ],
+                        },
+                }
+            properties:
+                condition: { type: string, description: 'and | or', openapiContext: { example: 'and' } }
+                rules:
+                    type: array
+                    openapiContext: { example: [{ field: 'sku', operator: '=', value: '*' }] }
+                    items:
+                        type: object
+                        objectName: DiscountRule
+                        properties:
+                            field: { type: string, openapiContext: { example: 'sku' } }
+                            attribute:
+                                {
+                                    type: string,
+                                    description: 'Only for attribute-based fields (field.attribute).',
+                                    openapiContext: { example: 'color' },
+                                }
+                            operator: { type: string, openapiContext: { example: '=' } }
+                            value:
+                                {
+                                    type: string,
+                                    description: 'Value to compare with. Quotes ('' and ") are not allowed in a field, attribute or value.',
+                                    openapiContext: { example: '*' },
+                                }
+                groups:
+                    type: array
+                    nullable: true
+                    description: "Nested rule groups, combined with the parent by the parent's condition. A nested group must contain at least one rule or group. A group sent without groups[] has no nested groups, so repeat them on PATCH."
+                    openapiContext:
+                        {
+                            example:
+                                [
+                                    {
+                                        condition: 'or',
+                                        rules:
+                                            [
+                                                { field: 'currency', operator: '=', value: 'EUR' },
+                                                { field: 'currency', operator: '=', value: 'CHF' },
+                                            ],
+                                    },
+                                ],
+                        }
+                    items:
+                        type: object
+                        objectName: DiscountDecisionRuleGroupLevel2
+                        properties:
+                            condition: { type: string, description: 'and | or', openapiContext: { example: 'or' } }
+                            rules:
+                                type: array
+                                openapiContext: { example: [{ field: 'currency', operator: '=', value: 'EUR' }] }
+                                items:
+                                    type: object
+                                    objectName: DiscountRule
+                                    properties:
+                                        field: { type: string, openapiContext: { example: 'currency' } }
+                                        attribute: { type: string, openapiContext: { example: 'color' } }
+                                        operator: { type: string, openapiContext: { example: '=' } }
+                                        value: { type: string, openapiContext: { example: 'EUR' } }
+                            groups:
+                                type: array
+                                description: 'Deepest allowed level; contains rules only.'
+                                openapiContext:
+                                    {
+                                        example:
+                                            [
+                                                {
+                                                    condition: 'and',
+                                                    rules: [{ field: 'day-of-week', operator: 'is in', value: '6;7' }],
+                                                },
+                                            ],
+                                    }
+                                items:
+                                    type: object
+                                    objectName: DiscountDecisionRuleGroupLevel3
+                                    properties:
+                                        condition:
+                                            {
+                                                type: string,
+                                                description: 'and | or',
+                                                openapiContext: { example: 'and' },
+                                            }
+                                        rules:
+                                            type: array
+                                            openapiContext:
+                                                { example: [{ field: 'day-of-week', operator: 'is in', value: '6;7' }] }
+                                            items:
+                                                type: object
+                                                objectName: DiscountRule
+                                                properties:
+                                                    field: { type: string, openapiContext: { example: 'day-of-week' } }
+                                                    attribute: { type: string, openapiContext: { example: 'color' } }
+                                                    operator: { type: string, openapiContext: { example: 'is in' } }
+                                                    value: { type: string, openapiContext: { example: '6;7' } }
+        collectorQueryString:
+            type: string
+            writable: false
+            nullable: true
+            description: 'The collector rules in their stored text form (read-only). Null for strategies other than query-string.'
+            openapiContext: { example: "sku = '*'" }
+        decisionRuleQueryString:
+            type: string
+            writable: false
+            nullable: true
+            description: 'The decision rules in their stored text form (read-only). Null when there are no conditions.'
+            openapiContext: { example: "sub-total >= '500'" }
+        minimumItemQuantity:
+            type: integer
+            writable: true
+            required: true
+            description: 'Minimum number of cart items matching the collector rules, at least 1. Default: 1.'
+            openapiContext: { example: 1 }
+        priority:
+            type: integer
+            writable: true
+            nullable: true
+            description: 'Application order; lower values are applied first. Range from GET /discount-options priority (default range 1-9999). Default: 9999.'
+            openapiContext: { example: 100 }
+        stores:
+            type: array
+            writable: true
+            nullable: true
+            description: 'Names of the stores the discount is available in (GET /discount-options, stores[].name). Unknown names are rejected. Default: none (the discount is never applied). On PATCH: omit the property to keep the stored stores, send null or an empty array to clear them, send a list to replace them.'
+            items: { type: string }
+            openapiContext: { example: ['DE', 'AT'] }
+        createdAt:
+            type: string
+            writable: false
+            nullable: true
+            description: 'Creation time, UTC, Y-m-d H:i:s.'
+            openapiContext: { example: '2026-01-15 09:30:00' }
