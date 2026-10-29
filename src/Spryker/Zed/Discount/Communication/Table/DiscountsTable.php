@@ -294,7 +294,7 @@ class DiscountsTable extends AbstractTable
     {
         return $this->generateLabel(
             $discountEntity->getIsActive() ? 'Active' : 'Inactive',
-            $discountEntity->getIsActive() ? 'label-success' : 'label-danger',
+            $discountEntity->getIsActive() ? 'label-primary' : 'badge-outline-dark',
         );
     }
 
