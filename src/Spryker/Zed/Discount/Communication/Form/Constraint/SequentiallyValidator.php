@@ -35,8 +35,8 @@ class SequentiallyValidator extends ConstraintValidator
         $validator = $context->getValidator()->inContext($context);
         $originalCount = $validator->getViolations()->count();
 
-        foreach ($constraint->constraints as $subСonstraint) {
-            if ($originalCount !== $validator->validate($value, $subСonstraint)->getViolations()->count()) {
+        foreach ($constraint->constraints as $subConstraint) {
+            if ($originalCount !== $validator->validate($value, $subConstraint)->getViolations()->count()) {
                 break;
             }
         }

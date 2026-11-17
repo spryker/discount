@@ -117,7 +117,7 @@ class MetaDataProvider implements MetaDataProviderInterface
     public function getAcceptedTypesByFieldName($fieldName)
     {
         if (strpos($fieldName, '.') !== false) {
-            [$fieldName, $attribute] = explode('.', $fieldName);
+            [$fieldName] = explode('.', $fieldName);
         }
 
         foreach ($this->specificationPlugins as $specificationPlugin) {
