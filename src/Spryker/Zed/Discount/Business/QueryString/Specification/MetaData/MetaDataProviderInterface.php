@@ -56,4 +56,16 @@ interface MetaDataProviderInterface
      * @return array
      */
     public function getQueryStringValueOptions();
+
+    /**
+     * @return array<string, string> Keys are field names, values are the URLs that suggest values for the field.
+     */
+    public function getQueryStringValueSuggestUrls(): array;
+
+    /**
+     * @param list<string> $values
+     *
+     * @return list<string>
+     */
+    public function getInvalidQueryStringValues(string $fieldName, array $values): array;
 }

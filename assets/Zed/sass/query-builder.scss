@@ -3,6 +3,8 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
+$query-builder-select-width: 250px;
+
 :root {
     --ins-card-border-width: 1px;
 }
@@ -91,6 +93,39 @@
     .rule-value-container input[type='text'],
     .rule-value-container input[type='number'] {
         padding: 1px;
+    }
+
+    .rule-filter-container .form-control {
+        width: $query-builder-select-width;
+    }
+
+    .rule-value-container:has(> .select2-container.form-control) {
+        box-sizing: content-box;
+        width: $query-builder-select-width;
+    }
+
+    .rule-value-container .select2-container.form-control {
+        height: auto;
+        padding: 0;
+        border: 0;
+
+        .select2-selection--multiple .select2-selection__rendered {
+            flex: 1 1 auto;
+            min-width: 0;
+            white-space: normal;
+        }
+
+        .select2-selection__choice {
+            box-sizing: border-box;
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .select2-search__field {
+            max-width: 100%;
+        }
     }
 
     .error-container {

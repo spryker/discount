@@ -509,4 +509,9 @@
         <property name="detail" type="string" description="A detailed error message providing more specific information about an issue."/>
     </transfer>
 
+    <transfer name="DiscountRuleValueValidationResponse" strict="true">
+        <property name="isSuccessful" type="bool"/>
+        <property name="invalidValues" type="string[]" singular="invalidValue"/>
+    </transfer>
+
 </transfers>

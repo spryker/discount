@@ -313,6 +313,10 @@ interface DiscountFacadeInterface
      * Specification:
      * - Configure specification builder on type and query string
      * - Try building query string
+     * - Executes {@link \Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountRuleWithValueValidationPluginInterface::validateQueryStringValues()}
+     *   of the plugin of each clause field that compares exact values with `=`, `!=`, `is in` or `is not in`.
+     * - Adds an error that names the invalid values when the plugin returns any.
+     * - Names the values as the parser normalized them: lowercased and without quotes.
      * - Store all occurred error to array and return it
      *
      * @api
@@ -819,6 +823,8 @@ interface DiscountFacadeInterface
      * - Defaults the condition of a group without one to `LogicalComparators::COMPARATOR_AND`.
      * - Returns an empty query string for a root group without rules and nested groups.
      * - Validates the rendered query string against the query string meta data of the given type.
+     * - Executes {@link \Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountRuleWithValueValidationPluginInterface::validateQueryStringValues()}
+     *   of the plugin of each rule field that compares exact values with `=`, `!=`, `is in` or `is not in`.
      * - Returns `DiscountRuleGroupResponse.isSuccessful = false` with `DiscountRuleGroupResponse.errors` when a nested
      *   group is empty, when a rule is incomplete, when a condition is not supported or when the rendered query string is
      *   invalid; never throws.
@@ -843,6 +849,8 @@ interface DiscountFacadeInterface
      * - Validates that every `DiscountConfigurator.discountGeneral.storeRelation.stores` entry resolves to an existing store.
      * - Validates that `DiscountConfigurator.discountCalculator.collectorQueryString` is provided when the collector strategy
      *   type is `DiscountConstants::DISCOUNT_COLLECTOR_STRATEGY_QUERY_STRING`, and that both stored query strings are valid.
+     * - Executes {@link \Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountRuleWithValueValidationPluginInterface::validateQueryStringValues()}
+     *   of the plugin of each query string clause field that compares exact values with `=`, `!=`, `is in` or `is not in`.
      * - Executes {@link \Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountConfiguratorValidatorRulePluginInterface} plugin stack.
      * - Returns `DiscountConfiguratorResponse.isSuccessful = true` when every rule is satisfied.
      * - Returns `DiscountConfiguratorResponse.isSuccessful = false` with `DiscountConfiguratorResponse.errors` carrying the
@@ -857,6 +865,8 @@ interface DiscountFacadeInterface
      * Specification:
      * - Validates the discount configurator with the rules of {@link validateDiscountConfigurator()} except the
      *   {@link \Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountConfiguratorValidatorRulePluginInterface} plugin stack.
+     * - Executes {@link \Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountRuleWithValueValidationPluginInterface::validateQueryStringValues()}
+     *   of the plugin of each query string clause field that compares exact values with `=`, `!=`, `is in` or `is not in`.
      * - Serves the Back Office discount form, where a sub-form that another module contributes validates its own data.
      * - Returns `DiscountConfiguratorResponse.isSuccessful = true` when every rule is satisfied.
      * - Returns `DiscountConfiguratorResponse.isSuccessful = false` with `DiscountConfiguratorResponse.errors` otherwise.

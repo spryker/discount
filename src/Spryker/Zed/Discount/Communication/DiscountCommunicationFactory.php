@@ -32,6 +32,7 @@ use Spryker\Zed\Discount\Dependency\Facade\DiscountToStoreFacadeInterface;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToTranslatorFacadeInterface;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\Kernel\Communication\BusinessFactoryResolverAwareTrait;
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\Money\Communication\Form\Type\MoneyCollectionType;
 use Spryker\Zed\Money\Communication\Form\Type\MoneyType;
@@ -43,9 +44,12 @@ use Symfony\Component\Form\FormInterface;
  * @method \Spryker\Zed\Discount\Business\DiscountFacadeInterface getFacade()
  * @method \Spryker\Zed\Discount\Persistence\DiscountRepositoryInterface getRepository()
  * @method \Spryker\Zed\Discount\Persistence\DiscountEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\Discount\Business\DiscountBusinessFactory getBusinessFactory()
  */
 class DiscountCommunicationFactory extends AbstractCommunicationFactory
 {
+    use BusinessFactoryResolverAwareTrait;
+
     /**
      * @param int|null $idDiscount
      * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer|null $discountConfiguratorTransfer
@@ -152,7 +156,10 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
         /** @var \Spryker\Zed\Discount\Business\DiscountFacade $facade */
         $facade = $this->getFacade();
 
-        return new JavascriptQueryBuilderTransformer($facade);
+        return new JavascriptQueryBuilderTransformer(
+            $facade,
+            $this->getBusinessFactory()->createQueryStringMetaDataProviderFactory(),
+        );
     }
 
     /**

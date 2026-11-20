@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Discount\Communication\QueryBuilderTransformer;
 
 use Spryker\Zed\Discount\Business\DiscountFacade;
+use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProviderFactoryInterface;
 
 class JavascriptQueryBuilderTransformer implements JavascriptQueryBuilderTransformerInterface
 {
@@ -31,9 +32,12 @@ class JavascriptQueryBuilderTransformer implements JavascriptQueryBuilderTransfo
         'is not in' => 'not_in',
     ];
 
-    public function __construct(DiscountFacade $discountFacade)
+    protected MetaProviderFactoryInterface $metaProviderFactory;
+
+    public function __construct(DiscountFacade $discountFacade, MetaProviderFactoryInterface $metaProviderFactory)
     {
         $this->discountFacade = $discountFacade;
+        $this->metaProviderFactory = $metaProviderFactory;
     }
 
     /**
@@ -45,6 +49,7 @@ class JavascriptQueryBuilderTransformer implements JavascriptQueryBuilderTransfo
     {
         $ruleFields = $this->discountFacade->getQueryStringFieldsByType($type);
         $valueOptions = $this->discountFacade->getQueryStringValueOptions($type);
+        $valueSuggestUrls = $this->metaProviderFactory->createMetaProviderByType($type)->getQueryStringValueSuggestUrls();
 
         $transformed = [];
         foreach ($ruleFields as $ruleField) {
@@ -53,6 +58,15 @@ class JavascriptQueryBuilderTransformer implements JavascriptQueryBuilderTransfo
             $fieldTransformed['label'] = $ruleField;
             $fieldTransformed['type'] = 'string';
             $fieldTransformed['operators'] = $this->transformComparators($type, $ruleField);
+
+            if (isset($valueSuggestUrls[$ruleField])) {
+                $fieldTransformed['input'] = 'select';
+                $fieldTransformed['plugin'] = 'select2';
+                $fieldTransformed['suggest_url'] = $valueSuggestUrls[$ruleField];
+                $transformed[] = $fieldTransformed;
+
+                continue;
+            }
 
             if (!empty($valueOptions[$ruleField])) {
                 $fieldTransformed['input'] = 'select';

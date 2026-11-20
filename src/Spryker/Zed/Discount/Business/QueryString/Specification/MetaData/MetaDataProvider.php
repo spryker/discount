@@ -12,6 +12,8 @@ use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
 use Spryker\Zed\Discount\Business\QueryString\LogicalComparators;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountRuleWithAttributesPluginInterface;
 use Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountRuleWithValueOptionsPluginInterface;
+use Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountRuleWithValueSuggestUrlPluginInterface;
+use Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountRuleWithValueValidationPluginInterface;
 
 class MetaDataProvider implements MetaDataProviderInterface
 {
@@ -197,5 +199,41 @@ class MetaDataProvider implements MetaDataProviderInterface
         }
 
         return $valueOptions;
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public function getQueryStringValueSuggestUrls(): array
+    {
+        $valueSuggestUrls = [];
+
+        foreach ($this->specificationPlugins as $specificationPlugin) {
+            if (!$specificationPlugin instanceof DiscountRuleWithValueSuggestUrlPluginInterface) {
+                continue;
+            }
+
+            $valueSuggestUrls[$specificationPlugin->getFieldName()] = $specificationPlugin->getQueryStringValueSuggestUrl();
+        }
+
+        return $valueSuggestUrls;
+    }
+
+    /**
+     * @param list<string> $values
+     *
+     * @return list<string>
+     */
+    public function getInvalidQueryStringValues(string $fieldName, array $values): array
+    {
+        foreach ($this->specificationPlugins as $specificationPlugin) {
+            if (!$specificationPlugin instanceof DiscountRuleWithValueValidationPluginInterface || $specificationPlugin->getFieldName() !== $fieldName) {
+                continue;
+            }
+
+            return array_values($specificationPlugin->validateQueryStringValues($values)->getInvalidValues());
+        }
+
+        return [];
     }
 }

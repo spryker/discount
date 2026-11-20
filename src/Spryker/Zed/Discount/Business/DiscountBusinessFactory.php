@@ -71,6 +71,8 @@ use Spryker\Zed\Discount\Business\Persistence\DiscountStoreRelationMapper;
 use Spryker\Zed\Discount\Business\Persistence\DiscountStoreRelationReader;
 use Spryker\Zed\Discount\Business\Persistence\DiscountStoreRelationWriter;
 use Spryker\Zed\Discount\Business\QueryString\ClauseValidator;
+use Spryker\Zed\Discount\Business\QueryString\ClauseValidatorInterface;
+use Spryker\Zed\Discount\Business\QueryString\ClauseValueValidator;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Discount\Business\QueryString\Converter\DiscountQueryStringBuilder;
 use Spryker\Zed\Discount\Business\QueryString\Converter\DiscountQueryStringBuilderInterface;
@@ -83,6 +85,7 @@ use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorProvider;
 use Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleProvider;
 use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProviderFactory;
 use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder;
+use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilderInterface;
 use Spryker\Zed\Discount\Business\QueryString\Tokenizer;
 use Spryker\Zed\Discount\Business\QueryString\Validator;
 use Spryker\Zed\Discount\Business\QuoteChangeObserver\QuoteChangeObserver;
@@ -419,8 +422,39 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     public function createQueryStringValidator()
     {
         return new Validator(
-            $this->createDecisionRuleBuilder(),
-            $this->createCollectorBuilder(),
+            $this->createDecisionRuleValidationBuilder(),
+            $this->createCollectorValidationBuilder(),
+        );
+    }
+
+    public function createDecisionRuleValidationBuilder(): SpecificationBuilderInterface
+    {
+        return new SpecificationBuilder(
+            $this->createTokenizer(),
+            $this->createDecisionRuleProvider(),
+            $this->createComparatorOperators(),
+            $this->createClauseValueValidator(MetaProviderFactory::TYPE_DECISION_RULE),
+            $this->createMetaDataProviderByType(MetaProviderFactory::TYPE_DECISION_RULE),
+        );
+    }
+
+    public function createCollectorValidationBuilder(): SpecificationBuilderInterface
+    {
+        return new SpecificationBuilder(
+            $this->createTokenizer(),
+            $this->createCollectorProvider(),
+            $this->createComparatorOperators(),
+            $this->createClauseValueValidator(MetaProviderFactory::TYPE_COLLECTOR),
+            $this->createMetaDataProviderByType(MetaProviderFactory::TYPE_COLLECTOR),
+        );
+    }
+
+    public function createClauseValueValidator(string $type): ClauseValidatorInterface
+    {
+        return new ClauseValueValidator(
+            $this->createClauseValidator($type),
+            $this->createMetaDataProviderByType($type),
+            $this->createComparatorProvider()->createExactValueComparators(),
         );
     }
 

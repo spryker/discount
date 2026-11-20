@@ -12,6 +12,8 @@ use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Discount\Business\QueryString\LogicalComparators;
 use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProvider;
 use Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface;
+use SprykerTest\Zed\Discount\Plugin\DecisionRuleStubPlugin;
+use SprykerTest\Zed\Discount\Plugin\DecisionRuleWithValueSuggestUrlStubPlugin;
 
 /**
  * Auto-generated group annotations
@@ -27,6 +29,25 @@ use Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface;
  */
 class MetaDataProviderTest extends Unit
 {
+    public function testGetQueryStringValueSuggestUrlsReturnsTheUrlOfEachFieldThatProvidesOne(): void
+    {
+        // Arrange
+        $metaDataProvider = new MetaDataProvider(
+            [
+                new DecisionRuleWithValueSuggestUrlStubPlugin('suggested-field', '/module/suggest'),
+                new DecisionRuleStubPlugin('text-field'),
+            ],
+            $this->createComparatorOperatorsMock(),
+            $this->createLogicalComparatorsMock(),
+        );
+
+        // Act
+        $valueSuggestUrls = $metaDataProvider->getQueryStringValueSuggestUrls();
+
+        // Assert
+        $this->assertSame(['suggested-field' => '/module/suggest'], $valueSuggestUrls);
+    }
+
     public function testGetAvailableFieldsShouldReturnFieldProvidedByPlugins(): void
     {
         $fieldName = 'sample field';

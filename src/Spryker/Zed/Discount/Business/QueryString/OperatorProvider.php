@@ -40,6 +40,19 @@ class OperatorProvider
     }
 
     /**
+     * @return list<\Spryker\Zed\Discount\Business\QueryString\Comparator\ComparatorInterface>
+     */
+    public function createExactValueComparators(): array
+    {
+        return [
+            $this->createEqual(),
+            $this->createNotEqual(),
+            $this->createIsIn(),
+            $this->createIsNotIn(),
+        ];
+    }
+
+    /**
      * @return \Spryker\Zed\Discount\Business\QueryString\Comparator\Contains
      */
     protected function createContains()
